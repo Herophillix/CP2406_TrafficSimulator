@@ -29,13 +29,13 @@ public class Road {
         }
     }
 
-    public void Connect(Segment nextSegment, Road.DIRECTION direction)
+    public void Connect(Segment nextSegment, int position, Road.DIRECTION direction)
     {
         for(Lane lane: lanes)
         {
             if(lane.GetDirection() == direction)
             {
-                lane.Connect(nextSegment);
+                lane.Connect(nextSegment, position);
                 break;
             }
         }

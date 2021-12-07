@@ -22,8 +22,14 @@ public class Lane {
 
     public Road.DIRECTION GetDirection() { return direction; }
 
-    public void Connect(Segment nextSegment)
+    public void Connect(Segment nextSegment, int position)
     {
-        this.roadSegments.get(roadSegments.size() - 1).AddNextSegment(nextSegment);
+        switch (position)
+        {
+            case 0 -> { this.roadSegments.get(0).AddNextSegment(nextSegment); }
+            case 1 -> { this.roadSegments.get(1).AddNextSegment(nextSegment); }
+            case 2 -> { this.roadSegments.get(roadSegments.size() - 2).AddNextSegment(nextSegment); }
+            case 3 -> { this.roadSegments.get(roadSegments.size() - 1).AddNextSegment(nextSegment); }
+        }
     }
 }

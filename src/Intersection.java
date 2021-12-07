@@ -25,7 +25,7 @@ public abstract class Intersection {
                 if (neighbouringRoadIntersection == null || neighbouringRoadIntersection == roadIntersection)
                     continue;
 
-
+                roadIntersection.ConnectIncomingSegment(neighbouringRoadIntersection);
             }
         }
     }
