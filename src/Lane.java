@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-public class Lane {
+public class Lane extends TrafficObject{
     public enum SEGMENT_POSITION {
         FIRST,
         SECOND,
@@ -13,14 +13,15 @@ public class Lane {
     private Road.DIRECTION direction;
     protected ArrayList<Segment> roadSegments;
 
-    public Lane(int length, Road.DIRECTION direction)
+    public Lane(int id, int length, Road.DIRECTION direction)
     {
+        super(id, "Lane");
         this.direction = direction;
         roadSegments = new ArrayList<>();
         Segment oldSegment = null;
         for(int i = 0; i < length; ++i)
         {
-            Segment newSegment = new Segment();
+            Segment newSegment = new Segment(i);
             newSegment.AddNextSegment(oldSegment);
 
             this.roadSegments.add(newSegment);

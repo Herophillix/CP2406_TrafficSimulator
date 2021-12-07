@@ -1,10 +1,11 @@
 import java.util.ArrayList;
 
-public class Segment {
+public class Segment extends TrafficObject {
     private ArrayList<Vehicle> currentVehicles;
     private ArrayList<Segment> nextSegments;
 
-    public Segment() {
+    public Segment(int id) {
+        super(id, "Segment");
         this.currentVehicles = new ArrayList<>();
         this.nextSegments = new ArrayList<>();
     }

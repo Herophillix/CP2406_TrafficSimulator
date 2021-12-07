@@ -1,30 +1,20 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-public abstract class Vehicle {
-    private int id;
+public abstract class Vehicle extends TrafficObject{
     private float length;
     private float breadth;
     private int speed;
     private Segment[] currentSegments;
 
-    private Vehicle()
+    protected Vehicle(int id, String name)
     {
-        this.id = 0;
+        super(id, name);
         this.length = 1;
         this.breadth = 0.5f;
         this.speed = 1;
         this.currentSegments = new Segment[1];
     }
-
-    protected Vehicle(int id)
-    {
-        this();
-        this.id = id;
-    }
-
-    public void SetID(int id) { this.id = id; }
-    public int GetID() { return this.id; }
 
     public void SetLength(float length)
     {
@@ -54,7 +44,6 @@ public abstract class Vehicle {
         {
             Segment firstSegment = currentSegments[0];
             if(firstSegment == null) {
-                System.out.println("No more");
                 return;
             }
 
@@ -66,6 +55,7 @@ public abstract class Vehicle {
                 {
                     if(currentSegments[j] != null)
                     {
+                        currentSegments[j].RemoveVehicle(this);
                         currentSegments[j] = null;
                         break;
                     }
@@ -95,14 +85,6 @@ public abstract class Vehicle {
                     }
                 }
             }
-
-            System.out.println("Position");
-            for (int j = 0; j < currentSegments.length; ++j)
-            {
-                if(currentSegments[j] != null)
-                    System.out.println("Vehicle Body " + j + ": " + currentSegments[j].toString());
-            }
-            System.out.println();
         }
     }
 }

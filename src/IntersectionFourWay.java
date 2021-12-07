@@ -1,7 +1,7 @@
 public class IntersectionFourWay extends Intersection {
-    public IntersectionFourWay()
+    public IntersectionFourWay(int id)
     {
-        super();
+        super(id, "4-WayIntersection");
         for(Road.DIRECTION direction: Road.DIRECTION.values())
         {
             if(direction == Road.DIRECTION.DIRECTION_COUNT)

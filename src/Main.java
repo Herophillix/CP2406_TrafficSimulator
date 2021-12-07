@@ -2,13 +2,13 @@ public class Main {
     public static void main(String[] args) {
         Road[] roads = new Road[4];
 
-        IntersectionFourWay fourWay = new IntersectionFourWay();
+        IntersectionFourWay fourWay = new IntersectionFourWay(0);
         System.out.println("Intersection");
         fourWay.PrintIntersection();
 
         for(int i = 0; i < 4; ++i)
         {
-            Road newRoad = new Road(3, Road.DIRECTION.values()[i]);
+            Road newRoad = new Road(i,3, Road.DIRECTION.values()[i]);
             System.out.println("Road " + i + ", " + Road.DIRECTION.values()[i]);
             newRoad.PrintRoad();
             fourWay.ConnectRoad(newRoad, Road.DIRECTION.values()[i]);
@@ -23,9 +23,10 @@ public class Main {
         Car car = new Car(0, testSegment, 1);
 
         System.out.println("Car Movement");
-        for(int i = 0; i < 20; ++i)
+        for(int i = 0; i < 10; ++i)
         {
-            bus.Move();
+            car.Move();
+            car.PrintInformation();
         }
     }
 }

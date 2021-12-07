@@ -1,4 +1,4 @@
-public class Road {
+public class Road extends TrafficObject{
     public static final int MIN_LENGTH = 3;
     public enum DIRECTION {
         N, E, S, W, DIRECTION_COUNT;
@@ -10,19 +10,20 @@ public class Road {
 
     private int length;
     private Lane[] lanes;
-    public Road(int length, Road.DIRECTION direction)
+    public Road(int id, int length, Road.DIRECTION direction)
     {
+        super(id, "Road");
         this.length = MathUtility.Clamp(length, MIN_LENGTH, MIN_LENGTH * 5);
 
         lanes = new Lane[2];
         switch (direction) {
             case N, S -> {
-                lanes[0] = new Lane(this.length, DIRECTION.N);
-                lanes[1] = new Lane(this.length, DIRECTION.S);
+                lanes[0] = new Lane(0, this.length, DIRECTION.N);
+                lanes[1] = new Lane(1, this.length, DIRECTION.S);
             }
             case E, W -> {
-                lanes[0] = new Lane(this.length, DIRECTION.E);
-                lanes[1] = new Lane(this.length, DIRECTION.W);
+                lanes[0] = new Lane(0, this.length, DIRECTION.E);
+                lanes[1] = new Lane(1, this.length, DIRECTION.W);
             }
         }
     }

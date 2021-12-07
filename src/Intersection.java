@@ -1,8 +1,9 @@
-public abstract class Intersection {
+public abstract class Intersection extends TrafficObject{
     private RoadIntersection[] roadIntersections;
 
-    public Intersection()
+    public Intersection(int id, String name)
     {
+        super(id, name);
         roadIntersections = new RoadIntersection[Road.DIRECTION.DIRECTION_COUNT.ordinal()];
     }
 
