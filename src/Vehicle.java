@@ -66,7 +66,7 @@ public abstract class Vehicle extends TrafficObject{
                 ArrayList<Segment> availableSegments = new ArrayList<>();
                 for(Segment nextSegment : nextSegments)
                 {
-                    if(nextSegment.GetVehicleCount() == 0)
+                    if(nextSegment.IsSegmentAvailable())
                     {
                         availableSegments.add(nextSegment);
                     }

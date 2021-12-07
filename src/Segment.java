@@ -3,11 +3,17 @@ import java.util.ArrayList;
 public class Segment extends TrafficObject {
     private ArrayList<Vehicle> currentVehicles;
     private ArrayList<Segment> nextSegments;
+    private TrafficLight trafficLight;
 
     public Segment(int id, String name) {
         super(id, name + "Segment");
         this.currentVehicles = new ArrayList<>();
         this.nextSegments = new ArrayList<>();
+    }
+
+    public void AssignTrafficLight(TrafficLight trafficLight)
+    {
+        this.trafficLight = trafficLight;
     }
 
     public void AssignVehicle(Vehicle vehicle) {
@@ -30,8 +36,11 @@ public class Segment extends TrafficObject {
         nextSegments.add(nextSegment);
     }
 
-    public int GetVehicleCount() {
-        return currentVehicles.size();
+    public boolean IsSegmentAvailable() {
+        if(trafficLight != null)
+            return currentVehicles.size() == 0 && trafficLight.GetIsGreen();
+        else
+            return currentVehicles.size() == 0;
     }
 
     public ArrayList<Segment> GetNextSegments() {

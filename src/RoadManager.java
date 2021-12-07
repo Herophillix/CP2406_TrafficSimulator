@@ -16,7 +16,16 @@ public class RoadManager {
         Road toReturn = new Road(roads.size(), "", length, direction);
         if(toConnect != null)
         {
-            toConnect.Connect(toReturn);
+            switch (direction)
+            {
+                case NORTH, EAST -> {
+                    toConnect.Connect(toReturn);
+                }
+                case SOUTH, WEST -> {
+                    toReturn.Connect(toConnect);
+                }
+            }
+            //toConnect.Connect(toReturn);
         }
         roads.add(toReturn);
         return toReturn;
@@ -56,5 +65,13 @@ public class RoadManager {
         Random random = new Random();
         Road randomRoad = roads.get(random.nextInt(roads.size()));
         return randomRoad.GetRandomSegments(count);
+    }
+
+    public void Simulate()
+    {
+        for(Intersection intersection: intersections)
+        {
+            intersection.UpdateRoadIntersections();
+        }
     }
 }

@@ -11,6 +11,41 @@ public class Main {
         vehicleManager = new VehicleManager();
 
         System.out.println("Welcome to Traffic Simulator 1.0");
+        System.out.println("Would you like to use preset road?");
+        boolean usePresetRoad = GetBoolean();
+        if (usePresetRoad)
+        {
+            CreatePresetRoads();
+        }
+        else
+        {
+            CreateRoads();
+        }
+
+        CreateVehicles();
+
+        StartSimulation();
+    }
+
+    public static void CreatePresetRoads()
+    {
+        Road currentRoad = roadManager.AddRoad(5, Road.DIRECTION.EAST, null);
+
+        IntersectionFourWay fourWay = roadManager.AddFourWayIntersection(currentRoad);
+
+        for(int i = 0; i < Road.DIRECTION.DIRECTION_COUNT.ordinal(); ++i)
+        {
+            Road.DIRECTION tmpDirection = Road.DIRECTION.values()[i];
+            Road intersectionRoad = fourWay.GetRoad(tmpDirection);
+            if(intersectionRoad.GetConnectedRoad(tmpDirection) == null)
+            {
+                roadManager.AddRoad(5, intersectionRoad.GetDirection(), intersectionRoad);
+            }
+        }
+    }
+
+    public static void CreateRoads()
+    {
         System.out.println("Let's create your first road!");
         Road currentRoad = CreateRoadFromUser(null);
 
@@ -27,6 +62,31 @@ public class Main {
                 case 2 -> currentRoad = CreateFourWayIntersectionFromUser(currentRoad);
                 case 3 -> currentRoad = CreateThreeWayIntersectionFromUser(currentRoad);
                 case 4 -> isAddingRoad = false;
+            }
+        }
+    }
+
+    public static void CreateVehicles()
+    {
+        vehicleManager.AddCar(roadManager.GetRandomSegment(), 1);
+    }
+
+    public static void StartSimulation()
+    {
+
+        int time = 0;
+        System.out.print("Set time scale in milliseconds:");
+        int speedOfSim = scanner.nextInt();
+        while (vehicleManager.GetVehicleCount() > 0) {
+            //roadManager.Simulate();
+            vehicleManager.Simulate();
+
+            time = time + 1;
+            System.out.println(time + " Seconds have passed.\n");
+            try {
+                Thread.sleep(speedOfSim); // set speed of simulation.
+            } catch (InterruptedException sim) {
+                Thread.currentThread().interrupt();
             }
         }
     }
@@ -57,24 +117,18 @@ public class Main {
         IntersectionFourWay intersectionFourWay = roadManager.AddFourWayIntersection(previousRoad);
 
         System.out.println("Would you like to add a road at the end of each exit? ");
-        System.out.println("1)Yes\n2)No");
-        int addRoadChoice = scanner.nextInt();
-        switch (addRoadChoice)
+        boolean addRoad = GetBoolean();
+        if(addRoad)
         {
-            case 1 -> {
-                for(int i = 0; i < Road.DIRECTION.DIRECTION_COUNT.ordinal(); ++i)
+            for(int i = 0; i < Road.DIRECTION.DIRECTION_COUNT.ordinal(); ++i)
+            {
+                Road.DIRECTION tmpDirection = Road.DIRECTION.values()[i];
+                Road intersectionRoad = intersectionFourWay.GetRoad(tmpDirection);
+                if(intersectionRoad.GetConnectedRoad(tmpDirection) == null)
                 {
-                    Road.DIRECTION tmpDirection = Road.DIRECTION.values()[i];
-                    Road intersectionRoad = intersectionFourWay.GetRoad(tmpDirection);
-                    if(intersectionRoad.GetConnectedRoad(tmpDirection) == null)
-                    {
-                        System.out.println("Add road for " + Road.DIRECTION.values()[i].name() + " direction: ");
-                        CreateRoadFromUser(intersectionRoad);
-                    }
+                    System.out.println("Add road for " + tmpDirection.name() + " direction: ");
+                    CreateRoadFromUser(intersectionRoad);
                 }
-            }
-            case 2 -> {
-
             }
         }
 
@@ -126,24 +180,15 @@ public class Main {
         IntersectionThreeWay intersectionThreeWay = roadManager.AddThreeWayIntersection(directions, previousRoad);
 
         System.out.println("Would you like to add a road at the end of each exit? ");
-        System.out.println("1)Yes\n2)No");
-        int addRoadChoice = scanner.nextInt();
-        switch (addRoadChoice)
+        boolean addRoad = GetBoolean();
+        if(addRoad)
         {
-            case 1 -> {
-                for(int i = 0; i < directions.length; ++i)
-                {
-                    Road.DIRECTION tmpDirection = directions[i];
-                    Road intersectionRoad = intersectionThreeWay.GetRoad(tmpDirection);
-                    if(intersectionRoad.GetConnectedRoad(tmpDirection) == null)
-                    {
-                        System.out.println("Add road for " + directions[i].name() + " direction: ");
-                        CreateRoadFromUser(intersectionRoad);
-                    }
+            for (Road.DIRECTION tmpDirection : directions) {
+                Road intersectionRoad = intersectionThreeWay.GetRoad(tmpDirection);
+                if (intersectionRoad.GetConnectedRoad(tmpDirection) == null) {
+                    System.out.println("Add road for " + tmpDirection.name() + " direction: ");
+                    CreateRoadFromUser(intersectionRoad);
                 }
-            }
-            case 2 -> {
-
             }
         }
 
@@ -190,5 +235,28 @@ public class Main {
                 direction = Road.DIRECTION.values()[directionChoice - 1];
         }
         return direction;
+    }
+
+    public static boolean GetBoolean()
+    {
+        boolean isInputValid = false;
+        boolean userChoice = false;
+        while(!isInputValid)
+        {
+            System.out.println("1)Yes\n2)No");
+            System.out.println("Input: ");
+            int userInput = scanner.nextInt();
+            switch (userInput)
+            {
+                case 1 -> {
+                    isInputValid = true;
+                    userChoice = true;
+                }
+                case 2 -> {
+                    isInputValid = true;
+                }
+            }
+        }
+        return userChoice;
     }
 }

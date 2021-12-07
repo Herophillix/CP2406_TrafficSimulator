@@ -8,7 +8,9 @@ public class RoadIntersection {
     private Road.DIRECTION dirOutwardsIntersection;
     private Road road;
     private Segment[] straightSegment;
+    private TrafficLight straightTrafficLight;
     private Segment[] rightTurnSegment;
+    private TrafficLight rightTrafficLight;
     private Segment leftTurnSegment;
 
     public RoadIntersection(Road.DIRECTION direction, String name)
@@ -38,6 +40,10 @@ public class RoadIntersection {
             oldSegment = segment;
         }
         Collections.reverse(Arrays.asList(straightSegment));
+
+        straightTrafficLight = new TrafficLight(0, road.GetLane(Road.DIRECTION.OppositeDirection(dirOutwardsIntersection)).GetName() + "-Straight_");
+        straightSegment[0].AssignTrafficLight(straightTrafficLight);
+
         road.ConnectSegment(straightSegment[0], Lane.SEGMENT_POSITION.LAST, Road.DIRECTION.OppositeDirection(dirOutwardsIntersection));
     }
 
@@ -57,6 +63,10 @@ public class RoadIntersection {
             oldSegment = segment;
         }
         Collections.reverse(Arrays.asList(rightTurnSegment));
+
+        rightTrafficLight = new TrafficLight(0, road.GetLane(Road.DIRECTION.OppositeDirection(dirOutwardsIntersection)).GetName() + "-Right_");
+        rightTurnSegment[0].AssignTrafficLight(rightTrafficLight);
+
         road.ConnectSegment(rightTurnSegment[0], Lane.SEGMENT_POSITION.LAST, Road.DIRECTION.OppositeDirection(dirOutwardsIntersection));
 
     }
@@ -112,5 +122,13 @@ public class RoadIntersection {
                 }
                 break;
         }
+    }
+
+    public void UpdateTrafficLights()
+    {
+        if(straightTrafficLight != null)
+            straightTrafficLight.AddTick();
+        if(rightTrafficLight != null)
+            rightTrafficLight.AddTick();
     }
 }

@@ -57,13 +57,14 @@ public abstract class Intersection extends TrafficObject{
         return null;
     }
 
-    public void PrintIntersection()
+    public void UpdateRoadIntersections()
     {
-        for(int i = 0; i < roadIntersections.length; ++i)
+        for(RoadIntersection roadIntersection: roadIntersections)
         {
-            System.out.println("Direction: " + Road.DIRECTION.values()[i]);
-            roadIntersections[i].GetRoad().PrintRoad();
+            if(roadIntersection != null)
+            {
+                roadIntersection.UpdateTrafficLights();
+            }
         }
-        System.out.println();
     }
 }

@@ -8,6 +8,8 @@ public class VehicleManager {
         vehicles = new ArrayList<>();
     }
 
+    public int GetVehicleCount() { return vehicles.size(); }
+
     public Car AddCar(Segment currentSegment, int speed)
     {
         Car car = new Car(vehicles.size(), currentSegment, speed);
