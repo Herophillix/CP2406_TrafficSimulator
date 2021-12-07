@@ -45,6 +45,6 @@ public class IntersectionThreeWay extends Intersection{
 
             AddRoadIntersection(newRoad, direction);
         }
-        ConnectRoadIntersection();
+        InitializeRoadIntersectionConnections();
     }
 }

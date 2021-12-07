@@ -11,6 +11,6 @@ public class IntersectionFourWay extends Intersection {
 
             AddRoadIntersection(newRoad, direction);
         }
-        ConnectRoadIntersection();
+        InitializeRoadIntersectionConnections();
     }
 }

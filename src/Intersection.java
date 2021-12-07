@@ -14,7 +14,7 @@ public abstract class Intersection {
         roadIntersections[direction.ordinal()] = roadIntersection;
     }
 
-    public void ConnectRoadIntersection()
+    public void InitializeRoadIntersectionConnections()
     {
         for(RoadIntersection roadIntersection: roadIntersections)
         {
@@ -28,5 +28,10 @@ public abstract class Intersection {
                 roadIntersection.ConnectIncomingSegment(neighbouringRoadIntersection);
             }
         }
+    }
+
+    public void ConnectRoad(Road roadToConnect, Road.DIRECTION direction)
+    {
+        roadToConnect.Connect(roadIntersections[direction.ordinal()].GetRoad());
     }
 }

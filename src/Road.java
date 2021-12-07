@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class Road {
     public static final int MIN_LENGTH = 3;
     public enum DIRECTION {
@@ -29,15 +27,27 @@ public class Road {
         }
     }
 
-    public void Connect(Segment nextSegment, int position, Road.DIRECTION direction)
+    public void ConnectSegment(Segment nextSegment, Lane.SEGMENT_POSITION position, Road.DIRECTION direction)
     {
         for(Lane lane: lanes)
         {
             if(lane.GetDirection() == direction)
             {
-                lane.Connect(nextSegment, position);
+                lane.ConnectSegment(nextSegment, position);
                 break;
             }
+        }
+    }
+
+    public void Connect(Road roadToConnect)
+    {
+        if(lanes[0].GetDirection() == roadToConnect.lanes[0].GetDirection())
+        {
+            lanes[0].ConnectSegment(roadToConnect.lanes[0].GetSegment(Lane.SEGMENT_POSITION.FIRST), Lane.SEGMENT_POSITION.LAST);
+        }
+        if(lanes[1].GetDirection() == roadToConnect.lanes[1].GetDirection())
+        {
+            roadToConnect.lanes[1].ConnectSegment(lanes[1].GetSegment(Lane.SEGMENT_POSITION.FIRST), Lane.SEGMENT_POSITION.LAST);
         }
     }
 }

@@ -17,6 +17,8 @@ public class RoadIntersection {
         this.leftTurnSegment = null;
     }
 
+    public Road GetRoad() { return road; }
+
     public void AddStraightSegment()
     {
         if(this.straightSegment != null)
@@ -28,7 +30,7 @@ public class RoadIntersection {
             Segment segment = new Segment();
             if(i == 0)
             {
-                road.Connect(segment, 3, Road.DIRECTION.OppositeDirection(dirOutwardsIntersection));
+                road.ConnectSegment(segment, Lane.SEGMENT_POSITION.LAST, Road.DIRECTION.OppositeDirection(dirOutwardsIntersection));
             }
             this.straightSegment[i] = segment;
         }
@@ -45,7 +47,7 @@ public class RoadIntersection {
             Segment segment = new Segment();
             if(i == 0)
             {
-                road.Connect(segment, 3, Road.DIRECTION.OppositeDirection(dirOutwardsIntersection));
+                road.ConnectSegment(segment, Lane.SEGMENT_POSITION.LAST, Road.DIRECTION.OppositeDirection(dirOutwardsIntersection));
             }
             this.rightTurnSegment[i] = segment;
         }
@@ -57,7 +59,7 @@ public class RoadIntersection {
             return;
 
         Segment segment = new Segment();
-        road.Connect(segment, 2, Road.DIRECTION.OppositeDirection(dirOutwardsIntersection));
+        road.ConnectSegment(segment, Lane.SEGMENT_POSITION.SECOND_LAST, Road.DIRECTION.OppositeDirection(dirOutwardsIntersection));
         this.leftTurnSegment = segment;
     }
 
@@ -72,33 +74,33 @@ public class RoadIntersection {
             case N:
                 switch (otherRoad.dirOutwardsIntersection)
                 {
-                    case E -> { road.Connect(otherRoad.GetLastRightSegment(), 0, dirOutwardsIntersection); }
-                    case S -> { road.Connect(otherRoad.GetLastStraightSegment(), 0, dirOutwardsIntersection); }
-                    case W -> { road.Connect(otherRoad.GetLastLeftSegment(), 1, dirOutwardsIntersection); }
+                    case E -> { road.ConnectSegment(otherRoad.GetLastRightSegment(), Lane.SEGMENT_POSITION.FIRST, dirOutwardsIntersection); }
+                    case S -> { road.ConnectSegment(otherRoad.GetLastStraightSegment(), Lane.SEGMENT_POSITION.FIRST, dirOutwardsIntersection); }
+                    case W -> { road.ConnectSegment(otherRoad.GetLastLeftSegment(), Lane.SEGMENT_POSITION.SECOND, dirOutwardsIntersection); }
                 }
                 break;
             case E:
                 switch (otherRoad.dirOutwardsIntersection)
                 {
-                    case N -> { road.Connect(otherRoad.GetLastLeftSegment(), 1, dirOutwardsIntersection); }
-                    case S -> { road.Connect(otherRoad.GetLastRightSegment(), 0, dirOutwardsIntersection); }
-                    case W -> { road.Connect(otherRoad.GetLastStraightSegment(), 0, dirOutwardsIntersection); }
+                    case N -> { road.ConnectSegment(otherRoad.GetLastLeftSegment(), Lane.SEGMENT_POSITION.SECOND, dirOutwardsIntersection); }
+                    case S -> { road.ConnectSegment(otherRoad.GetLastRightSegment(), Lane.SEGMENT_POSITION.FIRST, dirOutwardsIntersection); }
+                    case W -> { road.ConnectSegment(otherRoad.GetLastStraightSegment(), Lane.SEGMENT_POSITION.FIRST, dirOutwardsIntersection); }
                 }
                 break;
             case S:
                 switch (otherRoad.dirOutwardsIntersection)
                 {
-                    case N -> { road.Connect(otherRoad.GetLastStraightSegment(), 0, dirOutwardsIntersection); }
-                    case E -> { road.Connect(otherRoad.GetLastLeftSegment(), 1, dirOutwardsIntersection); }
-                    case W -> { road.Connect(otherRoad.GetLastRightSegment(), 0, dirOutwardsIntersection); }
+                    case N -> { road.ConnectSegment(otherRoad.GetLastStraightSegment(), Lane.SEGMENT_POSITION.FIRST, dirOutwardsIntersection); }
+                    case E -> { road.ConnectSegment(otherRoad.GetLastLeftSegment(), Lane.SEGMENT_POSITION.SECOND, dirOutwardsIntersection); }
+                    case W -> { road.ConnectSegment(otherRoad.GetLastRightSegment(), Lane.SEGMENT_POSITION.FIRST, dirOutwardsIntersection); }
                 }
                 break;
             case W:
                 switch (otherRoad.dirOutwardsIntersection)
                 {
-                    case N -> { road.Connect(otherRoad.GetLastRightSegment(), 0, dirOutwardsIntersection); }
-                    case E -> { road.Connect(otherRoad.GetLastStraightSegment(), 0, dirOutwardsIntersection); }
-                    case S -> { road.Connect(otherRoad.GetLastLeftSegment(), 1, dirOutwardsIntersection); }
+                    case N -> { road.ConnectSegment(otherRoad.GetLastRightSegment(), Lane.SEGMENT_POSITION.FIRST, dirOutwardsIntersection); }
+                    case E -> { road.ConnectSegment(otherRoad.GetLastStraightSegment(), Lane.SEGMENT_POSITION.FIRST, dirOutwardsIntersection); }
+                    case S -> { road.ConnectSegment(otherRoad.GetLastLeftSegment(), Lane.SEGMENT_POSITION.SECOND, dirOutwardsIntersection); }
                 }
                 break;
         }

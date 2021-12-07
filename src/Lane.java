@@ -1,6 +1,13 @@
 import java.util.ArrayList;
 
 public class Lane {
+    public enum SEGMENT_POSITION {
+        FIRST,
+        SECOND,
+        SECOND_LAST,
+        LAST
+    }
+
     private Road.DIRECTION direction;
     private ArrayList<Segment> roadSegments;
 
@@ -21,15 +28,26 @@ public class Lane {
     }
 
     public Road.DIRECTION GetDirection() { return direction; }
-
-    public void Connect(Segment nextSegment, int position)
+    public Segment GetSegment(SEGMENT_POSITION position)
     {
         switch (position)
         {
-            case 0 -> { this.roadSegments.get(0).AddNextSegment(nextSegment); }
-            case 1 -> { this.roadSegments.get(1).AddNextSegment(nextSegment); }
-            case 2 -> { this.roadSegments.get(roadSegments.size() - 2).AddNextSegment(nextSegment); }
-            case 3 -> { this.roadSegments.get(roadSegments.size() - 1).AddNextSegment(nextSegment); }
+            case FIRST -> { return roadSegments.get(0); }
+            case SECOND -> { return roadSegments.get(1); }
+            case SECOND_LAST -> { return roadSegments.get(roadSegments.size() - 2); }
+            case LAST -> { return roadSegments.get(roadSegments.size() - 1); }
+            default -> { return  null; }
+        }
+    }
+
+    public void ConnectSegment(Segment nextSegment, SEGMENT_POSITION position)
+    {
+        switch (position)
+        {
+            case FIRST -> { this.roadSegments.get(0).AddNextSegment(nextSegment); }
+            case SECOND -> { this.roadSegments.get(1).AddNextSegment(nextSegment); }
+            case SECOND_LAST -> { this.roadSegments.get(roadSegments.size() - 2).AddNextSegment(nextSegment); }
+            case LAST -> { this.roadSegments.get(roadSegments.size() - 1).AddNextSegment(nextSegment); }
         }
     }
 }
