@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Lane {
     public enum SEGMENT_POSITION {
@@ -9,7 +10,7 @@ public class Lane {
     }
 
     private Road.DIRECTION direction;
-    private ArrayList<Segment> roadSegments;
+    protected ArrayList<Segment> roadSegments;
 
     public Lane(int length, Road.DIRECTION direction)
     {
@@ -25,6 +26,7 @@ public class Lane {
 
             oldSegment = newSegment;
         }
+        Collections.reverse(roadSegments);
     }
 
     public Road.DIRECTION GetDirection() { return direction; }

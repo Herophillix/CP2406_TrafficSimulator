@@ -62,6 +62,11 @@ public abstract class Vehicle {
                     availableSegments.add(nextSegment);
                 }
             }
+            if(availableSegments.size() == 0)
+            {
+                System.out.println("No available segments");
+                break;
+            }
             Random rand = new Random();
             Segment segmentToMove = availableSegments.get(rand.nextInt(availableSegments.size()));
             for(int j = 0; j < currentSegments.length; ++j)
@@ -70,6 +75,7 @@ public abstract class Vehicle {
                 oldSegment.RemoveVehicle(this);
                 currentSegments[j] = segmentToMove;
                 currentSegments[j].AssignVehicle(this);
+                System.out.println("Move from " + oldSegment.toString() + " to " + segmentToMove.toString());
                 segmentToMove = oldSegment;
             }
         }

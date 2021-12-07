@@ -26,7 +26,6 @@ public class Segment {
     public void AddNextSegment(Segment nextSegment) {
         if (nextSegments.contains(nextSegment) || nextSegment == null)
             return;
-
         nextSegments.add(nextSegment);
     }
 

@@ -34,4 +34,13 @@ public abstract class Intersection {
     {
         roadToConnect.Connect(roadIntersections[direction.ordinal()].GetRoad());
     }
+
+    public void PrintIntersection()
+    {
+        for(int i = 0; i < roadIntersections.length; ++i)
+        {
+            System.out.println("Direction: " + Road.DIRECTION.values()[i]);
+            roadIntersections[i].GetRoad().PrintRoad();
+        }
+    }
 }

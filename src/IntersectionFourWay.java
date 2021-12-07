@@ -4,6 +4,8 @@ public class IntersectionFourWay extends Intersection {
         super();
         for(Road.DIRECTION direction: Road.DIRECTION.values())
         {
+            if(direction == Road.DIRECTION.DIRECTION_COUNT)
+                continue;
             RoadIntersection newRoad = new RoadIntersection(direction);
             newRoad.AddStraightSegment();
             newRoad.AddRightSegment();
