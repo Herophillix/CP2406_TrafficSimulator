@@ -8,6 +8,7 @@ public abstract class TrafficObject {
     }
 
     public int GetID() { return id; }
+    public String GetName() { return name + "_" + id; }
 
     public void PrintInformation()
     {

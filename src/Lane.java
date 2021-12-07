@@ -10,18 +10,20 @@ public class Lane extends TrafficObject{
         LAST
     }
 
+    protected TrafficObject currentRoad;
     private Road.DIRECTION direction;
     protected ArrayList<Segment> roadSegments;
 
-    public Lane(int id, int length, Road.DIRECTION direction)
+    public Lane(int id, Road currentRoad, int length, Road.DIRECTION direction)
     {
-        super(id, "Lane");
+        super(id, direction.name() + "_Lane");
+        this.currentRoad = currentRoad;
         this.direction = direction;
         roadSegments = new ArrayList<>();
         Segment oldSegment = null;
         for(int i = 0; i < length; ++i)
         {
-            Segment newSegment = new Segment(i);
+            Segment newSegment = new Segment((length - 1) - i, this);
             newSegment.AddNextSegment(oldSegment);
 
             this.roadSegments.add(newSegment);

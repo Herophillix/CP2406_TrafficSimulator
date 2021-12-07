@@ -31,7 +31,7 @@ public class RoadIntersection {
         Segment oldSegment = null;
         for(int i = 0; i < STRAIGHT_LENGTH; ++i)
         {
-            Segment segment = new Segment(i);
+            Segment segment = new Segment((STRAIGHT_LENGTH - 1) - i, road.GetLane(Road.DIRECTION.OppositeDirection(dirOutwardsIntersection)));
             segment.AddNextSegment(oldSegment);
 
             this.straightSegment[i] = segment;
@@ -50,7 +50,7 @@ public class RoadIntersection {
         Segment oldSegment = null;
         for(int i = 0; i < RIGHT_LENGTH; ++i)
         {
-            Segment segment = new Segment(i);
+            Segment segment = new Segment((RIGHT_LENGTH - 1) - i, road.GetLane(Road.DIRECTION.OppositeDirection(dirOutwardsIntersection)));
             segment.AddNextSegment(oldSegment);
 
             this.rightTurnSegment[i] = segment;
@@ -66,7 +66,7 @@ public class RoadIntersection {
         if(this.leftTurnSegment != null)
             return;
 
-        Segment segment = new Segment(0);
+        Segment segment = new Segment(0, road.GetLane(Road.DIRECTION.OppositeDirection(dirOutwardsIntersection)));
         road.ConnectSegment(segment, Lane.SEGMENT_POSITION.SECOND_LAST, Road.DIRECTION.OppositeDirection(dirOutwardsIntersection));
         this.leftTurnSegment = segment;
     }
@@ -79,36 +79,36 @@ public class RoadIntersection {
     {
         switch (dirOutwardsIntersection)
         {
-            case N:
+            case NORTH:
                 switch (otherRoad.dirOutwardsIntersection)
                 {
-                    case E -> { otherRoad.GetLastRightSegment().AddNextSegment(road.GetLane(dirOutwardsIntersection).GetSegment(Lane.SEGMENT_POSITION.FIRST));}
-                    case S -> { otherRoad.GetLastStraightSegment().AddNextSegment(road.GetLane(dirOutwardsIntersection).GetSegment(Lane.SEGMENT_POSITION.FIRST)); }
-                    case W -> { otherRoad.GetLastLeftSegment().AddNextSegment(road.GetLane(dirOutwardsIntersection).GetSegment(Lane.SEGMENT_POSITION.SECOND));}
+                    case EAST -> { otherRoad.GetLastRightSegment().AddNextSegment(road.GetLane(dirOutwardsIntersection).GetSegment(Lane.SEGMENT_POSITION.FIRST));}
+                    case SOUTH -> { otherRoad.GetLastStraightSegment().AddNextSegment(road.GetLane(dirOutwardsIntersection).GetSegment(Lane.SEGMENT_POSITION.FIRST)); }
+                    case WEST -> { otherRoad.GetLastLeftSegment().AddNextSegment(road.GetLane(dirOutwardsIntersection).GetSegment(Lane.SEGMENT_POSITION.SECOND));}
                 }
                 break;
-            case E:
+            case EAST:
                 switch (otherRoad.dirOutwardsIntersection)
                 {
-                    case N -> { otherRoad.GetLastLeftSegment().AddNextSegment(road.GetLane(dirOutwardsIntersection).GetSegment(Lane.SEGMENT_POSITION.SECOND));}
-                    case S -> { otherRoad.GetLastRightSegment().AddNextSegment(road.GetLane(dirOutwardsIntersection).GetSegment(Lane.SEGMENT_POSITION.FIRST)); }
-                    case W -> { otherRoad.GetLastStraightSegment().AddNextSegment(road.GetLane(dirOutwardsIntersection).GetSegment(Lane.SEGMENT_POSITION.FIRST));}
+                    case NORTH -> { otherRoad.GetLastLeftSegment().AddNextSegment(road.GetLane(dirOutwardsIntersection).GetSegment(Lane.SEGMENT_POSITION.SECOND));}
+                    case SOUTH -> { otherRoad.GetLastRightSegment().AddNextSegment(road.GetLane(dirOutwardsIntersection).GetSegment(Lane.SEGMENT_POSITION.FIRST)); }
+                    case WEST -> { otherRoad.GetLastStraightSegment().AddNextSegment(road.GetLane(dirOutwardsIntersection).GetSegment(Lane.SEGMENT_POSITION.FIRST));}
                 }
                 break;
-            case S:
+            case SOUTH:
                 switch (otherRoad.dirOutwardsIntersection)
                 {
-                    case N -> { otherRoad.GetLastStraightSegment().AddNextSegment(road.GetLane(dirOutwardsIntersection).GetSegment(Lane.SEGMENT_POSITION.FIRST));}
-                    case E -> { otherRoad.GetLastLeftSegment().AddNextSegment(road.GetLane(dirOutwardsIntersection).GetSegment(Lane.SEGMENT_POSITION.SECOND)); }
-                    case W -> { otherRoad.GetLastRightSegment().AddNextSegment(road.GetLane(dirOutwardsIntersection).GetSegment(Lane.SEGMENT_POSITION.FIRST));}
+                    case NORTH -> { otherRoad.GetLastStraightSegment().AddNextSegment(road.GetLane(dirOutwardsIntersection).GetSegment(Lane.SEGMENT_POSITION.FIRST));}
+                    case EAST -> { otherRoad.GetLastLeftSegment().AddNextSegment(road.GetLane(dirOutwardsIntersection).GetSegment(Lane.SEGMENT_POSITION.SECOND)); }
+                    case WEST -> { otherRoad.GetLastRightSegment().AddNextSegment(road.GetLane(dirOutwardsIntersection).GetSegment(Lane.SEGMENT_POSITION.FIRST));}
                 }
                 break;
-            case W:
+            case WEST:
                 switch (otherRoad.dirOutwardsIntersection)
                 {
-                    case N -> { otherRoad.GetLastRightSegment().AddNextSegment(road.GetLane(dirOutwardsIntersection).GetSegment(Lane.SEGMENT_POSITION.FIRST));}
-                    case E -> { otherRoad.GetLastStraightSegment().AddNextSegment(road.GetLane(dirOutwardsIntersection).GetSegment(Lane.SEGMENT_POSITION.FIRST)); }
-                    case S -> { otherRoad.GetLastLeftSegment().AddNextSegment(road.GetLane(dirOutwardsIntersection).GetSegment(Lane.SEGMENT_POSITION.FIRST));}
+                    case NORTH -> { otherRoad.GetLastRightSegment().AddNextSegment(road.GetLane(dirOutwardsIntersection).GetSegment(Lane.SEGMENT_POSITION.FIRST));}
+                    case EAST -> { otherRoad.GetLastStraightSegment().AddNextSegment(road.GetLane(dirOutwardsIntersection).GetSegment(Lane.SEGMENT_POSITION.FIRST)); }
+                    case SOUTH -> { otherRoad.GetLastLeftSegment().AddNextSegment(road.GetLane(dirOutwardsIntersection).GetSegment(Lane.SEGMENT_POSITION.FIRST));}
                 }
                 break;
         }
