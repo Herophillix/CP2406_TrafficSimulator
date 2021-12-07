@@ -1,28 +1,29 @@
 public class Main {
     public static void main(String[] args) {
-        Road road = new Road(10, Road.DIRECTION.E);
-        System.out.println("Road 1");
-        road.PrintRoad();
-        Segment testSegment = road.GetRandomSegment();
-        Car car = new Car(0, testSegment, 1);
-
-        //Road road2 = new Road(10, Road.DIRECTION.E);
-        //System.out.println("Road 2");
-        //road2.PrintRoad();
-
-        //road.Connect(road2);
+        Road[] roads = new Road[4];
 
         IntersectionFourWay fourWay = new IntersectionFourWay();
-        fourWay.ConnectRoad(road, Road.DIRECTION.W);
+        System.out.println("Intersection");
         fourWay.PrintIntersection();
+        System.out.println("");
+
+        for(int i = 0; i < 4; ++i)
+        {
+            Road newRoad = new Road(3, Road.DIRECTION.values()[i]);
+            System.out.println("Road " + i + ", " + Road.DIRECTION.values()[i]);
+            newRoad.PrintRoad();
+            System.out.println("");
+            fourWay.ConnectRoad(newRoad, Road.DIRECTION.OppositeDirection(Road.DIRECTION.values()[i]));
+
+            roads[i] = newRoad;
+        }
+
+        Segment testSegment = roads[0].GetRandomSegment();
+        Car car = new Car(0, testSegment, 1);
 
         System.out.println("Car Movement");
         for(int i = 0; i < 20; ++i)
         {
-            if(i == 12)
-            {
-                System.out.println();
-            }
             car.Move();
         }
     }

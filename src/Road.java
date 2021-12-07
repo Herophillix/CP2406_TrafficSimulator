@@ -4,7 +4,7 @@ public class Road {
         N, E, S, W, DIRECTION_COUNT;
         public static DIRECTION OppositeDirection(DIRECTION direction)
         {
-            return DIRECTION.values()[(direction.ordinal() + 2) % (DIRECTION_COUNT.ordinal() - 1)];
+            return DIRECTION.values()[(direction.ordinal() + 2) % DIRECTION_COUNT.ordinal()];
         }
     }
 
@@ -49,6 +49,18 @@ public class Road {
         {
             roadToConnect.lanes[1].ConnectSegment(lanes[1].GetSegment(Lane.SEGMENT_POSITION.FIRST), Lane.SEGMENT_POSITION.LAST);
         }
+    }
+
+    public Lane GetLane(Road.DIRECTION direction)
+    {
+        for(Lane lane: lanes)
+        {
+            if(lane.GetDirection() == direction)
+            {
+                return lane;
+            }
+        }
+        return null;
     }
 
     public Segment GetRandomSegment()
