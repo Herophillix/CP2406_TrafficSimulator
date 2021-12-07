@@ -1,4 +1,4 @@
-public class Vehicle {
+public abstract class Vehicle {
     private int id;
     private float length;
     private float breadth;
