@@ -12,32 +12,32 @@ public class IntersectionThreeWay extends Intersection{
 
                 switch (direction)
                 {
-                    case N:
+                    case NORTH:
                         switch (otherDirection) {
-                            case E -> newRoad.AddLeftSegment();
-                            case S -> newRoad.AddStraightSegment();
-                            case W -> newRoad.AddRightSegment();
+                            case EAST -> newRoad.AddLeftSegment();
+                            case SOUTH -> newRoad.AddStraightSegment();
+                            case WEST -> newRoad.AddRightSegment();
                         }
                         break;
-                    case E:
+                    case EAST:
                         switch (otherDirection) {
-                            case N -> newRoad.AddRightSegment();
-                            case S -> newRoad.AddLeftSegment();
-                            case W -> newRoad.AddStraightSegment();
+                            case NORTH -> newRoad.AddRightSegment();
+                            case SOUTH -> newRoad.AddLeftSegment();
+                            case WEST -> newRoad.AddStraightSegment();
                         }
                         break;
-                    case S:
+                    case SOUTH:
                         switch (otherDirection) {
-                            case N -> newRoad.AddStraightSegment();
-                            case E -> newRoad.AddRightSegment();
-                            case W -> newRoad.AddLeftSegment();
+                            case NORTH -> newRoad.AddStraightSegment();
+                            case EAST -> newRoad.AddRightSegment();
+                            case WEST -> newRoad.AddLeftSegment();
                         }
                         break;
-                    case W:
+                    case WEST:
                         switch (otherDirection) {
-                            case N -> newRoad.AddLeftSegment();
-                            case E -> newRoad.AddStraightSegment();
-                            case S -> newRoad.AddRightSegment();
+                            case NORTH -> newRoad.AddLeftSegment();
+                            case EAST -> newRoad.AddStraightSegment();
+                            case SOUTH -> newRoad.AddRightSegment();
                         }
                         break;
                 }

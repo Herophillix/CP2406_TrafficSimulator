@@ -37,10 +37,10 @@ public abstract class Intersection extends TrafficObject{
         {
             switch (direction)
             {
-                case N, E -> {
+                case NORTH, EAST -> {
                     roadIntersections[direction.ordinal()].GetRoad().Connect(roadToConnect);
                 }
-                case S, W -> {
+                case SOUTH, WEST -> {
                     roadToConnect.Connect(roadIntersections[direction.ordinal()].GetRoad());
                 }
             }

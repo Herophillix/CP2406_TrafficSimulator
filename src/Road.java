@@ -1,7 +1,7 @@
 public class Road extends TrafficObject{
     public static final int MIN_LENGTH = 3;
     public enum DIRECTION {
-        N, E, S, W, DIRECTION_COUNT;
+        NORTH, EAST, SOUTH, WEST, DIRECTION_COUNT;
         public static DIRECTION OppositeDirection(DIRECTION direction)
         {
             return DIRECTION.values()[(direction.ordinal() + 2) % DIRECTION_COUNT.ordinal()];
@@ -17,13 +17,13 @@ public class Road extends TrafficObject{
 
         lanes = new Lane[2];
         switch (direction) {
-            case N, S -> {
-                lanes[0] = new Lane(0, this.length, DIRECTION.N);
-                lanes[1] = new Lane(1, this.length, DIRECTION.S);
+            case NORTH, SOUTH -> {
+                lanes[0] = new Lane(0, this, this.length, DIRECTION.NORTH);
+                lanes[1] = new Lane(1, this, this.length, DIRECTION.SOUTH);
             }
-            case E, W -> {
-                lanes[0] = new Lane(0, this.length, DIRECTION.E);
-                lanes[1] = new Lane(1, this.length, DIRECTION.W);
+            case EAST, WEST -> {
+                lanes[0] = new Lane(0, this, this.length, DIRECTION.EAST);
+                lanes[1] = new Lane(1, this, this.length, DIRECTION.WEST);
             }
         }
     }
