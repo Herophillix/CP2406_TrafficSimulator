@@ -73,12 +73,12 @@ public class Road extends TrafficObject{
 
     public Segment GetRandomSegment()
     {
-        return lanes[0].GetSegment(Lane.SEGMENT_POSITION.FIRST);
+        return lanes[(int)Math.round(Math.random())].GetSegment(Lane.SEGMENT_POSITION.values()[(int)Math.ceil(Math.random() * Lane.SEGMENT_POSITION.LAST.ordinal() - 1)]);
     }
 
     public Segment[] GetRandomSegments(int count)
     {
-        return lanes[0].GetSegments(Lane.SEGMENT_POSITION.FIRST, count);
+        return lanes[(int)Math.round(Math.random())].GetSegments(Lane.SEGMENT_POSITION.FIRST, MathUtility.Clamp(count, 1, 3));
     }
 
     public void PrintRoad()

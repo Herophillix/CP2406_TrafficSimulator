@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public class RoadManager {
     private ArrayList<Road> roads;
@@ -41,5 +42,19 @@ public class RoadManager {
         }
         intersections.add(toReturn);
         return toReturn;
+    }
+
+    public Segment GetRandomSegment()
+    {
+        Random random = new Random();
+        Road randomRoad = roads.get(random.nextInt(roads.size()));
+        return randomRoad.GetRandomSegment();
+    }
+
+    public Segment[] GetRandomSegments(int count)
+    {
+        Random random = new Random();
+        Road randomRoad = roads.get(random.nextInt(roads.size()));
+        return randomRoad.GetRandomSegments(count);
     }
 }

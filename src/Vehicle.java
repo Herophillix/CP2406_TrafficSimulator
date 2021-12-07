@@ -38,13 +38,13 @@ public abstract class Vehicle extends TrafficObject{
         this.currentSegments = currentSegments;
     }
 
-    public void Move()
+    public boolean Move()
     {
         for(int i = 0; i < speed; ++i)
         {
             Segment firstSegment = currentSegments[0];
             if(firstSegment == null) {
-                return;
+                return false;
             }
 
             ArrayList<Segment> nextSegments = firstSegment.GetNextSegments();
@@ -86,19 +86,16 @@ public abstract class Vehicle extends TrafficObject{
                 }
             }
         }
+        return true;
     }
 
     @Override
     public void PrintInformation()
     {
-        for(int i = 0; i < currentSegments.length; ++i)
+        Segment segment = currentSegments[0];
+        if(segment != null)
         {
-            System.out.print(GetName() + " ");
-            Segment segment = currentSegments[i];
-            if(segment != null)
-            {
-                System.out.println("Body " + i + " on " + segment.GetName());
-            }
+            System.out.println(GetName() + " on " + segment.GetName());
         }
     }
 }
