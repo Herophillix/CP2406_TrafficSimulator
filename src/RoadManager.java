@@ -15,7 +15,7 @@ public class RoadManager {
         Road toReturn = new Road(roads.size(), "", length, direction);
         if(toConnect != null)
         {
-            toReturn.Connect(toConnect);
+            toConnect.Connect(toReturn);
         }
         roads.add(toReturn);
         return toReturn;

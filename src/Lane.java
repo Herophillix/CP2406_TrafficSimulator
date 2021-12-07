@@ -13,6 +13,7 @@ public class Lane extends TrafficObject{
     protected TrafficObject currentRoad;
     private Road.DIRECTION direction;
     protected ArrayList<Segment> roadSegments;
+    private Road connectedRoad;
 
     public Lane(int id, String name, int length, Road.DIRECTION direction)
     {
@@ -55,9 +56,11 @@ public class Lane extends TrafficObject{
         Collections.reverse(Arrays.asList(toReturn));
         return toReturn;
     }
+    public Road GetConnectedRoad() { return connectedRoad; }
 
-    public void ConnectSegment(Segment nextSegment, SEGMENT_POSITION position)
+    public void ConnectSegment(Road road, Segment nextSegment, SEGMENT_POSITION position)
     {
+        connectedRoad = road == null ? connectedRoad : road;
         switch (position)
         {
             case FIRST -> { this.roadSegments.get(0).AddNextSegment(nextSegment); }

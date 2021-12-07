@@ -72,7 +72,7 @@ public class RoadIntersection {
     }
 
     public Segment GetLastStraightSegment() { return straightSegment[straightSegment.length - 1]; }
-    public Segment GetLastRightSegment() { return rightTurnSegment[straightSegment.length - 1]; }
+    public Segment GetLastRightSegment() { return rightTurnSegment[rightTurnSegment.length - 1]; }
     public Segment GetLastLeftSegment() { return leftTurnSegment; }
 
     public void ConnectIncomingSegment(RoadIntersection otherRoad)

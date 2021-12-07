@@ -11,6 +11,7 @@ public class Road extends TrafficObject{
     private int length;
     private Road.DIRECTION direction;
     private Lane[] lanes;
+
     public Road(int id, String name, int length, Road.DIRECTION direction)
     {
         super(id, name + "Road");
@@ -30,30 +31,6 @@ public class Road extends TrafficObject{
         }
     }
 
-    public void ConnectSegment(Segment nextSegment, Lane.SEGMENT_POSITION position, Road.DIRECTION direction)
-    {
-        for(Lane lane: lanes)
-        {
-            if(lane.GetDirection() == direction)
-            {
-                lane.ConnectSegment(nextSegment, position);
-                break;
-            }
-        }
-    }
-
-    public void Connect(Road roadToConnect)
-    {
-        if(lanes[0].GetDirection() == roadToConnect.lanes[0].GetDirection())
-        {
-            lanes[0].ConnectSegment(roadToConnect.lanes[0].GetSegment(Lane.SEGMENT_POSITION.FIRST), Lane.SEGMENT_POSITION.LAST);
-        }
-        if(lanes[1].GetDirection() == roadToConnect.lanes[1].GetDirection())
-        {
-            roadToConnect.lanes[1].ConnectSegment(lanes[1].GetSegment(Lane.SEGMENT_POSITION.FIRST), Lane.SEGMENT_POSITION.LAST);
-        }
-    }
-
     public DIRECTION GetDirection() { return this.direction; }
 
     public Lane GetLane(Road.DIRECTION direction)
@@ -66,6 +43,32 @@ public class Road extends TrafficObject{
             }
         }
         return null;
+    }
+
+    public Road GetConnectedRoad(DIRECTION direction) { return lanes[direction.ordinal() / 2].GetConnectedRoad(); }
+
+    public void ConnectSegment(Segment nextSegment, Lane.SEGMENT_POSITION position, Road.DIRECTION direction)
+    {
+        for(Lane lane: lanes)
+        {
+            if(lane.GetDirection() == direction)
+            {
+                lane.ConnectSegment(null, nextSegment, position);
+                break;
+            }
+        }
+    }
+
+    public void Connect(Road roadToConnect)
+    {
+        if(lanes[0].GetDirection() == roadToConnect.lanes[0].GetDirection())
+        {
+            lanes[0].ConnectSegment(roadToConnect, roadToConnect.lanes[0].GetSegment(Lane.SEGMENT_POSITION.FIRST), Lane.SEGMENT_POSITION.LAST);
+        }
+        if(lanes[1].GetDirection() == roadToConnect.lanes[1].GetDirection())
+        {
+            roadToConnect.lanes[1].ConnectSegment(roadToConnect, lanes[1].GetSegment(Lane.SEGMENT_POSITION.FIRST), Lane.SEGMENT_POSITION.LAST);
+        }
     }
 
     public Segment GetRandomSegment()
