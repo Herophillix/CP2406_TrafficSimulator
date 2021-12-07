@@ -9,7 +9,7 @@ public class IntersectionFourWay extends Intersection {
             newRoad.AddRightSegment();
             newRoad.AddLeftSegment();
 
-            AddIntersectionRoad(newRoad, direction);
+            AddRoadIntersection(newRoad, direction);
         }
     }
 }

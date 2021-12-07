@@ -2,6 +2,7 @@ public class RoadIntersection {
     private final int STRAIGHT_LENGTH = 2;
     private final int RIGHT_LENGTH = 2;
 
+    private Road.DIRECTION dirOutwardsIntersection;
     private Road road;
     private Segment[] straightSegment;
     private Segment[] rightTurnSegment;
@@ -9,6 +10,7 @@ public class RoadIntersection {
 
     public RoadIntersection(Road.DIRECTION direction)
     {
+        this.dirOutwardsIntersection = direction;
         this.road = new Road(Road.MIN_LENGTH, direction);
         this.straightSegment = null;
         this.rightTurnSegment = null;
@@ -23,7 +25,12 @@ public class RoadIntersection {
         this.straightSegment = new Segment[STRAIGHT_LENGTH];
         for(int i = 0; i < STRAIGHT_LENGTH; ++i)
         {
-            this.straightSegment[i] = new Segment();
+            Segment segment = new Segment();
+            if(i == 0)
+            {
+                road.Connect(segment, Road.DIRECTION.OppositeDirection(dirOutwardsIntersection));
+            }
+            this.straightSegment[i] = segment;
         }
     }
 
@@ -35,7 +42,12 @@ public class RoadIntersection {
         this.rightTurnSegment = new Segment[RIGHT_LENGTH];
         for(int i = 0; i < RIGHT_LENGTH; ++i)
         {
-            this.rightTurnSegment[i] = new Segment();
+            Segment segment = new Segment();
+            if(i == 0)
+            {
+                road.Connect(segment, Road.DIRECTION.OppositeDirection(dirOutwardsIntersection));
+            }
+            this.rightTurnSegment[i] = segment;
         }
     }
 
@@ -44,6 +56,13 @@ public class RoadIntersection {
         if(this.leftTurnSegment != null)
             return;
 
-        this.leftTurnSegment = new Segment();
+        Segment segment = new Segment();
+        road.Connect(segment, Road.DIRECTION.OppositeDirection(dirOutwardsIntersection));
+        this.leftTurnSegment = segment;
     }
+
+    public Segment GetLastStraightSegment() { return straightSegment[straightSegment.length - 1]; }
+    public Segment GetLastRightSegment() { return straightSegment[straightSegment.length - 1]; }
+    public Segment GetLastLeftSegment() { return straightSegment[straightSegment.length - 1]; }
+
 }

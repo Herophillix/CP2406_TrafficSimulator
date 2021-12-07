@@ -42,6 +42,8 @@ public class IntersectionThreeWay extends Intersection{
                         break;
                 }
             }
+
+            AddRoadIntersection(newRoad, direction);
         }
     }
 }

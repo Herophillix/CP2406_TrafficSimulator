@@ -22,4 +22,12 @@ public class Segment {
             currentVehicles.add(vehicle);
         }
     }
+
+    public void AddNextSegment(Segment nextSegment)
+    {
+        if(nextSegments.contains(nextSegment) || nextSegment == null)
+            return;
+
+        nextSegments.add(nextSegment);
+    }
 }
