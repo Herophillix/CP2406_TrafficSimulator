@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 
 public class Road {
-    private final int MIN_LENGTH = 3;
-    public enum DIRECTION { N, E, S, W }
+    public static final int MIN_LENGTH = 3;
+    public enum DIRECTION { N, E, S, W, DIRECTION_COUNT }
 
     private int length;
     private ArrayList<Lane> lanes;

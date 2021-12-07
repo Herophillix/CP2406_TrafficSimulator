@@ -1,11 +1,13 @@
 import java.util.ArrayList;
 
-public class RoadSegment {
+public class Segment {
     private ArrayList<Vehicle> currentVehicles;
+    private ArrayList<Segment> nextSegments;
 
-    public RoadSegment()
+    public Segment()
     {
         this.currentVehicles = new ArrayList<>();
+        this.nextSegments = new ArrayList<>();
     }
 
     public void AssignVehicle(Vehicle vehicle)

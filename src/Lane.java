@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Lane {
     private Road.DIRECTION direction;
-    private ArrayList<RoadSegment> roadSegments;
+    private ArrayList<Segment> roadSegments;
 
     public Lane(int length, Road.DIRECTION direction)
     {
@@ -10,7 +10,7 @@ public class Lane {
         roadSegments = new ArrayList<>();
         for(int i = 0; i < length; ++i)
         {
-            this.roadSegments.add(new RoadSegment());
+            this.roadSegments.add(new Segment());
         }
     }
 }
