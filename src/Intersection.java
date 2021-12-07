@@ -31,8 +31,9 @@ public abstract class Intersection extends TrafficObject{
         }
     }
 
-    public void ConnectRoad(Road roadToConnect, Road.DIRECTION direction)
+    public void ConnectRoad(Road roadToConnect)
     {
+        Road.DIRECTION direction = Road.DIRECTION.OppositeDirection(roadToConnect.GetDirection());
         if(roadIntersections[direction.ordinal()] != null)
         {
             switch (direction)
@@ -45,6 +46,15 @@ public abstract class Intersection extends TrafficObject{
                 }
             }
         }
+    }
+
+    public Road GetRoad(Road.DIRECTION direction)
+    {
+        if(roadIntersections[direction.ordinal()] != null)
+        {
+            return roadIntersections[direction.ordinal()].GetRoad();
+        }
+        return null;
     }
 
     public void PrintIntersection()

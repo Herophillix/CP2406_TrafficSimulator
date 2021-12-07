@@ -91,15 +91,13 @@ public abstract class Vehicle extends TrafficObject{
     @Override
     public void PrintInformation()
     {
-        System.out.print(GetName() + " ");
         for(int i = 0; i < currentSegments.length; ++i)
         {
+            System.out.print(GetName() + " ");
             Segment segment = currentSegments[i];
             if(segment != null)
             {
-                Lane lane = segment.currentLane;
-                TrafficObject road = lane.currentRoad;
-                System.out.println("Body " + i + " on " + road.GetName() + ", " + lane.GetName() + " on " + segment.GetName());
+                System.out.println("Body " + i + " on " + segment.GetName());
             }
         }
     }

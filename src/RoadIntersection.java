@@ -11,10 +11,10 @@ public class RoadIntersection {
     private Segment[] rightTurnSegment;
     private Segment leftTurnSegment;
 
-    public RoadIntersection(Road.DIRECTION direction)
+    public RoadIntersection(Road.DIRECTION direction, String name)
     {
         this.dirOutwardsIntersection = direction;
-        this.road = new Road(direction.ordinal(), Road.MIN_LENGTH, direction);
+        this.road = new Road(direction.ordinal(), name + direction + "_", Road.MIN_LENGTH, direction);
         this.straightSegment = null;
         this.rightTurnSegment = null;
         this.leftTurnSegment = null;
@@ -31,7 +31,7 @@ public class RoadIntersection {
         Segment oldSegment = null;
         for(int i = 0; i < STRAIGHT_LENGTH; ++i)
         {
-            Segment segment = new Segment((STRAIGHT_LENGTH - 1) - i, road.GetLane(Road.DIRECTION.OppositeDirection(dirOutwardsIntersection)));
+            Segment segment = new Segment((STRAIGHT_LENGTH - 1) - i, road.GetLane(Road.DIRECTION.OppositeDirection(dirOutwardsIntersection)).GetName() + "-Straight_");
             segment.AddNextSegment(oldSegment);
 
             this.straightSegment[i] = segment;
@@ -50,7 +50,7 @@ public class RoadIntersection {
         Segment oldSegment = null;
         for(int i = 0; i < RIGHT_LENGTH; ++i)
         {
-            Segment segment = new Segment((RIGHT_LENGTH - 1) - i, road.GetLane(Road.DIRECTION.OppositeDirection(dirOutwardsIntersection)));
+            Segment segment = new Segment((RIGHT_LENGTH - 1) - i, road.GetLane(Road.DIRECTION.OppositeDirection(dirOutwardsIntersection)).GetName() + "-Right");
             segment.AddNextSegment(oldSegment);
 
             this.rightTurnSegment[i] = segment;
@@ -66,7 +66,7 @@ public class RoadIntersection {
         if(this.leftTurnSegment != null)
             return;
 
-        Segment segment = new Segment(0, road.GetLane(Road.DIRECTION.OppositeDirection(dirOutwardsIntersection)));
+        Segment segment = new Segment(0, road.GetLane(Road.DIRECTION.OppositeDirection(dirOutwardsIntersection)).GetName() + "-Left");
         road.ConnectSegment(segment, Lane.SEGMENT_POSITION.SECOND_LAST, Road.DIRECTION.OppositeDirection(dirOutwardsIntersection));
         this.leftTurnSegment = segment;
     }

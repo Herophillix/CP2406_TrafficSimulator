@@ -9,21 +9,23 @@ public class Road extends TrafficObject{
     }
 
     private int length;
+    private Road.DIRECTION direction;
     private Lane[] lanes;
-    public Road(int id, int length, Road.DIRECTION direction)
+    public Road(int id, String name, int length, Road.DIRECTION direction)
     {
-        super(id, "Road");
+        super(id, name + "Road");
         this.length = MathUtility.Clamp(length, MIN_LENGTH, MIN_LENGTH * 5);
+        this.direction = direction;
 
         lanes = new Lane[2];
         switch (direction) {
             case NORTH, SOUTH -> {
-                lanes[0] = new Lane(0, this, this.length, DIRECTION.NORTH);
-                lanes[1] = new Lane(1, this, this.length, DIRECTION.SOUTH);
+                lanes[0] = new Lane(0, GetName(), this.length, DIRECTION.NORTH);
+                lanes[1] = new Lane(1, GetName(), this.length, DIRECTION.SOUTH);
             }
             case EAST, WEST -> {
-                lanes[0] = new Lane(0, this, this.length, DIRECTION.EAST);
-                lanes[1] = new Lane(1, this, this.length, DIRECTION.WEST);
+                lanes[0] = new Lane(0, GetName(), this.length, DIRECTION.EAST);
+                lanes[1] = new Lane(1, GetName(), this.length, DIRECTION.WEST);
             }
         }
     }
@@ -51,6 +53,8 @@ public class Road extends TrafficObject{
             roadToConnect.lanes[1].ConnectSegment(lanes[1].GetSegment(Lane.SEGMENT_POSITION.FIRST), Lane.SEGMENT_POSITION.LAST);
         }
     }
+
+    public DIRECTION GetDirection() { return this.direction; }
 
     public Lane GetLane(Road.DIRECTION direction)
     {

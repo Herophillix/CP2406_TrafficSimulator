@@ -14,16 +14,16 @@ public class Lane extends TrafficObject{
     private Road.DIRECTION direction;
     protected ArrayList<Segment> roadSegments;
 
-    public Lane(int id, Road currentRoad, int length, Road.DIRECTION direction)
+    public Lane(int id, String name, int length, Road.DIRECTION direction)
     {
-        super(id, direction.name() + "_Lane");
+        super(id, name + "-" + direction.name() + "_Lane");
         this.currentRoad = currentRoad;
         this.direction = direction;
         roadSegments = new ArrayList<>();
         Segment oldSegment = null;
         for(int i = 0; i < length; ++i)
         {
-            Segment newSegment = new Segment((length - 1) - i, this);
+            Segment newSegment = new Segment((length - 1) - i, GetName() + "-");
             newSegment.AddNextSegment(oldSegment);
 
             this.roadSegments.add(newSegment);
