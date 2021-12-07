@@ -68,11 +68,17 @@ public class Road {
         return lanes[0].GetSegment(Lane.SEGMENT_POSITION.FIRST);
     }
 
+    public Segment[] GetRandomSegments(int count)
+    {
+        return lanes[0].GetSegments(Lane.SEGMENT_POSITION.FIRST, count);
+    }
+
     public void PrintRoad()
     {
         for(int i = 0; i < length; ++i)
         {
             System.out.println("Segment " + i +": " + lanes[0].roadSegments.get(i).toString() + "," + lanes[1].roadSegments.get(i).toString());
         }
+        System.out.println();
     }
 }

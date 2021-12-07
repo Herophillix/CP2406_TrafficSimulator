@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 public class Lane {
@@ -40,6 +41,16 @@ public class Lane {
             case LAST -> { return roadSegments.get(roadSegments.size() - 1); }
             default -> { return  null; }
         }
+    }
+    public Segment[] GetSegments(SEGMENT_POSITION position, int count)
+    {
+        Segment[] toReturn = new Segment[count];
+        for(int i = 0; i < count; ++i)
+        {
+            toReturn[i] = roadSegments.get(i);
+        }
+        Collections.reverse(Arrays.asList(toReturn));
+        return toReturn;
     }
 
     public void ConnectSegment(Segment nextSegment, SEGMENT_POSITION position)

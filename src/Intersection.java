@@ -32,7 +32,18 @@ public abstract class Intersection {
 
     public void ConnectRoad(Road roadToConnect, Road.DIRECTION direction)
     {
-        roadToConnect.Connect(roadIntersections[direction.ordinal()].GetRoad());
+        if(roadIntersections[direction.ordinal()] != null)
+        {
+            switch (direction)
+            {
+                case N, E -> {
+                    roadIntersections[direction.ordinal()].GetRoad().Connect(roadToConnect);
+                }
+                case S, W -> {
+                    roadToConnect.Connect(roadIntersections[direction.ordinal()].GetRoad());
+                }
+            }
+        }
     }
 
     public void PrintIntersection()
@@ -42,5 +53,6 @@ public abstract class Intersection {
             System.out.println("Direction: " + Road.DIRECTION.values()[i]);
             roadIntersections[i].GetRoad().PrintRoad();
         }
+        System.out.println();
     }
 }

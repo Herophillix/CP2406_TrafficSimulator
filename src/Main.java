@@ -5,26 +5,27 @@ public class Main {
         IntersectionFourWay fourWay = new IntersectionFourWay();
         System.out.println("Intersection");
         fourWay.PrintIntersection();
-        System.out.println("");
 
         for(int i = 0; i < 4; ++i)
         {
             Road newRoad = new Road(3, Road.DIRECTION.values()[i]);
             System.out.println("Road " + i + ", " + Road.DIRECTION.values()[i]);
             newRoad.PrintRoad();
-            System.out.println("");
-            fourWay.ConnectRoad(newRoad, Road.DIRECTION.OppositeDirection(Road.DIRECTION.values()[i]));
+            fourWay.ConnectRoad(newRoad, Road.DIRECTION.values()[i]);
 
             roads[i] = newRoad;
         }
+//        Road testRoad = new Road(10, Road.DIRECTION.E);
+//        testRoad.PrintRoad();
 
-        Segment testSegment = roads[0].GetRandomSegment();
+        Segment testSegment = roads[2].GetRandomSegment();
+        Bus bus = new Bus(0, roads[2].GetRandomSegments(3), 1);
         Car car = new Car(0, testSegment, 1);
 
         System.out.println("Car Movement");
         for(int i = 0; i < 20; ++i)
         {
-            car.Move();
+            bus.Move();
         }
     }
 }

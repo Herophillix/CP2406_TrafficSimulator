@@ -53,31 +53,56 @@ public abstract class Vehicle {
         for(int i = 0; i < speed; ++i)
         {
             Segment firstSegment = currentSegments[0];
+            if(firstSegment == null) {
+                System.out.println("No more");
+                return;
+            }
+
             ArrayList<Segment> nextSegments = firstSegment.GetNextSegments();
-            ArrayList<Segment> availableSegments = new ArrayList<>();
-            for(Segment nextSegment : nextSegments)
+
+            if(nextSegments.size() == 0)
             {
-                if(nextSegment.GetVehicleCount() == 0)
+                for(int j = currentSegments.length - 1; j >= 0; --j)
                 {
-                    availableSegments.add(nextSegment);
+                    if(currentSegments[j] != null)
+                    {
+                        currentSegments[j] = null;
+                        break;
+                    }
                 }
             }
-            if(availableSegments.size() == 0)
+            else
             {
-                System.out.println("No available segments");
-                break;
+                ArrayList<Segment> availableSegments = new ArrayList<>();
+                for(Segment nextSegment : nextSegments)
+                {
+                    if(nextSegment.GetVehicleCount() == 0)
+                    {
+                        availableSegments.add(nextSegment);
+                    }
+                }
+                if(availableSegments.size() > 0)
+                {
+                    Random rand = new Random();
+                    Segment segmentToMove = availableSegments.get(rand.nextInt(availableSegments.size()));
+                    for(int j = 0; j < currentSegments.length; ++j)
+                    {
+                        Segment oldSegment = currentSegments[j];
+                        oldSegment.RemoveVehicle(this);
+                        currentSegments[j] = segmentToMove;
+                        currentSegments[j].AssignVehicle(this);
+                        segmentToMove = oldSegment;
+                    }
+                }
             }
-            Random rand = new Random();
-            Segment segmentToMove = availableSegments.get(rand.nextInt(availableSegments.size()));
-            for(int j = 0; j < currentSegments.length; ++j)
+
+            System.out.println("Position");
+            for (int j = 0; j < currentSegments.length; ++j)
             {
-                Segment oldSegment = currentSegments[j];
-                oldSegment.RemoveVehicle(this);
-                currentSegments[j] = segmentToMove;
-                currentSegments[j].AssignVehicle(this);
-                System.out.println("Move from " + oldSegment.toString() + " to " + segmentToMove.toString());
-                segmentToMove = oldSegment;
+                if(currentSegments[j] != null)
+                    System.out.println("Vehicle Body " + j + ": " + currentSegments[j].toString());
             }
+            System.out.println();
         }
     }
 }
