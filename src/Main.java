@@ -78,7 +78,7 @@ public class Main {
         System.out.print("Set time scale in milliseconds:");
         int speedOfSim = scanner.nextInt();
         while (vehicleManager.GetVehicleCount() > 0) {
-            //roadManager.Simulate();
+            roadManager.Simulate();
             vehicleManager.Simulate();
 
             time = time + 1;
