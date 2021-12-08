@@ -29,11 +29,13 @@ public class RoadIntersection {
         if(this.straightSegment != null)
             return;
 
+        String objectName = road.GetLane(Road.DIRECTION.OppositeDirection(dirOutwardsIntersection)).GetName() + "-Straight_";
+
         this.straightSegment = new Segment[STRAIGHT_LENGTH];
         Segment oldSegment = null;
         for(int i = 0; i < STRAIGHT_LENGTH; ++i)
         {
-            Segment segment = new Segment((STRAIGHT_LENGTH - 1) - i, road.GetLane(Road.DIRECTION.OppositeDirection(dirOutwardsIntersection)).GetName() + "-Straight_");
+            Segment segment = new Segment((STRAIGHT_LENGTH - 1) - i, objectName);
             segment.AddNextSegment(oldSegment);
 
             this.straightSegment[i] = segment;
@@ -41,7 +43,16 @@ public class RoadIntersection {
         }
         Collections.reverse(Arrays.asList(straightSegment));
 
-        straightTrafficLight = new TrafficLight(0, road.GetLane(Road.DIRECTION.OppositeDirection(dirOutwardsIntersection)).GetName() + "-Straight_");
+        boolean isGreen = (dirOutwardsIntersection.ordinal() % 2) == 0;
+        int startTick;
+        switch (dirOutwardsIntersection)
+        {
+            case NORTH, SOUTH -> startTick = 0;
+            case EAST, WEST -> startTick = TrafficLight.SWITCH_THRESHOLD;
+            default -> startTick = 0;
+        }
+
+        straightTrafficLight = new TrafficLight(0, objectName, isGreen, startTick);
         straightSegment[0].AssignTrafficLight(straightTrafficLight);
 
         road.ConnectSegment(straightSegment[0], Lane.SEGMENT_POSITION.LAST, Road.DIRECTION.OppositeDirection(dirOutwardsIntersection));
@@ -52,11 +63,13 @@ public class RoadIntersection {
         if(this.rightTurnSegment != null)
             return;
 
+        String objectName = road.GetLane(Road.DIRECTION.OppositeDirection(dirOutwardsIntersection)).GetName() + "-Right";
+
         this.rightTurnSegment = new Segment[RIGHT_LENGTH];
         Segment oldSegment = null;
         for(int i = 0; i < RIGHT_LENGTH; ++i)
         {
-            Segment segment = new Segment((RIGHT_LENGTH - 1) - i, road.GetLane(Road.DIRECTION.OppositeDirection(dirOutwardsIntersection)).GetName() + "-Right");
+            Segment segment = new Segment((RIGHT_LENGTH - 1) - i, objectName);
             segment.AddNextSegment(oldSegment);
 
             this.rightTurnSegment[i] = segment;
@@ -64,7 +77,16 @@ public class RoadIntersection {
         }
         Collections.reverse(Arrays.asList(rightTurnSegment));
 
-        rightTrafficLight = new TrafficLight(0, road.GetLane(Road.DIRECTION.OppositeDirection(dirOutwardsIntersection)).GetName() + "-Right_");
+        boolean isGreen = false;
+        int startTick;
+        switch (dirOutwardsIntersection)
+        {
+            case NORTH, SOUTH -> startTick = TrafficLight.SWITCH_THRESHOLD * 2;
+            case EAST, WEST -> startTick = 0;
+            default -> startTick = 0;
+        }
+
+        rightTrafficLight = new TrafficLight(0, objectName, isGreen, startTick);
         rightTurnSegment[0].AssignTrafficLight(rightTrafficLight);
 
         road.ConnectSegment(rightTurnSegment[0], Lane.SEGMENT_POSITION.LAST, Road.DIRECTION.OppositeDirection(dirOutwardsIntersection));

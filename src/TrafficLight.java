@@ -1,12 +1,13 @@
 public class TrafficLight extends TrafficObject{
-    private final int SWITCH_THRESHOLD = 10;
+    public static final int SWITCH_THRESHOLD = 5;
 
     private boolean isGreen;
     private int currentTick;
 
-    public TrafficLight(int id, String name){
+    public TrafficLight(int id, String name, boolean isGreen, int startTick){
         super(id, name + "TrafficLight");
-        isGreen = true;
+        this.isGreen = isGreen;
+        this.currentTick = startTick;
     }
 
     public boolean GetIsGreen() { return isGreen; }
@@ -14,7 +15,8 @@ public class TrafficLight extends TrafficObject{
     public void AddTick()
     {
         ++currentTick;
-        if(currentTick == 5)
+        int tickThreshold = isGreen ? SWITCH_THRESHOLD : SWITCH_THRESHOLD * 3;
+        if(currentTick == tickThreshold)
         {
             currentTick = 0;
             isGreen = !isGreen;
