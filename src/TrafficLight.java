@@ -21,7 +21,7 @@ public class TrafficLight extends TrafficObject{
             currentTick = 0;
             isGreen = !isGreen;
         }
-        PrintInformation();
+        //PrintInformation();
     }
 
     @Override

@@ -56,15 +56,54 @@ public class RoadManager {
     public Segment GetRandomSegment()
     {
         Random random = new Random();
-        Road randomRoad = roads.get(random.nextInt(roads.size()));
-        return randomRoad.GetRandomSegment();
+        Segment toReturn = null;
+        int i = 0;
+        while (toReturn == null && i <= 5)
+        {
+            Road randomRoad = roads.get(random.nextInt(roads.size()));
+            Segment randomSegment = randomRoad.GetRandomSegment();
+            if(randomSegment.IsSegmentAvailable())
+                toReturn = randomSegment;
+            else while(!randomSegment.IsSegmentAvailable())
+            {
+                ArrayList<Segment> nextSegments = randomSegment.GetNextSegments();
+                if(nextSegments.size() != 0)
+                {
+                    randomSegment = randomSegment.GetNextSegments().get(0);
+                }
+                else
+                {
+                    break;
+                }
+            }
+            ++i;
+        }
+        return toReturn;
     }
 
     public Segment[] GetRandomSegments(int count)
     {
         Random random = new Random();
-        Road randomRoad = roads.get(random.nextInt(roads.size()));
-        return randomRoad.GetRandomSegments(count);
+        Segment[] toReturn = null;
+        int i = 0;
+        while(toReturn == null && i <= 5)
+        {
+            Road randomRoad = roads.get(random.nextInt(roads.size()));
+            Segment[] randomSegments = randomRoad.GetRandomSegments(count);
+            boolean isValid = true;
+            for(Segment segment: randomSegments)
+            {
+                if(!segment.IsSegmentAvailable())
+                {
+                    isValid = false;
+                    break;
+                }
+            }
+            if(isValid)
+                toReturn = randomSegments;
+            ++i;
+        }
+        return toReturn;
     }
 
     public void Simulate()

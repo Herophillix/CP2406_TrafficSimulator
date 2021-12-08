@@ -4,6 +4,6 @@ public class Bus extends Vehicle {
         super(id, "Bus");
         SetLength(3);
         SetCurrentSegments(currentSegments);
-        SetSpeed(MathUtility.Clamp(speed, 1, 3));
+        SetSpeed(MathUtility.Clamp(speed, 1, 2));
     }
 }

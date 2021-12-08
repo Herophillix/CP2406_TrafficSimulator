@@ -12,7 +12,7 @@ public class Main {
 
         System.out.println("Welcome to Traffic Simulator 1.0");
         System.out.println("Would you like to use preset road?");
-        boolean usePresetRoad = GetBoolean();
+        boolean usePresetRoad = GetUserBoolean();
         if (usePresetRoad)
         {
             CreatePresetRoads();
@@ -68,14 +68,52 @@ public class Main {
 
     public static void CreateVehicles()
     {
-        vehicleManager.AddCar(roadManager.GetRandomSegment(), 1);
+        System.out.println("How many cars would you like to have?");
+        int carCount = GetUserInt(1, 5);
+        System.out.println("How many busses would you like to have?");
+        int busCount = GetUserInt(0, 2);
+        System.out.println("How many motorbikes would you like to have?");
+        int motorbikeCount = GetUserInt(0, 3);
+
+        for(int i = 0; i < busCount; ++i)
+        {
+            Segment[] randomSegments = roadManager.GetRandomSegments(3);
+            if(randomSegments == null)
+            {
+                System.out.println("Unable to create bus");
+                break;
+            }
+            vehicleManager.AddBus(randomSegments, 1);
+        }
+
+        for(int i = 0; i < carCount; ++i)
+        {
+            Segment randomSegment = roadManager.GetRandomSegment();
+            if(randomSegment == null)
+            {
+                System.out.println("Unable to create car");
+                break;
+            }
+            vehicleManager.AddCar(randomSegment, 1);
+        }
+
+        for(int i = 0; i < motorbikeCount; ++i)
+        {
+            Segment randomSegment = roadManager.GetRandomSegment();
+            if(randomSegment == null)
+            {
+                System.out.println("Unable to create motorbike");
+                break;
+            }
+            vehicleManager.AddMotorbike(randomSegment, 1);
+        }
     }
 
     public static void StartSimulation()
     {
 
         int time = 0;
-        System.out.print("Set time scale in milliseconds:");
+        System.out.print("Set time scale in milliseconds: ");
         int speedOfSim = scanner.nextInt();
         while (vehicleManager.GetVehicleCount() > 0) {
             roadManager.Simulate();
@@ -117,7 +155,7 @@ public class Main {
         IntersectionFourWay intersectionFourWay = roadManager.AddFourWayIntersection(previousRoad);
 
         System.out.println("Would you like to add a road at the end of each exit? ");
-        boolean addRoad = GetBoolean();
+        boolean addRoad = GetUserBoolean();
         if(addRoad)
         {
             for(int i = 0; i < Road.DIRECTION.DIRECTION_COUNT.ordinal(); ++i)
@@ -180,7 +218,7 @@ public class Main {
         IntersectionThreeWay intersectionThreeWay = roadManager.AddThreeWayIntersection(directions, previousRoad);
 
         System.out.println("Would you like to add a road at the end of each exit? ");
-        boolean addRoad = GetBoolean();
+        boolean addRoad = GetUserBoolean();
         if(addRoad)
         {
             for (Road.DIRECTION tmpDirection : directions) {
@@ -203,7 +241,7 @@ public class Main {
 
             if(direction == previousDirection)
             {
-                System.out.println("This direction has already been connected to a road");
+                System.out.println("You are unable to go back to your previous direction");
                 continue;
             }
 
@@ -237,7 +275,7 @@ public class Main {
         return direction;
     }
 
-    public static boolean GetBoolean()
+    public static boolean GetUserBoolean()
     {
         boolean isInputValid = false;
         boolean userChoice = false;
@@ -258,5 +296,11 @@ public class Main {
             }
         }
         return userChoice;
+    }
+
+    public static int GetUserInt(int min, int max)
+    {
+        System.out.println("Input(" + min + " - " + max + "): ");
+        return MathUtility.Clamp(scanner.nextInt(), min, max);
     }
 }

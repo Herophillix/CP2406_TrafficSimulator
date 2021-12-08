@@ -39,7 +39,7 @@ public class Segment extends TrafficObject {
     public boolean IsSegmentAvailable() {
         if(trafficLight != null)
         {
-            //trafficLight.PrintInformation();
+            trafficLight.PrintInformation();
             return currentVehicles.size() == 0 && trafficLight.GetIsGreen();
         }
         else

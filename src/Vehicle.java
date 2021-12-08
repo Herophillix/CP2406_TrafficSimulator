@@ -32,10 +32,15 @@ public abstract class Vehicle extends TrafficObject{
     public void SetCurrentSegment(Segment currentSegment)
     {
         this.currentSegments = new Segment[] { currentSegment };
+        currentSegment.AssignVehicle(this);
     }
     public void SetCurrentSegments(Segment[] currentSegments)
     {
         this.currentSegments = currentSegments;
+        for(Segment currentSegment: currentSegments)
+        {
+            currentSegment.AssignVehicle(this);
+        }
     }
 
     public boolean Move()
