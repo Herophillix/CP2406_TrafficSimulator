@@ -111,16 +111,19 @@ public class Main {
 
     public static void StartSimulation()
     {
-
         int time = 0;
         System.out.print("Set time scale in milliseconds: ");
         int speedOfSim = scanner.nextInt();
+        int cycleNumber = 1;
         while (vehicleManager.GetVehicleCount() > 0) {
+            System.out.println();
+            System.out.println("Cycle " + cycleNumber);
             roadManager.Simulate();
             vehicleManager.Simulate();
 
             time = time + 1;
-            System.out.println(time + " Seconds have passed.\n");
+            //System.out.println(time + " Seconds have passed.\n");
+            ++cycleNumber;
             try {
                 Thread.sleep(speedOfSim); // set speed of simulation.
             } catch (InterruptedException sim) {
