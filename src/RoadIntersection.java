@@ -7,11 +7,11 @@ public class RoadIntersection {
 
     private Road.DIRECTION dirOutwardsIntersection;
     private Road road;
-    private Segment[] straightSegment;
+    private Segment[] straightSegment; // Intermediary segment when vehicles travel straight through intersection
     private TrafficLight straightTrafficLight;
-    private Segment[] rightTurnSegment;
+    private Segment[] rightTurnSegment; // Intermediary segment when vehicles turn right through intersection
     private TrafficLight rightTrafficLight;
-    private Segment leftTurnSegment;
+    private Segment leftTurnSegment; // Intermediary segment when vehicles turn left through intersection
 
     public RoadIntersection(Road.DIRECTION direction, String name)
     {
@@ -24,6 +24,7 @@ public class RoadIntersection {
 
     public Road GetRoad() { return road; }
 
+    // Add a straight segment if there is a road on the opposite of the intersection
     public void AddStraightSegment()
     {
         if(this.straightSegment != null)
@@ -58,6 +59,7 @@ public class RoadIntersection {
         road.ConnectSegment(straightSegment[0], Lane.SEGMENT_POSITION.LAST, Road.DIRECTION.OppositeDirection(dirOutwardsIntersection));
     }
 
+    // Add a right segment if there is a road on the right of the intersection
     public void AddRightSegment()
     {
         if(this.rightTurnSegment != null)
@@ -93,6 +95,7 @@ public class RoadIntersection {
 
     }
 
+    // Add a left segment if there is a road on the left of the intersection
     public void AddLeftSegment()
     {
         if(this.leftTurnSegment != null)
@@ -109,6 +112,7 @@ public class RoadIntersection {
 
     public void ConnectIncomingSegment(RoadIntersection otherRoad)
     {
+        // Connect a road intersection with another road intersection to allows turning and crossing
         switch (dirOutwardsIntersection)
         {
             case NORTH:

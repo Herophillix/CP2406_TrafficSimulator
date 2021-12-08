@@ -49,12 +49,15 @@ public abstract class Vehicle extends TrafficObject{
         for(int i = 0; i < speed; ++i)
         {
             Segment firstSegment = currentSegments[0];
+
+            // Check if vehicle is out of the boundaries
             if(firstSegment == null) {
                 return false;
             }
 
             ArrayList<Segment> nextSegments = firstSegment.GetNextSegments();
 
+            // Check if there is nowhere else to go
             if(nextSegments.size() == 0)
             {
                 for(int j = currentSegments.length - 1; j >= 0; --j)
@@ -70,6 +73,8 @@ public abstract class Vehicle extends TrafficObject{
             else
             {
                 ArrayList<Segment> availableSegments = new ArrayList<>();
+
+                // Check availability of the segments
                 for(Segment nextSegment : nextSegments)
                 {
                     if(nextSegment.IsSegmentAvailable())
@@ -79,8 +84,11 @@ public abstract class Vehicle extends TrafficObject{
                 }
                 if(availableSegments.size() > 0)
                 {
+                    // Select random segment out of the available segments
                     Random rand = new Random();
                     Segment segmentToMove = availableSegments.get(rand.nextInt(availableSegments.size()));
+
+                    // Move the vehicle
                     for(int j = 0; j < currentSegments.length; ++j)
                     {
                         Segment oldSegment = currentSegments[j];

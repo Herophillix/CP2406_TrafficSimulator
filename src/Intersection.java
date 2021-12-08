@@ -17,6 +17,7 @@ public abstract class Intersection extends TrafficObject{
 
     public void InitializeRoadIntersectionConnections()
     {
+        // Connect each road intersection with other road intersections
         for(RoadIntersection roadIntersection: roadIntersections)
         {
             if(roadIntersection == null)
@@ -44,6 +45,7 @@ public abstract class Intersection extends TrafficObject{
 
     public void ConnectRoad(Road roadToConnect)
     {
+        // Connect intersection with a road
         Road.DIRECTION direction = Road.DIRECTION.OppositeDirection(roadToConnect.GetDirection());
         if(roadIntersections[direction.ordinal()] != null)
         {

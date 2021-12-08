@@ -18,10 +18,13 @@ public class Lane extends TrafficObject{
     {
         super(id, name + "-" + direction.name() + "_Lane");
         this.direction = direction;
+
+        // Create segments based on the length of the road
         roadSegments = new ArrayList<>();
         Segment oldSegment = null;
         for(int i = 0; i < length; ++i)
         {
+            // Connect the segments to one another
             Segment newSegment = new Segment((length - 1) - i, GetName() + "-");
             newSegment.AddNextSegment(oldSegment);
 
@@ -59,6 +62,7 @@ public class Lane extends TrafficObject{
 
     public void ConnectSegment(Road road, Segment nextSegment, SEGMENT_POSITION position)
     {
+        // Connect a segment to another road
         connectedRoad = road == null ? connectedRoad : road;
         switch (position)
         {

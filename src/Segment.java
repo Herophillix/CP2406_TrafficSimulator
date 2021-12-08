@@ -35,6 +35,7 @@ public class Segment extends TrafficObject {
     }
 
     public boolean IsSegmentAvailable() {
+        // Check if the segment can be travelled to
         if(trafficLight != null)
         {
             trafficLight.PrintInformation();

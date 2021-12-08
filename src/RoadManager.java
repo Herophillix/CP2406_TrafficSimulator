@@ -55,6 +55,7 @@ public class RoadManager {
 
     public Segment GetRandomSegment()
     {
+        // Find a random segment from the road available
         Random random = new Random();
         Segment toReturn = null;
         int i = 0;
@@ -83,6 +84,7 @@ public class RoadManager {
 
     public Segment[] GetRandomSegments(int count)
     {
+        // Find random segments from the road available
         Random random = new Random();
         Segment[] toReturn = null;
         int i = 0;

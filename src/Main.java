@@ -76,7 +76,9 @@ public class Main {
             System.out.println("Road Length(3-15): ");
             roadLength = scanner.nextInt();
         }
+
         Road.DIRECTION direction;
+        // If user has already created previous road, use its direction
         if(previousRoad == null)
         {
             System.out.println("Direction of Road");
@@ -113,13 +115,16 @@ public class Main {
         Road.DIRECTION direction;
         System.out.println("Which direction would you like to go? ");
         direction = GetUserDirection();
+        // Prevent user from going the same direction as they started
         while(direction == previousDirection)
         {
             System.out.println("You are unable to go back to your previous direction");
             System.out.println("Which direction would you like to go? ");
             direction = GetUserDirection();
         }
+
         Road toReturn = intersectionFourWay.GetRoad(direction);
+        // Check whether the intersection has a road connected to it
         if(toReturn.GetConnectedRoad(direction) != null)
             toReturn = toReturn.GetConnectedRoad(direction);
         return toReturn;
@@ -178,13 +183,14 @@ public class Main {
             System.out.println("Which direction would you like to go? ");
             Road.DIRECTION direction = GetUserDirection();
 
+            // Prevent user from going the same direction as they started
             if(direction == previousDirection)
             {
                 System.out.println("You are unable to go back to your previous direction");
                 continue;
             }
 
-
+            // Check whether the direction that user wants to go is in the intersection
             nextRoad = intersectionThreeWay.GetRoad(direction);
             if (nextRoad == null)
             {
@@ -193,6 +199,7 @@ public class Main {
             else
             {
                 isValid = true;
+                // Check whether the intersection has a road connected to it
                 if(nextRoad.GetConnectedRoad(direction) != null)
                     nextRoad = nextRoad.GetConnectedRoad(direction);
             }
@@ -264,6 +271,7 @@ public class Main {
                 Thread.currentThread().interrupt();
             }
         }
+        System.out.println("Simulation over");
     }
 
     public static Road.DIRECTION GetUserDirection()
@@ -306,6 +314,12 @@ public class Main {
     public static int GetUserInt(int min, int max)
     {
         System.out.println("Input(" + min + " - " + max + "): ");
-        return MathUtility.Clamp(scanner.nextInt(), min, max);
+        int userInput = scanner.nextInt();
+        while(userInput < min || userInput > min)
+        {
+            System.out.println("Input(" + min + " - " + max + "): ");
+            userInput = scanner.nextInt();
+        }
+        return userInput;
     }
 }

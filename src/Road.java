@@ -18,6 +18,7 @@ public class Road extends TrafficObject{
         this.length = MathUtility.Clamp(length, MIN_LENGTH, MIN_LENGTH * 5);
         this.direction = direction;
 
+        // Create 2 lanes, 1 in the direction of road, and the other in the opposing direction
         lanes = new Lane[2];
         switch (direction) {
             case NORTH, SOUTH -> {
@@ -47,6 +48,7 @@ public class Road extends TrafficObject{
 
     public void Connect(Road roadToConnect)
     {
+        // Connect a road to another road
         if(lanes[0].GetDirection() == roadToConnect.lanes[0].GetDirection())
         {
             lanes[0].ConnectSegment(roadToConnect, roadToConnect.lanes[0].GetSegment(Lane.SEGMENT_POSITION.FIRST), Lane.SEGMENT_POSITION.LAST);
@@ -73,11 +75,13 @@ public class Road extends TrafficObject{
 
     public Segment GetRandomSegment()
     {
+        // Get a random segment from one of the lanes
         return lanes[(int)Math.round(Math.random())].GetSegment(Lane.SEGMENT_POSITION.values()[(int)Math.ceil(Math.random() * Lane.SEGMENT_POSITION.LAST.ordinal() - 1)]);
     }
 
     public Segment[] GetRandomSegments(int count)
     {
+        // Get random segments from one of the lanes
         return lanes[(int)Math.round(Math.random())].GetSegments(Lane.SEGMENT_POSITION.FIRST, MathUtility.Clamp(count, 1, length));
     }
 }
