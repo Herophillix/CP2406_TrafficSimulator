@@ -15,7 +15,7 @@ public class TrafficLight extends TrafficObject{
     public void AddTick()
     {
         ++currentTick;
-        int tickThreshold = isGreen ? SWITCH_THRESHOLD : SWITCH_THRESHOLD * 3;
+        int tickThreshold = isGreen ? SWITCH_THRESHOLD : (SWITCH_THRESHOLD + 2) * 3 + 2;
         if(currentTick == tickThreshold)
         {
             currentTick = 0;

@@ -48,7 +48,7 @@ public class RoadIntersection {
         switch (dirOutwardsIntersection)
         {
             case NORTH, SOUTH -> startTick = 0;
-            case EAST, WEST -> startTick = TrafficLight.SWITCH_THRESHOLD;
+            case EAST, WEST -> startTick = TrafficLight.SWITCH_THRESHOLD + 2 + 2;
             default -> startTick = 0;
         }
 
@@ -81,8 +81,8 @@ public class RoadIntersection {
         int startTick;
         switch (dirOutwardsIntersection)
         {
-            case NORTH, SOUTH -> startTick = TrafficLight.SWITCH_THRESHOLD * 2;
-            case EAST, WEST -> startTick = 0;
+            case NORTH, SOUTH -> startTick = (TrafficLight.SWITCH_THRESHOLD + 2) * 2 + 2;
+            case EAST, WEST -> startTick = 2;
             default -> startTick = 0;
         }
 
