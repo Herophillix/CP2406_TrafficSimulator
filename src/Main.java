@@ -313,7 +313,7 @@ public class Main {
     {
         System.out.println("Input(" + min + " - " + max + "): ");
         int userInput = scanner.nextInt();
-        while(userInput < min || userInput > min)
+        while(userInput < min || userInput > max)
         {
             System.out.println("Input(" + min + " - " + max + "): ");
             userInput = scanner.nextInt();
