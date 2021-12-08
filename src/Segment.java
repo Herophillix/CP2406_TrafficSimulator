@@ -12,13 +12,7 @@ public class Segment extends TrafficObject {
     }
 
     public void AssignVehicle(Vehicle vehicle) {
-        double totalLength = 0.0;
-        for (Vehicle currentVehicle : this.currentVehicles) {
-            totalLength += currentVehicle.GetLength();
-        }
-        if (totalLength + vehicle.GetLength() <= 1.0f) {
-            currentVehicles.add(vehicle);
-        }
+        currentVehicles.add(vehicle);
     }
 
     public void RemoveVehicle(Vehicle vehicle) {
