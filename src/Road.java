@@ -21,12 +21,12 @@ public class Road extends TrafficObject{
         lanes = new Lane[2];
         switch (direction) {
             case NORTH, SOUTH -> {
-                lanes[0] = new Lane(0, GetName(), this.length, DIRECTION.NORTH);
-                lanes[1] = new Lane(1, GetName(), this.length, DIRECTION.SOUTH);
+                lanes[0] = new Lane(0, GetInfo(), this.length, DIRECTION.NORTH);
+                lanes[1] = new Lane(1, GetInfo(), this.length, DIRECTION.SOUTH);
             }
             case EAST, WEST -> {
-                lanes[0] = new Lane(0, GetName(), this.length, DIRECTION.EAST);
-                lanes[1] = new Lane(1, GetName(), this.length, DIRECTION.WEST);
+                lanes[0] = new Lane(0, GetInfo(), this.length, DIRECTION.EAST);
+                lanes[1] = new Lane(1, GetInfo(), this.length, DIRECTION.WEST);
             }
         }
     }

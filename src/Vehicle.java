@@ -101,7 +101,7 @@ public abstract class Vehicle extends TrafficObject{
         Segment segment = currentSegments[0];
         if(segment != null)
         {
-            System.out.println(GetName() + " on " + segment.GetName());
+            System.out.println(GetInfo() + " on " + segment.GetInfo());
         }
     }
 }

@@ -4,7 +4,7 @@ public class IntersectionThreeWay extends Intersection{
         super(id, "3WayIntersection");
         for(Road.DIRECTION direction: directions)
         {
-            RoadIntersection newRoad = new RoadIntersection(direction, GetName() + "-");
+            RoadIntersection newRoad = new RoadIntersection(direction, GetInfo() + "-");
             for(Road.DIRECTION otherDirection: directions)
             {
                 if(direction == otherDirection)
