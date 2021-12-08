@@ -42,6 +42,7 @@ public abstract class Vehicle extends TrafficObject{
             currentSegment.AssignVehicle(this);
         }
     }
+    public Segment[] GetCurrentSegments() { return currentSegments; }
 
     public boolean Move()
     {

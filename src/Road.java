@@ -31,8 +31,8 @@ public class Road extends TrafficObject{
         }
     }
 
+    public int GetLength() { return length; }
     public DIRECTION GetDirection() { return this.direction; }
-
     public Lane GetLane(Road.DIRECTION direction)
     {
         for(Lane lane: lanes)
@@ -78,15 +78,6 @@ public class Road extends TrafficObject{
 
     public Segment[] GetRandomSegments(int count)
     {
-        return lanes[(int)Math.round(Math.random())].GetSegments(Lane.SEGMENT_POSITION.FIRST, MathUtility.Clamp(count, 1, 3));
-    }
-
-    public void PrintRoad()
-    {
-        for(int i = 0; i < length; ++i)
-        {
-            System.out.println("Segment " + i +": " + lanes[0].roadSegments.get(i).toString() + "," + lanes[1].roadSegments.get(i).toString());
-        }
-        System.out.println();
+        return lanes[(int)Math.round(Math.random())].GetSegments(Lane.SEGMENT_POSITION.FIRST, MathUtility.Clamp(count, 1, length));
     }
 }

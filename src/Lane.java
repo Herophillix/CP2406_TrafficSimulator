@@ -10,7 +10,6 @@ public class Lane extends TrafficObject{
         LAST
     }
 
-    protected TrafficObject currentRoad;
     private Road.DIRECTION direction;
     protected ArrayList<Segment> roadSegments;
     private Road connectedRoad;
@@ -18,7 +17,6 @@ public class Lane extends TrafficObject{
     public Lane(int id, String name, int length, Road.DIRECTION direction)
     {
         super(id, name + "-" + direction.name() + "_Lane");
-        this.currentRoad = currentRoad;
         this.direction = direction;
         roadSegments = new ArrayList<>();
         Segment oldSegment = null;
