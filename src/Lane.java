@@ -33,6 +33,7 @@ public class Lane extends TrafficObject{
     }
 
     public Road.DIRECTION GetDirection() { return direction; }
+
     public Segment GetSegment(SEGMENT_POSITION position)
     {
         switch (position)
@@ -44,6 +45,7 @@ public class Lane extends TrafficObject{
             default -> { return  null; }
         }
     }
+
     public Segment[] GetSegments(SEGMENT_POSITION position, int count)
     {
         Segment[] toReturn = new Segment[count];
@@ -54,7 +56,6 @@ public class Lane extends TrafficObject{
         Collections.reverse(Arrays.asList(toReturn));
         return toReturn;
     }
-    public Road GetConnectedRoad() { return connectedRoad; }
 
     public void ConnectSegment(Road road, Segment nextSegment, SEGMENT_POSITION position)
     {
@@ -67,4 +68,6 @@ public class Lane extends TrafficObject{
             case LAST -> { this.roadSegments.get(roadSegments.size() - 1).AddNextSegment(nextSegment); }
         }
     }
+
+    public Road GetConnectedRoad() { return connectedRoad; }
 }

@@ -31,6 +31,17 @@ public abstract class Intersection extends TrafficObject{
         }
     }
 
+    public void UpdateRoadIntersections()
+    {
+        for(RoadIntersection roadIntersection: roadIntersections)
+        {
+            if(roadIntersection != null)
+            {
+                roadIntersection.UpdateTrafficLights();
+            }
+        }
+    }
+
     public void ConnectRoad(Road roadToConnect)
     {
         Road.DIRECTION direction = Road.DIRECTION.OppositeDirection(roadToConnect.GetDirection());
@@ -55,16 +66,5 @@ public abstract class Intersection extends TrafficObject{
             return roadIntersections[direction.ordinal()].GetRoad();
         }
         return null;
-    }
-
-    public void UpdateRoadIntersections()
-    {
-        for(RoadIntersection roadIntersection: roadIntersections)
-        {
-            if(roadIntersection != null)
-            {
-                roadIntersection.UpdateTrafficLights();
-            }
-        }
     }
 }

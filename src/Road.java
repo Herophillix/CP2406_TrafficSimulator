@@ -45,6 +45,18 @@ public class Road extends TrafficObject{
         return null;
     }
 
+    public void Connect(Road roadToConnect)
+    {
+        if(lanes[0].GetDirection() == roadToConnect.lanes[0].GetDirection())
+        {
+            lanes[0].ConnectSegment(roadToConnect, roadToConnect.lanes[0].GetSegment(Lane.SEGMENT_POSITION.FIRST), Lane.SEGMENT_POSITION.LAST);
+        }
+        if(lanes[1].GetDirection() == roadToConnect.lanes[1].GetDirection())
+        {
+            roadToConnect.lanes[1].ConnectSegment(roadToConnect, lanes[1].GetSegment(Lane.SEGMENT_POSITION.FIRST), Lane.SEGMENT_POSITION.LAST);
+        }
+    }
+
     public Road GetConnectedRoad(DIRECTION direction) { return lanes[direction.ordinal() / 2].GetConnectedRoad(); }
 
     public void ConnectSegment(Segment nextSegment, Lane.SEGMENT_POSITION position, Road.DIRECTION direction)
@@ -56,18 +68,6 @@ public class Road extends TrafficObject{
                 lane.ConnectSegment(null, nextSegment, position);
                 break;
             }
-        }
-    }
-
-    public void Connect(Road roadToConnect)
-    {
-        if(lanes[0].GetDirection() == roadToConnect.lanes[0].GetDirection())
-        {
-            lanes[0].ConnectSegment(roadToConnect, roadToConnect.lanes[0].GetSegment(Lane.SEGMENT_POSITION.FIRST), Lane.SEGMENT_POSITION.LAST);
-        }
-        if(lanes[1].GetDirection() == roadToConnect.lanes[1].GetDirection())
-        {
-            roadToConnect.lanes[1].ConnectSegment(roadToConnect, lanes[1].GetSegment(Lane.SEGMENT_POSITION.FIRST), Lane.SEGMENT_POSITION.LAST);
         }
     }
 

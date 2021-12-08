@@ -11,11 +11,6 @@ public class Segment extends TrafficObject {
         this.nextSegments = new ArrayList<>();
     }
 
-    public void AssignTrafficLight(TrafficLight trafficLight)
-    {
-        this.trafficLight = trafficLight;
-    }
-
     public void AssignVehicle(Vehicle vehicle) {
         double totalLength = 0.0;
         for (Vehicle currentVehicle : this.currentVehicles) {
@@ -30,10 +25,19 @@ public class Segment extends TrafficObject {
         currentVehicles.remove(vehicle);
     }
 
+    public ArrayList<Segment> GetNextSegments() {
+        return nextSegments;
+    }
+
     public void AddNextSegment(Segment nextSegment) {
         if (nextSegments.contains(nextSegment) || nextSegment == null)
             return;
         nextSegments.add(nextSegment);
+    }
+
+    public void AssignTrafficLight(TrafficLight trafficLight)
+    {
+        this.trafficLight = trafficLight;
     }
 
     public boolean IsSegmentAvailable() {
@@ -44,9 +48,5 @@ public class Segment extends TrafficObject {
         }
         else
             return currentVehicles.size() == 0;
-    }
-
-    public ArrayList<Segment> GetNextSegments() {
-        return nextSegments;
     }
 }

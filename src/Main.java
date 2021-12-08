@@ -66,71 +66,7 @@ public class Main {
         }
     }
 
-    public static void CreateVehicles()
-    {
-        System.out.println("How many cars would you like to have?");
-        int carCount = GetUserInt(1, 5);
-        System.out.println("How many busses would you like to have?");
-        int busCount = GetUserInt(0, 2);
-        System.out.println("How many motorbikes would you like to have?");
-        int motorbikeCount = GetUserInt(0, 3);
 
-        for(int i = 0; i < busCount; ++i)
-        {
-            Segment[] randomSegments = roadManager.GetRandomSegments(3);
-            if(randomSegments == null)
-            {
-                System.out.println("Unable to create bus");
-                break;
-            }
-            vehicleManager.AddBus(randomSegments, 1);
-        }
-
-        for(int i = 0; i < carCount; ++i)
-        {
-            Segment randomSegment = roadManager.GetRandomSegment();
-            if(randomSegment == null)
-            {
-                System.out.println("Unable to create car");
-                break;
-            }
-            vehicleManager.AddCar(randomSegment, 1);
-        }
-
-        for(int i = 0; i < motorbikeCount; ++i)
-        {
-            Segment randomSegment = roadManager.GetRandomSegment();
-            if(randomSegment == null)
-            {
-                System.out.println("Unable to create motorbike");
-                break;
-            }
-            vehicleManager.AddMotorbike(randomSegment, 1);
-        }
-    }
-
-    public static void StartSimulation()
-    {
-        int time = 0;
-        System.out.print("Set time scale in milliseconds: ");
-        int speedOfSim = scanner.nextInt();
-        int cycleNumber = 1;
-        while (vehicleManager.GetVehicleCount() > 0) {
-            System.out.println();
-            System.out.println("Cycle " + cycleNumber);
-            roadManager.Simulate();
-            vehicleManager.Simulate();
-
-            time = time + 1;
-            //System.out.println(time + " Seconds have passed.\n");
-            ++cycleNumber;
-            try {
-                Thread.sleep(speedOfSim); // set speed of simulation.
-            } catch (InterruptedException sim) {
-                Thread.currentThread().interrupt();
-            }
-        }
-    }
 
     public static Road CreateRoadFromUser(Road previousRoad)
     {
@@ -262,6 +198,72 @@ public class Main {
             }
         }
         return nextRoad;
+    }
+
+    public static void CreateVehicles()
+    {
+        System.out.println("How many cars would you like to have?");
+        int carCount = GetUserInt(1, 5);
+        System.out.println("How many busses would you like to have?");
+        int busCount = GetUserInt(0, 2);
+        System.out.println("How many motorbikes would you like to have?");
+        int motorbikeCount = GetUserInt(0, 3);
+
+        for(int i = 0; i < busCount; ++i)
+        {
+            Segment[] randomSegments = roadManager.GetRandomSegments(3);
+            if(randomSegments == null)
+            {
+                System.out.println("Unable to create bus");
+                break;
+            }
+            vehicleManager.AddBus(randomSegments, 1);
+        }
+
+        for(int i = 0; i < carCount; ++i)
+        {
+            Segment randomSegment = roadManager.GetRandomSegment();
+            if(randomSegment == null)
+            {
+                System.out.println("Unable to create car");
+                break;
+            }
+            vehicleManager.AddCar(randomSegment, 1);
+        }
+
+        for(int i = 0; i < motorbikeCount; ++i)
+        {
+            Segment randomSegment = roadManager.GetRandomSegment();
+            if(randomSegment == null)
+            {
+                System.out.println("Unable to create motorbike");
+                break;
+            }
+            vehicleManager.AddMotorbike(randomSegment, 1);
+        }
+    }
+
+    public static void StartSimulation()
+    {
+        int time = 0;
+        System.out.print("Set time scale in milliseconds: ");
+        int speedOfSim = scanner.nextInt();
+        int cycleNumber = 1;
+        while (vehicleManager.GetVehicleCount() > 0) {
+            System.out.println();
+            System.out.println("Cycle " + cycleNumber);
+            roadManager.Simulate();
+            vehicleManager.Simulate();
+
+            time = time + 1;
+            //System.out.println(time + " Seconds have passed.\n");
+            ++cycleNumber;
+            try {
+                Thread.sleep(speedOfSim); // set speed of simulation.
+            } catch (InterruptedException sim) {
+                Thread.currentThread().interrupt();
+            }
+        }
     }
 
     public static Road.DIRECTION GetUserDirection()
