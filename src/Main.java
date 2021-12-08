@@ -66,8 +66,6 @@ public class Main {
         }
     }
 
-
-
     public static Road CreateRoadFromUser(Road previousRoad)
     {
         int roadLength = -1;
