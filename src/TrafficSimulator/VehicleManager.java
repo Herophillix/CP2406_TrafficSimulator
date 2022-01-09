@@ -1,3 +1,5 @@
+package TrafficSimulator;
+
 import java.util.ArrayList;
 
 public class VehicleManager {

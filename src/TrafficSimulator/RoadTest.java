@@ -1,11 +1,13 @@
+package TrafficSimulator;
+
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class RoadTest {
-    Road road = new Road(0, "Road", 10, Road.DIRECTION.EAST);
-    Road road2 = new Road(1, "Road", 10, Road.DIRECTION.EAST);
+    Road road = new Road(0, "TrafficSimulator.Road", 10, Road.DIRECTION.EAST);
+    Road road2 = new Road(1, "TrafficSimulator.Road", 10, Road.DIRECTION.EAST);
 
     @Test
     public void TestLength() { assertEquals(10, road.GetLength()); }

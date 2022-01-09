@@ -1,9 +1,11 @@
+package TrafficSimulator;
+
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CarTest {
-    Road road = new Road(0, "Road", 10, Road.DIRECTION.EAST);
+    Road road = new Road(0, "TrafficSimulator.Road", 10, Road.DIRECTION.EAST);
     Segment segment = road.GetRandomSegment();
     Car car = new Car(0, segment, 1);
 

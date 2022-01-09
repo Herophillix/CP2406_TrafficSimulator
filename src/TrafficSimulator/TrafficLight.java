@@ -1,3 +1,5 @@
+package TrafficSimulator;
+
 public class TrafficLight extends TrafficObject{
     public static final int SWITCH_THRESHOLD = 5;
 
@@ -5,7 +7,7 @@ public class TrafficLight extends TrafficObject{
     private int currentTick;
 
     public TrafficLight(int id, String name, boolean isGreen, int startTick){
-        super(id, name + "TrafficLight");
+        super(id, name + "TrafficSimulator.TrafficLight");
         this.isGreen = isGreen;
         this.currentTick = startTick;
     }

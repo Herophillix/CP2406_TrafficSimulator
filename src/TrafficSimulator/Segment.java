@@ -1,3 +1,5 @@
+package TrafficSimulator;
+
 import java.util.ArrayList;
 
 public class Segment extends TrafficObject {
@@ -6,7 +8,7 @@ public class Segment extends TrafficObject {
     private TrafficLight trafficLight;
 
     public Segment(int id, String name) {
-        super(id, name + "Segment");
+        super(id, name + "TrafficSimulator.Segment");
         this.currentVehicles = new ArrayList<>();
         this.nextSegments = new ArrayList<>();
     }

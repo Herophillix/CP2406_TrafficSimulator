@@ -1,3 +1,5 @@
+package TrafficSimulator;
+
 public class IntersectionFourWay extends Intersection {
     public IntersectionFourWay(int id)
     {

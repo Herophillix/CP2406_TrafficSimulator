@@ -1,3 +1,5 @@
+package TrafficSimulator;
+
 public class IntersectionThreeWay extends Intersection{
     public IntersectionThreeWay(int id, Road.DIRECTION[] directions)
     {

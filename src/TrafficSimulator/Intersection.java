@@ -1,3 +1,5 @@
+package TrafficSimulator;
+
 public abstract class Intersection extends TrafficObject{
     private RoadIntersection[] roadIntersections;
 

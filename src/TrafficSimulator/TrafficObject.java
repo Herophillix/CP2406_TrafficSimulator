@@ -1,3 +1,5 @@
+package TrafficSimulator;
+
 public abstract class TrafficObject {
     private int id;
     private String name;

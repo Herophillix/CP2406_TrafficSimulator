@@ -1,3 +1,5 @@
+package TrafficSimulator;
+
 import java.util.Scanner;
 
 public class Main {
@@ -53,7 +55,7 @@ public class Main {
         while(isAddingRoad)
         {
             System.out.println("What would you like to do next?");
-            System.out.println("1)Add new road\n2)Add 4-Way Intersection\n3)Add 3-way Intersection\n4)Simulate");
+            System.out.println("1)Add new road\n2)Add 4-Way TrafficSimulator.Intersection\n3)Add 3-way TrafficSimulator.Intersection\n4)Simulate");
             System.out.println("Input: ");
             int nextChoice = scanner.nextInt();
             switch (nextChoice)
@@ -71,7 +73,7 @@ public class Main {
         int roadLength = -1;
         while (roadLength <= 2)
         {
-            System.out.println("Road Length(3-15): ");
+            System.out.println("TrafficSimulator.Road Length(3-15): ");
             roadLength = scanner.nextInt();
         }
 
@@ -79,7 +81,7 @@ public class Main {
         // If user has already created previous road, use its direction
         if(previousRoad == null)
         {
-            System.out.println("Direction of Road");
+            System.out.println("Direction of TrafficSimulator.Road");
             direction = GetUserDirection();
         }
         else

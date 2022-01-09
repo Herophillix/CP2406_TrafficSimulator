@@ -1,3 +1,5 @@
+package TrafficSimulator;
+
 public class Road extends TrafficObject{
     public static final int MIN_LENGTH = 3;
     public enum DIRECTION {
@@ -14,7 +16,7 @@ public class Road extends TrafficObject{
 
     public Road(int id, String name, int length, Road.DIRECTION direction)
     {
-        super(id, name + "Road");
+        super(id, name + "TrafficSimulator.Road");
         this.length = MathUtility.Clamp(length, MIN_LENGTH, MIN_LENGTH * 5);
         this.direction = direction;
 

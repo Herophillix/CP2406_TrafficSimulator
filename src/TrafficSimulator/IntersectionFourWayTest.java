@@ -1,3 +1,5 @@
+package TrafficSimulator;
+
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -5,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class IntersectionFourWayTest {
     IntersectionFourWay fourWay = new IntersectionFourWay(0);
-    Road road = new Road(0,"Road", 3, Road.DIRECTION.EAST);
+    Road road = new Road(0,"TrafficSimulator.Road", 3, Road.DIRECTION.EAST);
 
     @Test
     public void TestRoadConnection() {
