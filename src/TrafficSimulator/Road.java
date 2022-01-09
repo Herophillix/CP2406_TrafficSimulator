@@ -16,7 +16,7 @@ public class Road extends TrafficObject{
 
     public Road(int id, String name, int length, Road.DIRECTION direction)
     {
-        super(id, name + "TrafficSimulator.Road");
+        super(id, name + "Road");
         this.length = MathUtility.Clamp(length, MIN_LENGTH, MIN_LENGTH * 5);
         this.direction = direction;
 

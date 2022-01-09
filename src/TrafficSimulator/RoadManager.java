@@ -2,15 +2,18 @@ package TrafficSimulator;
 
 import java.util.ArrayList;
 import java.util.Random;
+import FileManagement.FileManager;
 
 public class RoadManager {
     private ArrayList<Road> roads;
     private ArrayList<Intersection> intersections;
+    private FileManager fileManager;
 
     public RoadManager()
     {
         roads = new ArrayList<>();
         intersections = new ArrayList<>();
+        fileManager = new FileManager();
     }
 
     public Road AddRoad(int length, Road.DIRECTION direction, Road toConnect)
@@ -30,6 +33,7 @@ public class RoadManager {
             //toConnect.Connect(toReturn);
         }
         roads.add(toReturn);
+        fileManager.AddRoadToBuffer(length, direction, toConnect);
         return toReturn;
     }
 
@@ -116,5 +120,10 @@ public class RoadManager {
         {
             intersection.UpdateRoadIntersections();
         }
+    }
+
+    public void SaveFile()
+    {
+        fileManager.SaveFile();
     }
 }
