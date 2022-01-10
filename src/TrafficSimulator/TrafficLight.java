@@ -7,7 +7,7 @@ public class TrafficLight extends TrafficObject{
     private int currentTick;
 
     public TrafficLight(int id, String name, boolean isGreen, int startTick){
-        super(id, name + "TrafficSimulator.TrafficLight");
+        super(id, name + "TrafficLight");
         this.isGreen = isGreen;
         this.currentTick = startTick;
     }

@@ -8,7 +8,7 @@ public class Segment extends TrafficObject {
     private TrafficLight trafficLight;
 
     public Segment(int id, String name) {
-        super(id, name + "TrafficSimulator.Segment");
+        super(id, name + "Segment");
         this.currentVehicles = new ArrayList<>();
         this.nextSegments = new ArrayList<>();
     }
