@@ -1,4 +1,4 @@
-package TrafficSimulator;
+import TrafficSimulator.*;
 
 import java.util.Scanner;
 
