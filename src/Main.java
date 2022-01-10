@@ -2,6 +2,7 @@ import FileManagement.FileManager;
 import TrafficSimulator.*;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Main {
     public static Scanner scanner;
@@ -11,20 +12,28 @@ public class Main {
 
     public static void main(String[] args) {
         scanner = new Scanner(System.in);
-        roadManager = new RoadManager();
         vehicleManager = new VehicleManager();
         fileManager = new FileManager();
+        roadManager = new RoadManager(fileManager);
 
         System.out.println("Welcome to Traffic Simulator 1.0");
         System.out.println("Would you like to use preset road?");
         boolean usePresetRoad = GetUserBoolean();
         if (usePresetRoad)
         {
-            CreatePresetRoads();
+            LoadPresetFile();
         }
         else
         {
-            CreateRoads();
+            System.out.println("What would you like to do?");
+            System.out.println("1)Create new roads\n2)Load roads from file");
+            System.out.println("Input: ");
+            int nextChoice = Integer.parseInt(scanner.nextLine());
+            switch (nextChoice)
+            {
+                case 1 -> CreateFile();
+                case 2 -> LoadFile();
+            }
         }
 
         CreateVehicles();
@@ -34,23 +43,49 @@ public class Main {
 
     public static void LoadPresetFile()
     {
+        ArrayList<String> instructions = fileManager.LoadDefaultFile();
+        if(instructions.size() == 0)
+        {
+            System.out.println("Creating preset roads");
+            instructions = new ArrayList<>();
+            instructions.add("0-R-5-EAST");
+            instructions.add("1-4-0");
+            instructions.add("2-R-5-NORTH-1");
+            instructions.add("3-R-5-EAST-1");
+            instructions.add("4-R-5-SOUTH-1");
+        }
+        roadManager.CreateRoadFromFile(instructions);
 
+        fileManager.SaveDefaultFile();
     }
 
-    public static void CreatePresetRoads()
+    public static void LoadFile()
     {
-        Road currentRoad = roadManager.AddRoad(5, Road.DIRECTION.EAST, null);
-
-        IntersectionFourWay fourWay = roadManager.AddFourWayIntersection(currentRoad);
-
-        for(int i = 0; i < Road.DIRECTION.DIRECTION_COUNT.ordinal(); ++i)
+        System.out.println("File name: ");
+        String fileName = scanner.nextLine();
+        ArrayList<String> instructions = fileManager.LoadFile(fileName + ".txt");
+        if(instructions.size() == 0)
         {
-            Road.DIRECTION tmpDirection = Road.DIRECTION.values()[i];
-            Road intersectionRoad = fourWay.GetRoad(tmpDirection);
-            if(intersectionRoad.GetConnectedRoad(tmpDirection) == null)
-            {
-                roadManager.AddRoad(5, intersectionRoad.GetDirection(), intersectionRoad);
-            }
+            System.out.println("Using preset roads");
+            LoadPresetFile();
+        }
+        else
+        {
+            roadManager.CreateRoadFromFile(instructions);
+        }
+        fileManager.SaveFile(fileName + ".txt");
+    }
+
+    public static void CreateFile()
+    {
+        CreateRoads();
+        System.out.println("Would you like to save the road?");
+        boolean saveRoad = GetUserBoolean();
+        if(saveRoad)
+        {
+            System.out.println("File name: ");
+            String fileName = scanner.nextLine();
+            fileManager.SaveFile(fileName + ".txt");
         }
     }
 
@@ -65,7 +100,7 @@ public class Main {
             System.out.println("What would you like to do next?");
             System.out.println("1)Add new road\n2)Add 4-Way Intersection\n3)Add 3-way Intersection\n4)Simulate");
             System.out.println("Input: ");
-            int nextChoice = scanner.nextInt();
+            int nextChoice = Integer.parseInt(scanner.nextLine());
             switch (nextChoice)
             {
                 case 1 -> currentRoad = CreateRoadFromUser(currentRoad);
@@ -82,7 +117,7 @@ public class Main {
         while (roadLength <= 2)
         {
             System.out.println("Road Length(3-15): ");
-            roadLength = scanner.nextInt();
+            roadLength = GetUserInt(3, 15);
         }
 
         Road.DIRECTION direction;
@@ -262,7 +297,7 @@ public class Main {
     {
         int time = 0;
         System.out.print("Set time scale in milliseconds: ");
-        int speedOfSim = scanner.nextInt();
+        int speedOfSim = Integer.parseInt(scanner.nextLine());
         int cycleNumber = 1;
         while (vehicleManager.GetVehicleCount() > 0) {
             System.out.println();
@@ -289,7 +324,7 @@ public class Main {
         {
             System.out.println("1)North\n2)East\n3)South\n4)West");
             System.out.println("Input: ");
-            int directionChoice = scanner.nextInt();
+            int directionChoice = Integer.parseInt(scanner.nextLine());
             if (directionChoice >= Road.DIRECTION.NORTH.ordinal() + 1 && directionChoice <= Road.DIRECTION.WEST.ordinal() + 1)
                 direction = Road.DIRECTION.values()[directionChoice - 1];
         }
@@ -304,7 +339,7 @@ public class Main {
         {
             System.out.println("1)Yes\n2)No");
             System.out.println("Input: ");
-            int userInput = scanner.nextInt();
+            int userInput = Integer.parseInt(scanner.nextLine());
             switch (userInput)
             {
                 case 1 -> {
@@ -322,11 +357,11 @@ public class Main {
     public static int GetUserInt(int min, int max)
     {
         System.out.println("Input(" + min + " - " + max + "): ");
-        int userInput = scanner.nextInt();
+        int userInput = Integer.parseInt(scanner.nextLine());
         while(userInput < min || userInput > max)
         {
             System.out.println("Input(" + min + " - " + max + "): ");
-            userInput = scanner.nextInt();
+            userInput = Integer.parseInt(scanner.nextLine());
         }
         return userInput;
     }

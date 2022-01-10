@@ -2,16 +2,19 @@ package TrafficSimulator;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.io.IOException;
 import FileManagement.FileManager;
 
 public class RoadManager {
     private ArrayList<Road> roads;
     private ArrayList<Intersection> intersections;
+    private FileManager fileManager;
 
-    public RoadManager()
+    public RoadManager(FileManager fileManager)
     {
         roads = new ArrayList<>();
         intersections = new ArrayList<>();
+        this.fileManager = fileManager;
     }
 
     public Road AddRoad(int length, Road.DIRECTION direction, Road toConnect)
@@ -31,6 +34,7 @@ public class RoadManager {
             //toConnect.Connect(toReturn);
         }
         roads.add(toReturn);
+        fileManager.AddRoadToBuffer(toReturn, toConnect);
         return toReturn;
     }
 
@@ -42,6 +46,7 @@ public class RoadManager {
             toReturn.ConnectRoad(toConnect);
         }
         intersections.add(toReturn);
+        fileManager.AddFourWayIntersectionToBuffer(toReturn, toConnect);
         return toReturn;
     }
 
@@ -53,7 +58,77 @@ public class RoadManager {
             toReturn.ConnectRoad(toConnect);
         }
         intersections.add(toReturn);
+        fileManager.AddThreeWayIntersectionToBuffer(toReturn, toConnect);
         return toReturn;
+    }
+
+    public void CreateRoadFromFile(ArrayList<String> instructions)
+    {
+        for(String instruction: instructions)
+        {
+            String[] parts = instruction.split("-");
+            int saveId = Integer.parseInt(parts[0]);
+            char roadType = parts[1].charAt(0);
+            switch (roadType)
+            {
+                case 'R':
+                    int roadLength = Integer.parseInt(parts[2]);
+                    Road.DIRECTION direction = Road.DIRECTION.valueOf(parts[3]);
+                    Road toConnect = null;
+                    if(parts.length > 4)
+                    {
+                        int connectingSaveId = Integer.parseInt(parts[4]);
+
+                        TrafficObject trafficObject = fileManager.GetTrafficObject(connectingSaveId);
+                        Road trialRoad = null;
+                        try{
+                            trialRoad = (Road)trafficObject;
+                        } catch (Exception e) { }
+
+                        if(trialRoad != null)
+                            toConnect = trialRoad;
+                        else
+                        {
+                            trafficObject = fileManager.GetTrafficObject(connectingSaveId);
+                            IntersectionFourWay trialFourWayIntersection = null;
+                            try{
+                                trialFourWayIntersection = (IntersectionFourWay)trafficObject;
+                            } catch (Exception e) { }
+
+                            if(trialFourWayIntersection != null)
+                            {
+                                toConnect = trialFourWayIntersection.GetRoad(direction);
+                            }
+                            else
+                            {
+                                trafficObject = fileManager.GetTrafficObject(connectingSaveId);
+                                IntersectionThreeWay trialThreeWayIntersection = null;
+                                try{
+                                    trialThreeWayIntersection = (IntersectionThreeWay)trafficObject;
+                                } catch (Exception e) { }
+
+                                if(trialThreeWayIntersection != null)
+                                {
+                                    toConnect = trialThreeWayIntersection.GetRoad(direction);
+                                }
+                            }
+                        }
+                    }
+                    Road newRoad = AddRoad(roadLength, direction, toConnect);
+                    break;
+                case '4':
+                    toConnect = null;
+                    if(parts.length > 2)
+                    {
+                        int connectingSaveId = Integer.parseInt(parts[2]);
+                        toConnect = (Road)fileManager.GetTrafficObject(connectingSaveId);
+                    }
+                    IntersectionFourWay newFourWay = AddFourWayIntersection(toConnect);
+                    break;
+                case '3':
+                    break;
+            }
+        }
     }
 
     public Segment GetRandomSegment()

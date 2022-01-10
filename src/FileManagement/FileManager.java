@@ -10,18 +10,21 @@ import java.util.Scanner;
 import TrafficSimulator.*;
 
 public class FileManager {
-    final String fileName = "SaveFile.txt";
+    public final String fileName = "SaveFile.txt";
     private ArrayList<String> buffers;
     private int saveIndex;
+    private ArrayList<TrafficObject> trafficObjects;
 
     public FileManager()
     {
         buffers = new ArrayList<String>();
         saveIndex = 0;
+        trafficObjects = new ArrayList<TrafficObject>();
     }
 
     public void AddRoadToBuffer(Road road, Road toConnect)
     {
+        trafficObjects.add(road);
         road.SetSaveID(saveIndex);
         String toSave = String.valueOf(saveIndex) + "-R-" +
                 road.GetLength() + "-" +
@@ -33,6 +36,7 @@ public class FileManager {
 
     public void AddFourWayIntersectionToBuffer(IntersectionFourWay intersectionFourWay, Road toConnect)
     {
+        trafficObjects.add(intersectionFourWay);
         intersectionFourWay.SetSaveID(saveIndex);
         String toSave = String.valueOf(saveIndex) + "-4" +
                 (toConnect == null ? "" : "-" + String.valueOf(toConnect.GetSaveID()));
@@ -59,7 +63,6 @@ public class FileManager {
         }
         catch(IOException e){
             System.out.println("Unable to save road data from " + fileName);
-            e.printStackTrace();
         }
     }
 
@@ -80,7 +83,6 @@ public class FileManager {
             scanner.close();
         } catch (FileNotFoundException e) {
             System.out.println("File " + fileName + " is not found.");
-            e.printStackTrace();
         }
         return toReturn;
     }
@@ -88,5 +90,10 @@ public class FileManager {
     public ArrayList<String> LoadDefaultFile()
     {
         return LoadFile(this.fileName);
+    }
+
+    public TrafficObject GetTrafficObject(int index)
+    {
+        return trafficObjects.size() > index ? trafficObjects.get(index) : null;
     }
 }
