@@ -1,3 +1,4 @@
+import FileManagement.FileManager;
 import TrafficSimulator.*;
 
 import java.util.Scanner;
@@ -6,11 +7,13 @@ public class Main {
     public static Scanner scanner;
     public static RoadManager roadManager;
     public static VehicleManager vehicleManager;
+    public static FileManager fileManager;
 
     public static void main(String[] args) {
         scanner = new Scanner(System.in);
         roadManager = new RoadManager();
         vehicleManager = new VehicleManager();
+        fileManager = new FileManager();
 
         System.out.println("Welcome to Traffic Simulator 1.0");
         System.out.println("Would you like to use preset road?");
@@ -24,11 +27,14 @@ public class Main {
             CreateRoads();
         }
 
-        roadManager.SaveFile();
-
         CreateVehicles();
 
         StartSimulation();
+    }
+
+    public static void LoadPresetFile()
+    {
+
     }
 
     public static void CreatePresetRoads()

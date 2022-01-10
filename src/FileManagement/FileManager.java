@@ -2,7 +2,11 @@ package FileManagement;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
+
 import TrafficSimulator.*;
 
 public class FileManager {
@@ -41,7 +45,7 @@ public class FileManager {
 
     }
 
-    public void SaveFile()
+    public void SaveFile(String fileName)
     {
         try
         {
@@ -59,4 +63,30 @@ public class FileManager {
         }
     }
 
+    public void SaveDefaultFile()
+    {
+        SaveFile(this.fileName);
+    }
+
+    public ArrayList<String> LoadFile(String fileName)
+    {
+        ArrayList<String> toReturn = new ArrayList<String>();
+        try {
+            File file = new File(fileName);
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNextLine()) {
+                toReturn.add(scanner.nextLine());
+            }
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("File " + fileName + " is not found.");
+            e.printStackTrace();
+        }
+        return toReturn;
+    }
+
+    public ArrayList<String> LoadDefaultFile()
+    {
+        return LoadFile(this.fileName);
+    }
 }
