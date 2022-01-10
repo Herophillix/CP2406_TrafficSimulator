@@ -33,7 +33,7 @@ public class RoadManager {
             //toConnect.Connect(toReturn);
         }
         roads.add(toReturn);
-        fileManager.AddRoadToBuffer(length, direction, toConnect);
+        fileManager.AddRoadToBuffer(toReturn, toConnect);
         return toReturn;
     }
 
@@ -45,6 +45,7 @@ public class RoadManager {
             toReturn.ConnectRoad(toConnect);
         }
         intersections.add(toReturn);
+        fileManager.AddFourWayIntersectionToBuffer(toReturn, toConnect);
         return toReturn;
     }
 
@@ -56,6 +57,7 @@ public class RoadManager {
             toReturn.ConnectRoad(toConnect);
         }
         intersections.add(toReturn);
+        fileManager.AddThreeWayIntersectionToBuffer(toReturn, toConnect);
         return toReturn;
     }
 

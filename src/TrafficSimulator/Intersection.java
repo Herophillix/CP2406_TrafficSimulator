@@ -71,4 +71,15 @@ public abstract class Intersection extends TrafficObject{
         }
         return null;
     }
+
+    @Override
+    public void SetSaveID(int saveId)
+    {
+        this.saveId = saveId;
+        for(RoadIntersection intersection : roadIntersections)
+        {
+            if(intersection != null)
+                intersection.GetRoad().SetSaveID(saveId);
+        }
+    }
 }

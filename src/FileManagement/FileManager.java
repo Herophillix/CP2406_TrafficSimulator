@@ -8,15 +8,37 @@ import TrafficSimulator.*;
 public class FileManager {
     final String fileName = "SaveFile.txt";
     private ArrayList<String> buffers;
+    private int saveIndex;
 
     public FileManager()
     {
         buffers = new ArrayList<String>();
+        saveIndex = 0;
     }
 
-    public void AddRoadToBuffer(int length, Road.DIRECTION direction, Road toConnect)
+    public void AddRoadToBuffer(Road road, Road toConnect)
     {
-        buffers.add("R-" + length + "-" + direction.name());
+        road.SetSaveID(saveIndex);
+        String toSave = String.valueOf(saveIndex) + "-R-" +
+                road.GetLength() + "-" +
+                road.GetDirection().name() +
+                (toConnect == null ? "" : "-" + String.valueOf(toConnect.GetSaveID()));
+        buffers.add(toSave);
+        ++saveIndex;
+    }
+
+    public void AddFourWayIntersectionToBuffer(IntersectionFourWay intersectionFourWay, Road toConnect)
+    {
+        intersectionFourWay.SetSaveID(saveIndex);
+        String toSave = String.valueOf(saveIndex) + "-4" +
+                (toConnect == null ? "" : "-" + String.valueOf(toConnect.GetSaveID()));
+        buffers.add(toSave);
+        ++saveIndex;
+    }
+
+    public void AddThreeWayIntersectionToBuffer(IntersectionThreeWay intersectionThreeWay, Road toConnect)
+    {
+
     }
 
     public void SaveFile()

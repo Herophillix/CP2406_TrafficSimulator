@@ -24,6 +24,8 @@ public class Main {
             CreateRoads();
         }
 
+        roadManager.SaveFile();
+
         CreateVehicles();
 
         StartSimulation();
@@ -44,7 +46,6 @@ public class Main {
                 roadManager.AddRoad(5, intersectionRoad.GetDirection(), intersectionRoad);
             }
         }
-        roadManager.SaveFile();
     }
 
     public static void CreateRoads()
