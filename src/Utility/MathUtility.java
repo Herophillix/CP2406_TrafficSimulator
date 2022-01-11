@@ -1,4 +1,4 @@
-package TrafficSimulator;
+package Utility;
 
 public class MathUtility {
     public static int Clamp(int value, int min, int max)

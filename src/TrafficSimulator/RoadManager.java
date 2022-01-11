@@ -2,8 +2,11 @@ package TrafficSimulator;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.io.IOException;
+
 import FileManagement.FileManager;
+import GUI.TrafficFrame;
+import Utility.Vector2;
+import java.awt.*;
 
 public class RoadManager {
     private ArrayList<Road> roads;
@@ -32,6 +35,11 @@ public class RoadManager {
                 }
             }
             //toConnect.Connect(toReturn);
+            toReturn.SetPosition(toConnect.position.Add(toConnect.position));
+        }
+        else
+        {
+            toReturn.SetPosition(new Vector2(TrafficFrame.STARTING_X, TrafficFrame.STARTING_Y));
         }
         roads.add(toReturn);
         fileManager.AddRoadToBuffer(toReturn, toConnect);

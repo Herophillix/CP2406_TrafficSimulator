@@ -1,5 +1,7 @@
 package TrafficSimulator;
 
+import Utility.MathUtility;
+
 public class Motorbike extends Vehicle {
     public Motorbike(int id, Segment currentSegment, int speed)
     {

@@ -1,5 +1,10 @@
 package TrafficSimulator;
 
+import Utility.MathUtility;
+import Utility.Vector2;
+
+import java.awt.*;
+
 public class Road extends TrafficObject{
     public static final int MIN_LENGTH = 3;
     public enum DIRECTION {
@@ -26,10 +31,12 @@ public class Road extends TrafficObject{
             case NORTH, SOUTH -> {
                 lanes[0] = new Lane(0, GetInfo(), this.length, DIRECTION.NORTH);
                 lanes[1] = new Lane(1, GetInfo(), this.length, DIRECTION.SOUTH);
+                this.scale = new Vector2(SCALE, length * SCALE);
             }
             case EAST, WEST -> {
                 lanes[0] = new Lane(0, GetInfo(), this.length, DIRECTION.EAST);
                 lanes[1] = new Lane(1, GetInfo(), this.length, DIRECTION.WEST);
+                this.scale = new Vector2(length * SCALE, SCALE);
             }
         }
     }
@@ -85,5 +92,23 @@ public class Road extends TrafficObject{
     {
         // Get random segments from one of the lanes
         return lanes[(int)Math.round(Math.random())].GetSegments(Lane.SEGMENT_POSITION.FIRST, MathUtility.Clamp(count, 1, length));
+    }
+
+    @Override
+    public void Draw(Graphics g)
+    {
+        switch (direction)
+        {
+            case EAST, WEST:
+            {
+                g.setColor(Color.black);
+                g.fillRect(position.x, position.y, scale.x, scale.y);
+            }
+            case NORTH, SOUTH:
+            {
+                g.setColor(Color.black);
+                g.fillRect(position.x, position.y, scale.x, scale.y);
+            }
+        }
     }
 }

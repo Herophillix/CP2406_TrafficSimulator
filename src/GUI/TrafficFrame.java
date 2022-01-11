@@ -6,6 +6,11 @@ import java.awt.event.*;
 import java.util.*;
 
 public class TrafficFrame extends JFrame{
+    private static final int SCREEN_WIDTH = 1366;
+    private static final int SCREEN_HEIGHT = 768;
+    public static final int STARTING_X = 0;
+    public static final int STARTING_Y = SCREEN_HEIGHT / 2;
+
     public TrafficMenuBar menuBar;
     public TrafficFileChooser fileChooser;
     private TrafficOptionPane optionPane;
@@ -26,7 +31,7 @@ public class TrafficFrame extends JFrame{
     private void Initialize()
     {
         this.setTitle("Traffic Simulator 2.0");
-        this.setSize(1366, 768);
+        this.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());

@@ -1,6 +1,5 @@
 import FileManagement.FileManager;
 import TrafficSimulator.*;
-import GUI.TrafficFrame;
 
 import java.util.Scanner;
 import java.util.ArrayList;
