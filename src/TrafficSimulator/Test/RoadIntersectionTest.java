@@ -1,5 +1,7 @@
-package TrafficSimulator;
+package TrafficSimulator.Test;
 
+import TrafficSimulator.Road;
+import TrafficSimulator.RoadIntersection;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
