@@ -109,6 +109,23 @@ public class FileManager {
         }
     }
 
+    public void SaveFile(File file)
+    {
+        try
+        {
+            FileWriter writer = new FileWriter(file);
+            for(String buffer: buffers)
+            {
+                writer.write(buffer + "\n");
+            }
+            writer.close();
+            System.out.println("File saved as " + file.getName());
+        }
+        catch(IOException e){
+            System.out.println("Unable to save road data from " + file.getName());
+        }
+    }
+
     public void SaveDefaultFile()
     {
         SaveFile(this.fileName);
@@ -126,6 +143,22 @@ public class FileManager {
             scanner.close();
         } catch (FileNotFoundException e) {
             System.out.println("File " + fileName + " is not found.");
+        }
+        return toReturn;
+    }
+
+    public ArrayList<String> LoadFile(File file)
+    {
+        ArrayList<String> toReturn = new ArrayList<String>();
+        try {
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNextLine()) {
+                toReturn.add(scanner.nextLine());
+            }
+            System.out.println("File " + file.getName() + " loaded");
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("File is not found.");
         }
         return toReturn;
     }

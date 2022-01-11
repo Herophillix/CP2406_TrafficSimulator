@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.io.File;
 import java.awt.event.*;
 import java.util.*;
+import javax.swing.filechooser.*;
 
 public class TrafficFileChooser extends JFileChooser{
 
@@ -13,7 +14,11 @@ public class TrafficFileChooser extends JFileChooser{
     public TrafficFileChooser()
     {
         onFileOpened = new ArrayList<ActionListener>();
+        onFileSaved = new ArrayList<ActionListener>();
         setCurrentDirectory(new File("."));
+
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Text file(.txt)", "txt");
+        setFileFilter(filter);
     }
 
     public void OpenFile()
