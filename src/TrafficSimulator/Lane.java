@@ -1,5 +1,7 @@
 package TrafficSimulator;
 
+import Utility.Vector2;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -20,6 +22,18 @@ public class Lane extends TrafficObject{
     {
         super(id, name + "-" + direction.name() + "_Lane");
         this.direction = direction;
+        Vector2 reducedScale = new Vector2(1,1);
+
+        switch (direction) {
+            case NORTH, SOUTH -> {
+                this.scale = new Vector2(GRAPHIC_SCALE / 2, length * GRAPHIC_SCALE);
+                reducedScale = new Vector2(GRAPHIC_SCALE / 2, GRAPHIC_SCALE).Divide(10).Multiply(8);
+            }
+            case EAST, WEST -> {
+                this.scale = new Vector2(length * GRAPHIC_SCALE, GRAPHIC_SCALE / 2);
+                reducedScale = new Vector2(GRAPHIC_SCALE, GRAPHIC_SCALE / 2).Divide(10).Multiply(8);
+            }
+        }
 
         // Create segments based on the length of the road
         roadSegments = new ArrayList<>();
@@ -27,7 +41,7 @@ public class Lane extends TrafficObject{
         for(int i = 0; i < length; ++i)
         {
             // Connect the segments to one another
-            Segment newSegment = new Segment((length - 1) - i, GetName() + "-");
+            Segment newSegment = new Segment((length - 1) - i, GetName() + "-", reducedScale);
             newSegment.AddNextSegment(oldSegment);
 
             this.roadSegments.add(newSegment);

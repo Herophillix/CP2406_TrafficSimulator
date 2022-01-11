@@ -1,6 +1,7 @@
 package TrafficSimulator;
 
 import Utility.MathUtility;
+import Utility.Vector2;
 
 public class Car extends Vehicle {
     public Car(int id, Segment currentSegment, int speed)

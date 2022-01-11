@@ -1,5 +1,7 @@
 package TrafficSimulator;
 
+import Utility.Vector2;
+
 import java.util.ArrayList;
 
 public class Segment extends TrafficObject {
@@ -7,10 +9,11 @@ public class Segment extends TrafficObject {
     private ArrayList<Segment> nextSegments;
     private TrafficLight trafficLight;
 
-    public Segment(int id, String name) {
+    public Segment(int id, String name, Vector2 scale) {
         super(id, name + "Segment");
         this.currentVehicles = new ArrayList<>();
         this.nextSegments = new ArrayList<>();
+        this.scale = new Vector2(scale.x, scale.y);
     }
 
     public void AssignVehicle(Vehicle vehicle) {
