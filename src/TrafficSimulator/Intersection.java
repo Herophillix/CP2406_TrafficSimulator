@@ -1,5 +1,9 @@
 package TrafficSimulator;
 
+import Utility.Vector2;
+
+import java.awt.*;
+
 public abstract class Intersection extends TrafficObject{
     private RoadIntersection[] roadIntersections;
 
@@ -7,6 +11,13 @@ public abstract class Intersection extends TrafficObject{
     {
         super(id, name);
         roadIntersections = new RoadIntersection[Road.DIRECTION.DIRECTION_COUNT.ordinal()];
+        scale = new Vector2(GRAPHIC_SCALE, GRAPHIC_SCALE);
+    }
+
+    @Override
+    public void InitializeJPanelAttributes()
+    {
+        setBackground(Color.GRAY);
     }
 
     public void AddRoadIntersection(RoadIntersection roadIntersection, Road.DIRECTION direction)
@@ -81,5 +92,25 @@ public abstract class Intersection extends TrafficObject{
             if(intersection != null)
                 intersection.GetRoad().SetSaveID(saveId);
         }
+    }
+
+    @Override
+    public void SetJPanelBounds(Vector2 position, Vector2 scale)
+    {
+        for(RoadIntersection roadIntersection: roadIntersections)
+        {
+            if(roadIntersection != null)
+            {
+                Road road = roadIntersection.GetRoad();
+                switch (road.GetDirection())
+                {
+                    case NORTH -> road.SetPosition(position.Minus(new Vector2(0, road.scale.y)));
+                    case EAST -> road.SetPosition(position.Add(new Vector2(scale.x, 0)));
+                    case SOUTH -> road.SetPosition(position.Add(new Vector2(0, scale.y)));
+                    case WEST -> road.SetPosition(position.Minus(new Vector2(road.scale.x, 0)));
+                }
+            }
+        }
+        setBounds(position.x, position.y, scale.x, scale.y);
     }
 }

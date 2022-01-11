@@ -3,9 +3,10 @@ package TrafficSimulator;
 import Utility.Vector2;
 
 import java.awt.*;
+import javax.swing.*;
 
-public abstract class TrafficObject {
-    protected final int SCALE = 40;
+public abstract class TrafficObject extends JPanel {
+    protected static final int GRAPHIC_SCALE = 30;
     private int id;
     private String name;
     protected int saveId;
@@ -18,6 +19,12 @@ public abstract class TrafficObject {
         this.id = id;
         this.name = name;
         position = new Vector2(0,0);
+        InitializeJPanelAttributes();
+    }
+
+    public void InitializeJPanelAttributes()
+    {
+
     }
 
     public void SetSaveID(int saveId) { this.saveId = saveId; }
@@ -36,9 +43,10 @@ public abstract class TrafficObject {
     {
         this.position.x = position.x;
         this.position.y = position.y;
+        SetJPanelBounds(position, scale);
     }
 
-    public void Draw(Graphics g)
+    public void SetJPanelBounds(Vector2 position, Vector2 scale)
     {
 
     }

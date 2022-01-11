@@ -31,14 +31,20 @@ public class Road extends TrafficObject{
             case NORTH, SOUTH -> {
                 lanes[0] = new Lane(0, GetInfo(), this.length, DIRECTION.NORTH);
                 lanes[1] = new Lane(1, GetInfo(), this.length, DIRECTION.SOUTH);
-                this.scale = new Vector2(SCALE, length * SCALE);
+                this.scale = new Vector2(GRAPHIC_SCALE, length * GRAPHIC_SCALE);
             }
             case EAST, WEST -> {
                 lanes[0] = new Lane(0, GetInfo(), this.length, DIRECTION.EAST);
                 lanes[1] = new Lane(1, GetInfo(), this.length, DIRECTION.WEST);
-                this.scale = new Vector2(length * SCALE, SCALE);
+                this.scale = new Vector2(length * GRAPHIC_SCALE, GRAPHIC_SCALE);
             }
         }
+    }
+
+    @Override
+    public void InitializeJPanelAttributes()
+    {
+        setBackground(Color.GRAY);
     }
 
     public int GetLength() { return length; }
@@ -95,20 +101,8 @@ public class Road extends TrafficObject{
     }
 
     @Override
-    public void Draw(Graphics g)
+    public void SetJPanelBounds(Vector2 position, Vector2 scale)
     {
-        switch (direction)
-        {
-            case EAST, WEST:
-            {
-                g.setColor(Color.black);
-                g.fillRect(position.x, position.y, scale.x, scale.y);
-            }
-            case NORTH, SOUTH:
-            {
-                g.setColor(Color.black);
-                g.fillRect(position.x, position.y, scale.x, scale.y);
-            }
-        }
+        setBounds(position.x, position.y, scale.x, scale.y);
     }
 }

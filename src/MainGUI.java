@@ -44,6 +44,7 @@ public class MainGUI {
     private static void CreateNewRoad()
     {
         roadManager.AddRoad(5, Road.DIRECTION.EAST, null);
+        roadManager.AddRoadToFrame(frame);
     }
 
     private static void SaveRoad(Object desiredFile)
@@ -61,6 +62,7 @@ public class MainGUI {
             File file = (File)loadedFile;
             ArrayList<String> instructions = fileManager.LoadFile(file);
             roadManager.CreateRoadFromFile(instructions);
+            roadManager.AddRoadToFrame(frame);
         } catch (Exception e) { };
     }
 
@@ -74,6 +76,7 @@ public class MainGUI {
         instructions.add("[4]:[R-5-SOUTH]:[1]");
 
         roadManager.CreateRoadFromFile(instructions);
+        roadManager.AddRoadToFrame(frame);
     }
 
     //Simulation MenuBar

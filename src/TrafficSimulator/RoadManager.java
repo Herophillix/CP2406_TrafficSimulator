@@ -35,7 +35,13 @@ public class RoadManager {
                 }
             }
             //toConnect.Connect(toReturn);
-            toReturn.SetPosition(toConnect.position.Add(toConnect.position));
+            switch (direction)
+            {
+                case NORTH -> toReturn.SetPosition(toConnect.position.Minus(new Vector2(0, toReturn.scale.y)));
+                case EAST -> toReturn.SetPosition(toConnect.position.Add(new Vector2(toConnect.scale.x, 0)));
+                case SOUTH -> toReturn.SetPosition(toConnect.position.Add(new Vector2(0, toConnect.scale.y)));
+                case WEST -> toReturn.SetPosition(toConnect.position.Minus(new Vector2(toReturn.scale.x, 0)));
+            }
         }
         else
         {
@@ -52,6 +58,43 @@ public class RoadManager {
         if(toConnect != null)
         {
             toReturn.ConnectRoad(toConnect);
+
+            Vector2 squareScale = toReturn.scale;
+
+            // Direction of where the road is coming from
+            Road.DIRECTION direction = toConnect.GetDirection();
+
+            switch (direction)
+            {
+                case NORTH:
+                {
+                    Road connectingRoadFromIntersection = toReturn.GetRoad(Road.DIRECTION.OppositeDirection(direction));
+                    Vector2 valueToMove = new Vector2(0, connectingRoadFromIntersection.scale.y + squareScale.y);
+                    toReturn.SetPosition(toConnect.position.Minus(valueToMove));
+                    break;
+                }
+                case EAST:
+                {
+                    Road connectingRoadFromIntersection = toReturn.GetRoad(Road.DIRECTION.OppositeDirection(direction));
+                    Vector2 valueToMove = new Vector2(toConnect.scale.x + connectingRoadFromIntersection.scale.x, 0);
+                    toReturn.SetPosition(toConnect.position.Add(valueToMove));
+                    break;
+                }
+                case SOUTH:
+                {
+                    Road connectingRoadFromIntersection = toReturn.GetRoad(Road.DIRECTION.OppositeDirection(direction));
+                    Vector2 valueToMove = new Vector2(0, toConnect.scale.y + connectingRoadFromIntersection.scale.y);
+                    toReturn.SetPosition(toConnect.position.Add(valueToMove));
+                    break;
+                }
+                case WEST:
+                {
+                    Road connectingRoadFromIntersection = toReturn.GetRoad(Road.DIRECTION.OppositeDirection(direction));
+                    Vector2 valueToMove = new Vector2(connectingRoadFromIntersection.scale.x + squareScale.x, 0);
+                    toReturn.SetPosition(toConnect.position.Minus(valueToMove));
+                    break;
+                }
+            }
         }
         intersections.add(toReturn);
         fileManager.AddFourWayIntersectionToBuffer(toReturn, toConnect);
@@ -64,6 +107,43 @@ public class RoadManager {
         if(toConnect != null)
         {
             toReturn.ConnectRoad(toConnect);
+
+            Vector2 squareScale = toReturn.scale;
+
+            // Direction of where the road is coming from
+            Road.DIRECTION direction = toConnect.GetDirection();
+
+            switch (direction)
+            {
+                case NORTH:
+                {
+                    Road connectingRoadFromIntersection = toReturn.GetRoad(Road.DIRECTION.OppositeDirection(direction));
+                    Vector2 valueToMove = new Vector2(0, connectingRoadFromIntersection.scale.y + squareScale.y);
+                    toReturn.SetPosition(toConnect.position.Minus(valueToMove));
+                    break;
+                }
+                case EAST:
+                {
+                    Road connectingRoadFromIntersection = toReturn.GetRoad(Road.DIRECTION.OppositeDirection(direction));
+                    Vector2 valueToMove = new Vector2(toConnect.scale.x + connectingRoadFromIntersection.scale.x, 0);
+                    toReturn.SetPosition(toConnect.position.Add(valueToMove));
+                    break;
+                }
+                case SOUTH:
+                {
+                    Road connectingRoadFromIntersection = toReturn.GetRoad(Road.DIRECTION.OppositeDirection(direction));
+                    Vector2 valueToMove = new Vector2(0, toConnect.scale.y + connectingRoadFromIntersection.scale.y);
+                    toReturn.SetPosition(toConnect.position.Add(valueToMove));
+                    break;
+                }
+                case WEST:
+                {
+                    Road connectingRoadFromIntersection = toReturn.GetRoad(Road.DIRECTION.OppositeDirection(direction));
+                    Vector2 valueToMove = new Vector2(connectingRoadFromIntersection.scale.x + squareScale.x, 0);
+                    toReturn.SetPosition(toConnect.position.Minus(valueToMove));
+                    break;
+                }
+            }
         }
         intersections.add(toReturn);
         fileManager.AddThreeWayIntersectionToBuffer(toReturn, directions, toConnect);
@@ -309,5 +389,26 @@ public class RoadManager {
         {
             intersection.UpdateRoadIntersections();
         }
+    }
+
+    public void AddRoadToFrame(TrafficFrame frame)
+    {
+        for(Road road: roads)
+        {
+            frame.add(road);
+        }
+        for(Intersection intersection: intersections)
+        {
+            frame.add(intersection);
+            for(int i = 0; i < Road.DIRECTION.DIRECTION_COUNT.ordinal(); ++i)
+            {
+                Road road = intersection.GetRoad(Road.DIRECTION.values()[i]);
+                if(road != null)
+                {
+                    frame.add(road);
+                }
+            }
+        }
+        frame.repaint();
     }
 }
