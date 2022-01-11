@@ -1,5 +1,6 @@
 import FileManagement.FileManager;
 import TrafficSimulator.*;
+import GUI.TrafficFrame;
 
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -15,6 +16,8 @@ public class Main {
         vehicleManager = new VehicleManager();
         fileManager = new FileManager();
         roadManager = new RoadManager(fileManager);
+
+        new TrafficFrame();
 
         System.out.println("Welcome to Traffic Simulator 1.0");
         System.out.println("Would you like to use preset road?");
