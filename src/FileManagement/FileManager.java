@@ -26,10 +26,16 @@ public class FileManager {
     {
         trafficObjects.add(road);
         road.SetSaveID(saveIndex);
-        String toSave = String.valueOf(saveIndex) + "-R-" +
-                road.GetLength() + "-" +
-                road.GetDirection().name() +
-                (toConnect == null ? "" : "-" + String.valueOf(toConnect.GetSaveID()));
+
+        ArrayList<String> roadInformation = new ArrayList<String>();
+        roadInformation.add(String.valueOf(saveIndex));
+        roadInformation.add("R-" + road.GetLength() + "-" + road.GetDirection().name());
+        if(toConnect != null)
+        {
+            roadInformation.add(String.valueOf(toConnect.GetSaveID()));
+        }
+
+        String toSave = GetSaveText(roadInformation);
         buffers.add(toSave);
         ++saveIndex;
     }
@@ -38,15 +44,52 @@ public class FileManager {
     {
         trafficObjects.add(intersectionFourWay);
         intersectionFourWay.SetSaveID(saveIndex);
-        String toSave = String.valueOf(saveIndex) + "-4" +
-                (toConnect == null ? "" : "-" + String.valueOf(toConnect.GetSaveID()));
+
+        ArrayList<String> roadInformation = new ArrayList<String>();
+        roadInformation.add(String.valueOf(saveIndex));
+        roadInformation.add("4");
+        if(toConnect != null)
+        {
+            roadInformation.add(String.valueOf(toConnect.GetSaveID() + "-" + Road.DIRECTION.OppositeDirection(toConnect.GetDirection()).name()));
+        }
+
+        String toSave = GetSaveText(roadInformation);
         buffers.add(toSave);
         ++saveIndex;
     }
 
-    public void AddThreeWayIntersectionToBuffer(IntersectionThreeWay intersectionThreeWay, Road toConnect)
+    public void AddThreeWayIntersectionToBuffer(IntersectionThreeWay intersectionThreeWay, Road.DIRECTION[] directions, Road toConnect)
     {
+        trafficObjects.add(intersectionThreeWay);
+        intersectionThreeWay.SetSaveID(saveIndex);
 
+        String directionsToSave = "";
+        for(int i = 0; i < directions.length; ++i)
+        {
+            directionsToSave = directionsToSave + directions[i].name() + (i == directions.length - 1 ? "" : ",");
+        }
+
+        ArrayList<String> roadInformation = new ArrayList<String>();
+        roadInformation.add(String.valueOf(saveIndex));
+        roadInformation.add("3-" + directionsToSave);
+        if(toConnect != null)
+        {
+            roadInformation.add(String.valueOf(toConnect.GetSaveID() + "-" + Road.DIRECTION.OppositeDirection(toConnect.GetDirection()).name()));
+        }
+
+        String toSave = GetSaveText(roadInformation);
+        buffers.add(toSave);
+        ++saveIndex;
+    }
+
+    private String GetSaveText(ArrayList<String> roadInformation)
+    {
+        String toReturn = "";
+        for(int i = 0; i < roadInformation.size(); ++i)
+        {
+            toReturn += "[" + roadInformation.get(i) + "]" + (i == roadInformation.size() - 1 ? "" : ":");
+        }
+        return toReturn;
     }
 
     public void SaveFile(String fileName)

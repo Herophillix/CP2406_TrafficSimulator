@@ -10,7 +10,7 @@ public class TrafficFrame extends JFrame{
     public TrafficFrame()
     {
         Initialize();
-        InitalizeFileChooser();
+        InitializeFileChooser();
         InitializeMenuBar();
 
         this.setVisible(true);
@@ -25,7 +25,7 @@ public class TrafficFrame extends JFrame{
         this.setLayout(new BorderLayout());
     }
 
-    private void InitalizeFileChooser()
+    private void InitializeFileChooser()
     {
         fileChooser = new TrafficFileChooser();
     }

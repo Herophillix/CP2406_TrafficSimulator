@@ -8,6 +8,7 @@ import java.util.*;
 public class TrafficFileChooser extends JFileChooser{
 
     private ArrayList<ActionListener> onFileOpened;
+    private ArrayList<ActionListener> onFileSaved;
 
     public TrafficFileChooser()
     {
@@ -32,4 +33,20 @@ public class TrafficFileChooser extends JFileChooser{
         onFileOpened.add(l);
     }
 
+    public void SaveFile()
+    {
+        int response = showSaveDialog(null);
+        if(response == JFileChooser.APPROVE_OPTION)
+        {
+            for(ActionListener action: onFileSaved)
+            {
+                action.actionPerformed(new ActionEvent(getSelectedFile(), ActionEvent.ACTION_PERFORMED, JFileChooser.APPROVE_SELECTION));
+            }
+        }
+    }
+
+    public void AddOnFileSavedCallback(ActionListener l)
+    {
+        onFileSaved.add(l);
+    }
 }

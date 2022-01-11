@@ -17,8 +17,6 @@ public class Main {
         fileManager = new FileManager();
         roadManager = new RoadManager(fileManager);
 
-        new TrafficFrame();
-
         System.out.println("Welcome to Traffic Simulator 1.0");
         System.out.println("Would you like to use preset road?");
         boolean usePresetRoad = GetUserBoolean();
@@ -51,11 +49,11 @@ public class Main {
         {
             System.out.println("Creating preset roads");
             instructions = new ArrayList<>();
-            instructions.add("0-R-5-EAST");
-            instructions.add("1-4-0");
-            instructions.add("2-R-5-NORTH-1");
-            instructions.add("3-R-5-EAST-1");
-            instructions.add("4-R-5-SOUTH-1");
+            instructions.add("[0]:[R-5-EAST]");
+            instructions.add("[1]:[4]:[0-WEST]");
+            instructions.add("[2]:[R-5-NORTH]:[1]");
+            instructions.add("[3]:[R-5-EAST]:[1]");
+            instructions.add("[4]:[R-5-SOUTH]:[1]");
         }
         roadManager.CreateRoadFromFile(instructions);
 
@@ -117,11 +115,9 @@ public class Main {
     public static Road CreateRoadFromUser(Road previousRoad)
     {
         int roadLength = -1;
-        while (roadLength <= 2)
-        {
-            System.out.println("Road Length(3-15): ");
-            roadLength = GetUserInt(3, 15);
-        }
+
+        System.out.println("Road Length(3-15): ");
+        roadLength = GetUserInt(3, 15);
 
         Road.DIRECTION direction;
         // If user has already created previous road, use its direction
