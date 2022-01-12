@@ -395,19 +395,11 @@ public class RoadManager {
     {
         for(Road road: roads)
         {
-            frame.add(road);
+            road.AddObjectToFrame(frame);
         }
         for(Intersection intersection: intersections)
         {
-            frame.add(intersection);
-            for(int i = 0; i < Road.DIRECTION.DIRECTION_COUNT.ordinal(); ++i)
-            {
-                Road road = intersection.GetRoad(Road.DIRECTION.values()[i]);
-                if(road != null)
-                {
-                    frame.add(road);
-                }
-            }
+            intersection.AddObjectToFrame(frame);
         }
         frame.repaint();
     }

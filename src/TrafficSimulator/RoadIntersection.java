@@ -1,5 +1,8 @@
 package TrafficSimulator;
 
+import GUI.TrafficFrame;
+import Utility.Vector2;
+
 import java.util.Collections;
 import java.util.Arrays;
 
@@ -38,7 +41,7 @@ public class RoadIntersection {
         Segment oldSegment = null;
         for(int i = 0; i < STRAIGHT_LENGTH; ++i)
         {
-            Segment segment = new Segment((STRAIGHT_LENGTH - 1) - i, objectName);
+            Segment segment = new Segment((STRAIGHT_LENGTH - 1) - i, objectName, new Vector2(0,0));
             segment.AddNextSegment(oldSegment);
 
             this.straightSegment[i] = segment;
@@ -73,7 +76,7 @@ public class RoadIntersection {
         Segment oldSegment = null;
         for(int i = 0; i < RIGHT_LENGTH; ++i)
         {
-            Segment segment = new Segment((RIGHT_LENGTH - 1) - i, objectName);
+            Segment segment = new Segment((RIGHT_LENGTH - 1) - i, objectName, new Vector2(0,0));
             segment.AddNextSegment(oldSegment);
 
             this.rightTurnSegment[i] = segment;
@@ -103,7 +106,7 @@ public class RoadIntersection {
         if(this.leftTurnSegment != null)
             return;
 
-        Segment segment = new Segment(0, road.GetLane(Road.DIRECTION.OppositeDirection(dirOutwardsIntersection)).GetName() + "-Left");
+        Segment segment = new Segment(0, road.GetLane(Road.DIRECTION.OppositeDirection(dirOutwardsIntersection)).GetName() + "-Left", new Vector2(0,0));
         road.ConnectSegment(segment, Lane.SEGMENT_POSITION.SECOND_LAST, Road.DIRECTION.OppositeDirection(dirOutwardsIntersection));
         this.leftTurnSegment = segment;
     }
@@ -158,5 +161,10 @@ public class RoadIntersection {
             straightTrafficLight.AddTick();
         if(rightTrafficLight != null)
             rightTrafficLight.AddTick();
+    }
+
+    public void AddObjectToFrame(TrafficFrame frame)
+    {
+        road.AddObjectToFrame(frame);
     }
 }

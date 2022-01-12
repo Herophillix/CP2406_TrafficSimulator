@@ -44,7 +44,7 @@ public class VehicleManager {
             }
             else
             {
-                vehicle.PrintInformation();
+                //vehicle.PrintInformation();
                 ++i;
             }
         }

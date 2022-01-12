@@ -2,6 +2,7 @@ package TrafficSimulator;
 
 import Utility.Vector2;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Segment extends TrafficObject {
@@ -16,11 +17,19 @@ public class Segment extends TrafficObject {
         this.scale = new Vector2(scale.x, scale.y);
     }
 
+    @Override
+    public void InitializeJPanelAttributes()
+    {
+        setBackground(Color.YELLOW);
+    }
+
     public void AssignVehicle(Vehicle vehicle) {
+        setBackground(vehicle.vehicleColor);
         currentVehicles.add(vehicle);
     }
 
     public void RemoveVehicle(Vehicle vehicle) {
+        setBackground(Color.GRAY);
         currentVehicles.remove(vehicle);
     }
 

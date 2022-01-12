@@ -1,5 +1,6 @@
 package TrafficSimulator;
 
+import GUI.TrafficFrame;
 import Utility.Vector2;
 
 import java.util.ArrayList;
@@ -90,4 +91,65 @@ public class Lane extends TrafficObject{
     }
 
     public Road GetConnectedRoad() { return connectedRoad; }
+
+    @Override
+    public void SetJPanelBounds(Vector2 position, Vector2 scale)
+    {
+        switch (direction)
+        {
+            case NORTH:
+            {
+                for(int i = 0; i < roadSegments.size(); ++i)
+                {
+                    Segment roadSegment = roadSegments.get(i);
+                    int xTranslate = (scale.x - roadSegment.scale.x) / 2;
+                    int yTranslate = (roadSegments.size() - 1 - i) * (scale.y / roadSegments.size()) + ((scale.y / roadSegments.size()) - roadSegment.scale.y) / 2;
+                    roadSegment.SetPosition(this.position.Add(new Vector2(xTranslate, yTranslate)));
+                }
+                break;
+            }
+            case EAST:
+            {
+                for(int i = 0; i < roadSegments.size(); ++i)
+                {
+                    Segment roadSegment = roadSegments.get(i);
+                    int xTranslate = i * (scale.x / roadSegments.size()) + ((scale.x / roadSegments.size()) - roadSegment.scale.x) / 2;
+                    int yTranslate = (scale.y - roadSegment.scale.y) / 2;
+                    roadSegment.SetPosition(this.position.Add(new Vector2(xTranslate, yTranslate)));
+                }
+                break;
+            }
+            case SOUTH:
+            {
+                for(int i = 0; i < roadSegments.size(); ++i)
+                {
+                    Segment roadSegment = roadSegments.get(i);
+                    int xTranslate = (scale.x - roadSegment.scale.x) / 2;
+                    int yTranslate = i * (scale.y / roadSegments.size()) + ((scale.y / roadSegments.size()) - roadSegment.scale.y) / 2;
+                    roadSegment.SetPosition(this.position.Add(new Vector2(xTranslate, yTranslate)));
+                }
+                break;
+            }
+            case WEST:
+            {
+                for(int i = 0; i < roadSegments.size(); ++i)
+                {
+                    Segment roadSegment = roadSegments.get(i);
+                    int xTranslate = (roadSegments.size() - 1 - i) * (scale.x / roadSegments.size()) + ( (scale.x / roadSegments.size()) - roadSegment.scale.x) / 2;
+                    int yTranslate = (scale.y - roadSegment.scale.y) / 2;
+                    roadSegment.SetPosition(this.position.Add(new Vector2(xTranslate, yTranslate)));
+                }
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void AddObjectToFrame(TrafficFrame frame)
+    {
+        for(Segment segment: roadSegments)
+        {
+            segment.AddObjectToFrame(frame);
+        }
+    }
 }

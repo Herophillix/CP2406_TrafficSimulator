@@ -1,5 +1,6 @@
 package TrafficSimulator;
 
+import GUI.TrafficFrame;
 import Utility.MathUtility;
 import Utility.Vector2;
 
@@ -104,5 +105,27 @@ public class Road extends TrafficObject{
     public void SetJPanelBounds(Vector2 position, Vector2 scale)
     {
         setBounds(position.x, position.y, scale.x, scale.y);
+        switch (direction) {
+            case EAST, WEST -> {
+                for (int i = 0; i < lanes.length; ++i) {
+                    lanes[i].SetPosition(new Vector2(position.x, position.y + i * (scale.y / 2)));
+                }
+            }
+            case NORTH, SOUTH -> {
+                for (int i = 0; i < lanes.length; ++i) {
+                    lanes[i].SetPosition(new Vector2(position.x + i * (scale.x / 2), position.y));
+                }
+            }
+        }
+    }
+
+    @Override
+    public void AddObjectToFrame(TrafficFrame frame)
+    {
+        for(Lane lane: lanes)
+        {
+            lane.AddObjectToFrame(frame);
+        }
+        frame.add(this);
     }
 }

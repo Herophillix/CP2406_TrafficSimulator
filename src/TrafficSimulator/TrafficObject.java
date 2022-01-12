@@ -1,5 +1,6 @@
 package TrafficSimulator;
 
+import GUI.TrafficFrame;
 import Utility.Vector2;
 
 import java.awt.*;
@@ -48,6 +49,11 @@ public abstract class TrafficObject extends JPanel {
 
     public void SetJPanelBounds(Vector2 position, Vector2 scale)
     {
+        setBounds(position.x, position.y, scale.x, scale.y);
+    }
 
+    public void AddObjectToFrame(TrafficFrame frame)
+    {
+        frame.add(this);
     }
 }

@@ -7,8 +7,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SegmentTest {
-    Segment segment1 = new Segment(0, "TrafficSimulator.Segment");
-    Segment segment2 = new Segment(1, "TrafficSimulator.Segment");
+    Segment segment1 = new Segment(0, "TrafficSimulator.Segment", null);
+    Segment segment2 = new Segment(1, "TrafficSimulator.Segment", null);
     Car car = new Car(0, segment1, 1);
 
     @Test

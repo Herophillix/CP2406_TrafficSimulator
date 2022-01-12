@@ -2,12 +2,15 @@ package TrafficSimulator;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.awt.*;
 
 public abstract class Vehicle extends TrafficObject{
     private float length;
     private float breadth;
     private int speed;
     private Segment[] currentSegments;
+
+    public Color vehicleColor;
 
     protected Vehicle(int id, String name)
     {
@@ -16,6 +19,8 @@ public abstract class Vehicle extends TrafficObject{
         this.breadth = 0.5f;
         this.speed = 1;
         this.currentSegments = new Segment[1];
+        Random rand = new Random();
+        vehicleColor = new Color(rand.nextInt(225) + 30, rand.nextInt(225) + 30, rand.nextInt(225) + 30);
     }
 
     public void SetLength(float length)
