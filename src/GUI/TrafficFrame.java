@@ -13,7 +13,7 @@ public class TrafficFrame extends JFrame{
 
     public TrafficMenuBar menuBar;
     public TrafficFileChooser fileChooser;
-    private TrafficOptionPane optionPane;
+    public TrafficOptionPane optionPane;
 
     private ArrayList<ActionListener> onStartSimulation;
 

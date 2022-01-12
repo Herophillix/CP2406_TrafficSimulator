@@ -5,6 +5,8 @@ import TrafficSimulator.RoadManager;
 import TrafficSimulator.Segment;
 import TrafficSimulator.VehicleManager;
 import java.io.*;
+import javax.swing.*;
+import java.awt.event.*;
 
 import java.util.ArrayList;
 
@@ -13,6 +15,7 @@ public class MainGUI {
     public static RoadManager roadManager;
     public static VehicleManager vehicleManager;
     public static FileManager fileManager;
+    private static Timer timer;
 
     public static void main(String[] args)
     {
@@ -26,6 +29,27 @@ public class MainGUI {
         InitializeSimulationCallbacks();
 
         frame.ShowFrame();
+    }
+
+    private static void Reset()
+    {
+        if(fileManager.saveIndex > 0)
+        {
+            frame.setVisible(false);
+            frame.dispose();
+
+            frame = new TrafficFrame();
+            vehicleManager = new VehicleManager();
+            fileManager = new FileManager();
+            roadManager = new RoadManager(fileManager);
+
+            InitializeMenuCallbacks();
+            InitializeFileCallbacks();
+            InitializeSimulationCallbacks();
+
+            frame.menuBar.ShowButtonsWithFile();
+            frame.ShowFrame();
+        }
     }
 
     // File MenuBar
@@ -43,6 +67,7 @@ public class MainGUI {
 
     private static void CreateNewRoad()
     {
+        Reset();
         roadManager.AddRoad(5, Road.DIRECTION.EAST, null);
         roadManager.AddRoadToFrame(frame);
     }
@@ -59,6 +84,7 @@ public class MainGUI {
     {
         try
         {
+            Reset();
             File file = (File)loadedFile;
             ArrayList<String> instructions = fileManager.LoadFile(file);
             roadManager.CreateRoadFromFile(instructions);
@@ -68,6 +94,7 @@ public class MainGUI {
 
     private static void CreatePresetRoad()
     {
+        Reset();
         ArrayList<String> instructions = new ArrayList<>();
         instructions.add("[0]:[R-5-EAST]");
         instructions.add("[1]:[4]:[0-WEST]");
@@ -136,20 +163,32 @@ public class MainGUI {
 
     private static void Simulate(int speedOfSim)
     {
-        int cycleNumber = 1;
-        while (vehicleManager.GetVehicleCount() > 0) {
-            roadManager.Simulate();
-            vehicleManager.Simulate();
-
-            //System.out.println(time + " Seconds have passed.\n");
-            ++cycleNumber;
-            try {
-                Thread.sleep(speedOfSim); // set speed of simulation.
-
-            } catch (InterruptedException sim) {
-                Thread.currentThread().interrupt();
+        timer = new Timer(speedOfSim, e -> {
+            if (vehicleManager.GetVehicleCount() > 0) {
+                roadManager.Simulate();
+                vehicleManager.Simulate();
             }
-        }
-        System.out.println("Simulation over");
+            else
+            {
+                timer.stop();
+                JOptionPane.showMessageDialog(null, "Simulation Over", "Message", JOptionPane.PLAIN_MESSAGE);
+            }
+            frame.repaint();
+        });
+        timer.start();
+//        while (vehicleManager.GetVehicleCount() > 0) {
+//            roadManager.Simulate();
+//            vehicleManager.Simulate();
+//
+//            //System.out.println(time + " Seconds have passed.\n");
+//            ++cycleNumber;
+//            try {
+//                Thread.sleep(speedOfSim); // set speed of simulation.
+//
+//            } catch (InterruptedException sim) {
+//                Thread.currentThread().interrupt();
+//            }
+//        }
+//        System.out.println("Simulation over");
     }
 }

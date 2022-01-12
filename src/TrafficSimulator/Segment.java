@@ -20,7 +20,7 @@ public class Segment extends TrafficObject {
     @Override
     public void InitializeJPanelAttributes()
     {
-        setBackground(Color.YELLOW);
+        setBackground(Color.GRAY);
     }
 
     public void AssignVehicle(Vehicle vehicle) {

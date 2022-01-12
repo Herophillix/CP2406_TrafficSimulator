@@ -12,7 +12,7 @@ import TrafficSimulator.*;
 public class FileManager {
     public final String fileName = "SaveFile.txt";
     private ArrayList<String> buffers;
-    private int saveIndex;
+    public int saveIndex;
     private ArrayList<TrafficObject> trafficObjects;
 
     public FileManager()
