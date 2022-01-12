@@ -18,7 +18,7 @@ public class TrafficOptionPane {
                 toReturn = Integer.parseInt(userInput);
                 if (toReturn < min || toReturn > max)
                 {
-                    JOptionPane.showMessageDialog(null, "Please input number within the range.", "Error", JOptionPane.ERROR_MESSAGE);
+                    ShowMessageDialog("Please input number within the range.", JOptionPane.ERROR_MESSAGE);
                 }
                 else
                 {
@@ -26,10 +26,26 @@ public class TrafficOptionPane {
                 }
             } catch (Exception e)
             {
-                JOptionPane.showMessageDialog(null, "Please input a valid number.", "Error", JOptionPane.ERROR_MESSAGE);
+                ShowMessageDialog("Please input a valid number.", JOptionPane.ERROR_MESSAGE);
             }
         }
         return toReturn;
+    }
+
+    public void ShowMessageDialog(String message, int messageType)
+    {
+        String title = "";
+        switch (messageType)
+        {
+            case JOptionPane.ERROR_MESSAGE -> title = "Error";
+            case JOptionPane.PLAIN_MESSAGE -> title = "Message";
+        }
+        JOptionPane.showMessageDialog(null, message, title, messageType);
+    }
+
+    public int ShowOptionDialog(String message, Object[] choices, Object defaultValue)
+    {
+        return JOptionPane.showOptionDialog(null, message, "", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, choices, defaultValue);
     }
 
 }

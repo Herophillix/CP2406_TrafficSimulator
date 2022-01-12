@@ -7,8 +7,8 @@ import Utility.Vector2;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import javax.swing.*;
-import javax.swing.border.*;
+
+import Main.MainGUI;
 
 public class Road extends TrafficObject implements MouseListener {
     public static final int MIN_LENGTH = 3;
@@ -139,7 +139,7 @@ public class Road extends TrafficObject implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        MainGUI.PromptAddRoadType(this);
     }
 
     @Override
@@ -154,12 +154,12 @@ public class Road extends TrafficObject implements MouseListener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        //setBackground(Color.CYAN);
+        if(GetConnectedRoad(direction) == null && !MainGUI.inSimulation)
+            setBackground(Color.CYAN);
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-
-        //setBackground(Color.GRAY);
+        setBackground(Color.GRAY);
     }
 }

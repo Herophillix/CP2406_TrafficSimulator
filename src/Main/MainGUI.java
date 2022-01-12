@@ -1,9 +1,9 @@
+package Main;
+
 import GUI.*;
 import FileManagement.*;
-import TrafficSimulator.Road;
-import TrafficSimulator.RoadManager;
-import TrafficSimulator.Segment;
-import TrafficSimulator.VehicleManager;
+import TrafficSimulator.*;
+
 import java.io.*;
 import javax.swing.*;
 import java.awt.event.*;
@@ -16,6 +16,7 @@ public class MainGUI {
     public static VehicleManager vehicleManager;
     public static FileManager fileManager;
     private static Timer timer;
+    public static boolean inSimulation = false;
 
     public static void main(String[] args)
     {
@@ -163,6 +164,7 @@ public class MainGUI {
 
     private static void Simulate(int speedOfSim)
     {
+        inSimulation = true;
         timer = new Timer(speedOfSim, e -> {
             if (vehicleManager.GetVehicleCount() > 0) {
                 roadManager.Simulate();
@@ -170,25 +172,87 @@ public class MainGUI {
             }
             else
             {
+                inSimulation = false;
                 timer.stop();
-                JOptionPane.showMessageDialog(null, "Simulation Over", "Message", JOptionPane.PLAIN_MESSAGE);
+                frame.optionPane.ShowMessageDialog("Simulation over", JOptionPane.PLAIN_MESSAGE);
             }
             frame.repaint();
         });
         timer.start();
-//        while (vehicleManager.GetVehicleCount() > 0) {
-//            roadManager.Simulate();
-//            vehicleManager.Simulate();
-//
-//            //System.out.println(time + " Seconds have passed.\n");
-//            ++cycleNumber;
-//            try {
-//                Thread.sleep(speedOfSim); // set speed of simulation.
-//
-//            } catch (InterruptedException sim) {
-//                Thread.currentThread().interrupt();
-//            }
-//        }
-//        System.out.println("Simulation over");
+    }
+
+    public static void PromptAddRoadType(Road toConnect)
+    {
+        if(inSimulation)
+            return;
+
+        String[] choices = new String[3];
+        choices[0] = "Road";
+        choices[1] = "4-Way Intersection";
+        choices[2] = "3-Way Intersection";
+
+        int userChoice = frame.optionPane.ShowOptionDialog("What type of road would you like to add?", choices, choices[0]);
+
+        switch (userChoice)
+        {
+            case 0 -> PromptAddRoad(toConnect);
+            case 1 -> PromptAdd4WayIntersection(toConnect);
+            case 2 -> PromptAdd3WayIntersection(toConnect);
+        }
+    }
+
+    public static void PromptAddRoad(Road toConnect)
+    {
+        int roadLength = frame.optionPane.GetUserInt("Input road length", 3, 15);
+        if(roadLength > 1)
+        {
+            Road newRoad = roadManager.AddRoad(roadLength, toConnect.GetDirection(), toConnect);
+            newRoad.AddObjectToFrame(frame);
+            frame.repaint();
+            frame.optionPane.ShowMessageDialog("Road added", JOptionPane.PLAIN_MESSAGE);
+        }
+    }
+
+    public static void PromptAdd4WayIntersection(Road toConnect)
+    {
+        IntersectionFourWay newFourWay = roadManager.AddFourWayIntersection(toConnect);
+        newFourWay.AddObjectToFrame(frame);
+        frame.repaint();
+        frame.optionPane.ShowMessageDialog("4-Way intersection added", JOptionPane.PLAIN_MESSAGE);
+    }
+
+    public static void PromptAdd3WayIntersection(Road toConnect)
+    {
+        Road.DIRECTION usedDirection = Road.DIRECTION.OppositeDirection(toConnect.GetDirection());
+        ArrayList<Road.DIRECTION> directions = new ArrayList<>();
+        for(Road.DIRECTION tmpDirection : Road.DIRECTION.values())
+        {
+            if(!(tmpDirection == usedDirection || tmpDirection == Road.DIRECTION.DIRECTION_COUNT))
+            {
+                directions.add(tmpDirection);
+            }
+        }
+
+        int userChoice = frame.optionPane.ShowOptionDialog("Choose Direction 1 of the intersection", directions.toArray(), directions.get(0));
+        if (userChoice != -1)
+        {
+            Road.DIRECTION otherDirection = directions.get(userChoice);
+            directions.remove(userChoice);
+
+            userChoice = frame.optionPane.ShowOptionDialog("Choose Direction 2 of the intersection", directions.toArray(), directions.get(0));
+
+            if(userChoice != -1)
+            {
+                Road.DIRECTION[] newDirections = new Road.DIRECTION[3];
+                newDirections[0] = usedDirection;
+                newDirections[1] = otherDirection;
+                newDirections[2] = directions.get(userChoice);
+
+                IntersectionThreeWay newThreeWay = roadManager.AddThreeWayIntersection(newDirections, toConnect);
+                newThreeWay.AddObjectToFrame(frame);
+                frame.repaint();
+                frame.optionPane.ShowMessageDialog("3-Way intersection added", JOptionPane.PLAIN_MESSAGE);
+            }
+        }
     }
 }
