@@ -113,6 +113,10 @@ public class FileManager {
     {
         try
         {
+            if(!file.getAbsolutePath().endsWith(".txt"))
+            {
+                file = new File(file + ".txt");
+            }
             FileWriter writer = new FileWriter(file);
             for(String buffer: buffers)
             {

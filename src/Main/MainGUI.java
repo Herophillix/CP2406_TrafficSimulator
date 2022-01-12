@@ -78,6 +78,7 @@ public class MainGUI {
         try
         {
             fileManager.SaveFile((File)desiredFile);
+            frame.optionPane.ShowMessageDialog("File saved", JOptionPane.PLAIN_MESSAGE);
         } catch (Exception e) { };
     }
 

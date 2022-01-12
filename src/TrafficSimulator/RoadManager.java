@@ -241,7 +241,7 @@ public class RoadManager {
             }
             else
             {
-                Road.DIRECTION direction = Road.DIRECTION.valueOf(connectingRoadInformation[1]);
+                Road.DIRECTION direction = Road.DIRECTION.OppositeDirection(Road.DIRECTION.valueOf(connectingRoadInformation[1]));
 
                 trafficObject = fileManager.GetTrafficObject(connectingSaveId);
                 IntersectionFourWay trialFourWay = null;
@@ -298,7 +298,7 @@ public class RoadManager {
             }
             else
             {
-                Road.DIRECTION direction = Road.DIRECTION.valueOf(connectingRoadInformation[1]);
+                Road.DIRECTION direction = Road.DIRECTION.OppositeDirection(Road.DIRECTION.valueOf(connectingRoadInformation[1]));
 
                 trafficObject = fileManager.GetTrafficObject(connectingSaveId);
                 IntersectionFourWay trialFourWay = null;
