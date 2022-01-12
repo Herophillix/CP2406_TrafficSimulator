@@ -3,10 +3,11 @@ package TrafficSimulator;
 import GUI.TrafficFrame;
 import Utility.Vector2;
 
+import java.awt.*;
 import java.util.Collections;
 import java.util.Arrays;
 
-public class RoadIntersection {
+public class RoadIntersection extends TrafficObject{
     private final int STRAIGHT_LENGTH = 2;
     private final int RIGHT_LENGTH = 2;
 
@@ -20,11 +21,13 @@ public class RoadIntersection {
 
     public RoadIntersection(Road.DIRECTION direction, String name)
     {
+        super(0, name);
         this.dirOutwardsIntersection = direction;
         this.road = new Road(direction.ordinal(), name + direction + "_", Road.MIN_LENGTH, direction);
         this.straightSegment = null;
         this.rightTurnSegment = null;
         this.leftTurnSegment = null;
+        this.scale = new Vector2(this.road.scale.x, this.road.scale.y);
     }
 
     public Road GetRoad() { return road; }
@@ -41,7 +44,7 @@ public class RoadIntersection {
         Segment oldSegment = null;
         for(int i = 0; i < STRAIGHT_LENGTH; ++i)
         {
-            Segment segment = new Segment((STRAIGHT_LENGTH - 1) - i, objectName, new Vector2(0,0));
+            Segment segment = new Segment((STRAIGHT_LENGTH - 1) - i, objectName, dirOutwardsIntersection);
             segment.AddNextSegment(oldSegment);
 
             this.straightSegment[i] = segment;
@@ -76,7 +79,7 @@ public class RoadIntersection {
         Segment oldSegment = null;
         for(int i = 0; i < RIGHT_LENGTH; ++i)
         {
-            Segment segment = new Segment((RIGHT_LENGTH - 1) - i, objectName, new Vector2(0,0));
+            Segment segment = new Segment((RIGHT_LENGTH - 1) - i, objectName, dirOutwardsIntersection);
             segment.AddNextSegment(oldSegment);
 
             this.rightTurnSegment[i] = segment;
@@ -106,7 +109,7 @@ public class RoadIntersection {
         if(this.leftTurnSegment != null)
             return;
 
-        Segment segment = new Segment(0, road.GetLane(Road.DIRECTION.OppositeDirection(dirOutwardsIntersection)).GetName() + "-Left", new Vector2(0,0));
+        Segment segment = new Segment(0, road.GetLane(Road.DIRECTION.OppositeDirection(dirOutwardsIntersection)).GetName() + "-Left", dirOutwardsIntersection);
         road.ConnectSegment(segment, Lane.SEGMENT_POSITION.SECOND_LAST, Road.DIRECTION.OppositeDirection(dirOutwardsIntersection));
         this.leftTurnSegment = segment;
     }
@@ -163,8 +166,50 @@ public class RoadIntersection {
             rightTrafficLight.AddTick();
     }
 
+    @Override
+    public void SetPosition(Vector2 position)
+    {
+        super.SetPosition(position);
+        road.SetPosition(new Vector2(position.x, position.y));
+        for(int i = 0; i < straightSegment.length; ++i)
+        {
+            switch (dirOutwardsIntersection)
+            {
+                case NORTH -> {
+                    Segment straight = straightSegment[i];
+                    int xTranslate = scale.x * 3 / 4 - straight.scale.x / 2;
+                    int yTranslate = GRAPHIC_SCALE * (straightSegment.length + i + 1) + (GRAPHIC_SCALE - straight.scale.y) / 2;
+                    straight.SetPosition(position.Add(new Vector2(xTranslate, yTranslate)));
+                }
+                case EAST -> {
+                    Segment straight = straightSegment[i];
+                    int xTranslate = GRAPHIC_SCALE * (- i - 1) - (GRAPHIC_SCALE / 2 - straight.scale.x) / 2;
+                    int yTranslate = scale.y * 3 / 4 - straight.scale.y / 2;
+                    straight.SetPosition(position.Add(new Vector2(xTranslate, yTranslate)));
+                }
+                case SOUTH -> {
+                    Segment straight = straightSegment[i];
+                    int xTranslate = scale.x / 4 - straight.scale.x / 2;
+                    int yTranslate = GRAPHIC_SCALE * (- i - 1) - (GRAPHIC_SCALE / 2 - straight.scale.y) / 2;
+                    straight.SetPosition(position.Add(new Vector2(xTranslate, yTranslate)));
+                }
+                case WEST -> {
+                    Segment straight = straightSegment[i];
+                    int xTranslate = GRAPHIC_SCALE * (straightSegment.length + i + 1) + (GRAPHIC_SCALE - straight.scale.x) / 2;
+                    int yTranslate = scale.y / 4 - straight.scale.y / 2;
+                    straight.SetPosition(position.Add(new Vector2(xTranslate, yTranslate)));
+                }
+            }
+        }
+    }
+
+    @Override
     public void AddObjectToFrame(TrafficFrame frame)
     {
+        for(Segment straight: straightSegment)
+        {
+            straight.AddObjectToFrame(frame);
+        }
         road.AddObjectToFrame(frame);
     }
 }

@@ -10,26 +10,37 @@ public class Segment extends TrafficObject {
     private ArrayList<Segment> nextSegments;
     private TrafficLight trafficLight;
 
-    public Segment(int id, String name, Vector2 scale) {
+    public Segment(int id, String name, Road.DIRECTION direction) {
         super(id, name + "Segment");
         this.currentVehicles = new ArrayList<>();
         this.nextSegments = new ArrayList<>();
-        this.scale = new Vector2(scale.x, scale.y);
+
+        switch (direction) {
+            case NORTH, SOUTH -> {
+                this.scale = new Vector2(GRAPHIC_SCALE / 2, GRAPHIC_SCALE).Divide(10).Multiply(8);
+            }
+            case EAST, WEST -> {
+                this.scale = new Vector2(GRAPHIC_SCALE, GRAPHIC_SCALE / 2).Divide(10).Multiply(8);
+            }
+        }
     }
 
     @Override
     public void InitializeJPanelAttributes()
     {
         setBackground(Color.GRAY);
+        setVisible(false);
     }
 
     public void AssignVehicle(Vehicle vehicle) {
         setBackground(vehicle.vehicleColor);
+        setVisible(true);
         currentVehicles.add(vehicle);
     }
 
     public void RemoveVehicle(Vehicle vehicle) {
         setBackground(Color.GRAY);
+        setVisible(false);
         currentVehicles.remove(vehicle);
     }
 

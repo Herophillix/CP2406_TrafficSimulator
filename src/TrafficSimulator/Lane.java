@@ -23,16 +23,13 @@ public class Lane extends TrafficObject{
     {
         super(id, name + "-" + direction.name() + "_Lane");
         this.direction = direction;
-        Vector2 reducedScale = new Vector2(1,1);
 
         switch (direction) {
             case NORTH, SOUTH -> {
                 this.scale = new Vector2(GRAPHIC_SCALE / 2, length * GRAPHIC_SCALE);
-                reducedScale = new Vector2(GRAPHIC_SCALE / 2, GRAPHIC_SCALE).Divide(10).Multiply(8);
             }
             case EAST, WEST -> {
                 this.scale = new Vector2(length * GRAPHIC_SCALE, GRAPHIC_SCALE / 2);
-                reducedScale = new Vector2(GRAPHIC_SCALE, GRAPHIC_SCALE / 2).Divide(10).Multiply(8);
             }
         }
 
@@ -42,7 +39,7 @@ public class Lane extends TrafficObject{
         for(int i = 0; i < length; ++i)
         {
             // Connect the segments to one another
-            Segment newSegment = new Segment((length - 1) - i, GetName() + "-", reducedScale);
+            Segment newSegment = new Segment((length - 1) - i, GetName() + "-", direction);
             newSegment.AddNextSegment(oldSegment);
 
             this.roadSegments.add(newSegment);
@@ -102,7 +99,7 @@ public class Lane extends TrafficObject{
                 for(int i = 0; i < roadSegments.size(); ++i)
                 {
                     Segment roadSegment = roadSegments.get(i);
-                    int xTranslate = (scale.x - roadSegment.scale.x) / 2;
+                    int xTranslate = scale.x - roadSegment.scale.x / 2;
                     int yTranslate = (roadSegments.size() - 1 - i) * (scale.y / roadSegments.size()) + ((scale.y / roadSegments.size()) - roadSegment.scale.y) / 2;
                     roadSegment.SetPosition(this.position.Add(new Vector2(xTranslate, yTranslate)));
                 }
@@ -114,7 +111,7 @@ public class Lane extends TrafficObject{
                 {
                     Segment roadSegment = roadSegments.get(i);
                     int xTranslate = i * (scale.x / roadSegments.size()) + ((scale.x / roadSegments.size()) - roadSegment.scale.x) / 2;
-                    int yTranslate = (scale.y - roadSegment.scale.y) / 2;
+                    int yTranslate = scale.y - roadSegment.scale.y / 2;
                     roadSegment.SetPosition(this.position.Add(new Vector2(xTranslate, yTranslate)));
                 }
                 break;
@@ -124,7 +121,7 @@ public class Lane extends TrafficObject{
                 for(int i = 0; i < roadSegments.size(); ++i)
                 {
                     Segment roadSegment = roadSegments.get(i);
-                    int xTranslate = (scale.x - roadSegment.scale.x) / 2;
+                    int xTranslate = scale.x - roadSegment.scale.x / 2;
                     int yTranslate = i * (scale.y / roadSegments.size()) + ((scale.y / roadSegments.size()) - roadSegment.scale.y) / 2;
                     roadSegment.SetPosition(this.position.Add(new Vector2(xTranslate, yTranslate)));
                 }
@@ -136,7 +133,7 @@ public class Lane extends TrafficObject{
                 {
                     Segment roadSegment = roadSegments.get(i);
                     int xTranslate = (roadSegments.size() - 1 - i) * (scale.x / roadSegments.size()) + ( (scale.x / roadSegments.size()) - roadSegment.scale.x) / 2;
-                    int yTranslate = (scale.y - roadSegment.scale.y) / 2;
+                    int yTranslate = scale.y - roadSegment.scale.y / 2;
                     roadSegment.SetPosition(this.position.Add(new Vector2(xTranslate, yTranslate)));
                 }
                 break;

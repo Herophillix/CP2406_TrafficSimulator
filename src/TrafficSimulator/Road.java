@@ -32,12 +32,12 @@ public class Road extends TrafficObject{
             case NORTH, SOUTH -> {
                 lanes[0] = new Lane(0, GetInfo(), this.length, DIRECTION.NORTH);
                 lanes[1] = new Lane(1, GetInfo(), this.length, DIRECTION.SOUTH);
-                this.scale = new Vector2(GRAPHIC_SCALE, length * GRAPHIC_SCALE);
+                this.scale = new Vector2(2 * GRAPHIC_SCALE, length * GRAPHIC_SCALE);
             }
             case EAST, WEST -> {
                 lanes[0] = new Lane(0, GetInfo(), this.length, DIRECTION.EAST);
                 lanes[1] = new Lane(1, GetInfo(), this.length, DIRECTION.WEST);
-                this.scale = new Vector2(length * GRAPHIC_SCALE, GRAPHIC_SCALE);
+                this.scale = new Vector2(length * GRAPHIC_SCALE, 2 * GRAPHIC_SCALE);
             }
         }
     }

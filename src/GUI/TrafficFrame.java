@@ -6,8 +6,8 @@ import java.awt.event.*;
 import java.util.*;
 
 public class TrafficFrame extends JFrame{
-    private static final int SCREEN_WIDTH = 1366;
-    private static final int SCREEN_HEIGHT = 768;
+    private static final int SCREEN_WIDTH = 1600;
+    private static final int SCREEN_HEIGHT = 900;
     public static final int STARTING_X = 0;
     public static final int STARTING_Y = SCREEN_HEIGHT / 2 - 20;
 
@@ -34,6 +34,7 @@ public class TrafficFrame extends JFrame{
         this.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.getContentPane().setBackground(new Color(10, 70, 10));
         this.setLayout(null);
     }
 

@@ -12,7 +12,7 @@ public abstract class Intersection extends TrafficObject{
     {
         super(id, name);
         roadIntersections = new RoadIntersection[Road.DIRECTION.DIRECTION_COUNT.ordinal()];
-        scale = new Vector2(GRAPHIC_SCALE, GRAPHIC_SCALE);
+        scale = new Vector2(GRAPHIC_SCALE * 2, GRAPHIC_SCALE * 2);
     }
 
     @Override
@@ -105,10 +105,10 @@ public abstract class Intersection extends TrafficObject{
                 Road road = roadIntersection.GetRoad();
                 switch (road.GetDirection())
                 {
-                    case NORTH -> road.SetPosition(position.Minus(new Vector2(0, road.scale.y)));
-                    case EAST -> road.SetPosition(position.Add(new Vector2(scale.x, 0)));
-                    case SOUTH -> road.SetPosition(position.Add(new Vector2(0, scale.y)));
-                    case WEST -> road.SetPosition(position.Minus(new Vector2(road.scale.x, 0)));
+                    case NORTH -> roadIntersection.SetPosition(position.Minus(new Vector2(0, road.scale.y)));
+                    case EAST -> roadIntersection.SetPosition(position.Add(new Vector2(scale.x, 0)));
+                    case SOUTH -> roadIntersection.SetPosition(position.Add(new Vector2(0, scale.y)));
+                    case WEST -> roadIntersection.SetPosition(position.Minus(new Vector2(road.scale.x, 0)));
                 }
             }
         }
@@ -118,85 +118,10 @@ public abstract class Intersection extends TrafficObject{
     @Override
     public void AddObjectToFrame(TrafficFrame frame)
     {
-        frame.add(this);
         for(RoadIntersection intersection: roadIntersections)
         {
             intersection.AddObjectToFrame(frame);
         }
+        frame.add(this);
     }
-
-//    @Override
-//    public void paintComponent(Graphics g)
-//    {
-//        super.paintComponent(g);
-//        Graphics2D g2 = (Graphics2D)g;
-//        g2.setColor(Color.GRAY);
-//        for(RoadIntersection roadIntersection: roadIntersections)
-//        {
-//            if(roadIntersection != null)
-//            {
-//                Road currentRoad = roadIntersection.GetRoad();
-//                switch (currentRoad.GetDirection())
-//                {
-//                    case NORTH:
-//                    {
-//                        if(roadIntersections[Road.DIRECTION.EAST.ordinal()] != null)
-//                        {
-//                            Road otherRoad = roadIntersections[Road.DIRECTION.EAST.ordinal()].GetRoad();
-//                            Polygon trapezium = new Polygon();
-//                            trapezium.addPoint(currentRoad.position.x + currentRoad.scale.x, currentRoad.position.y + (currentRoad.scale.y / currentRoad.GetLength()));
-//                            trapezium.addPoint(currentRoad.position.x + currentRoad.scale.x, currentRoad.position.y + (currentRoad.scale.y / currentRoad.GetLength()) * 2);
-//                            trapezium.addPoint(otherRoad.position.x + (otherRoad.scale.x / otherRoad.GetLength()), otherRoad.position.y);
-//                            trapezium.addPoint(otherRoad.position.x + (otherRoad.scale.x / otherRoad.GetLength()) * 2, otherRoad.position.y);
-//                            g2.fillPolygon(trapezium);
-//                        }
-//                        break;
-//                    }
-//                    case EAST:
-//                    {
-//                        if(roadIntersections[Road.DIRECTION.SOUTH.ordinal()] != null)
-//                        {
-//                            Road otherRoad = roadIntersections[Road.DIRECTION.SOUTH.ordinal()].GetRoad();
-//                            Polygon trapezium = new Polygon();
-//                            trapezium.addPoint(currentRoad.position.x + (currentRoad.scale.x / currentRoad.GetLength()), currentRoad.position.y + currentRoad.scale.y);
-//                            trapezium.addPoint(currentRoad.position.x + (currentRoad.scale.x / currentRoad.GetLength()) * 2, currentRoad.position.y + currentRoad.scale.y);
-//                            trapezium.addPoint(otherRoad.position.x + otherRoad.scale.x, otherRoad.position.y + (otherRoad.scale.y / otherRoad.GetLength()) * 2);
-//                            trapezium.addPoint(otherRoad.position.x + otherRoad.scale.x, otherRoad.position.y + (otherRoad.scale.y / otherRoad.GetLength()));
-//                            g2.fillPolygon(trapezium);
-//                        }
-//                        break;
-//                    }
-//                    case SOUTH:
-//                    {
-//                        if(roadIntersections[Road.DIRECTION.WEST.ordinal()] != null)
-//                        {
-//                            Road otherRoad = roadIntersections[Road.DIRECTION.WEST.ordinal()].GetRoad();
-//                            Polygon trapezium = new Polygon();
-//                            trapezium.addPoint(currentRoad.position.x, currentRoad.position.y + (currentRoad.scale.y / currentRoad.GetLength()));
-//                            trapezium.addPoint(currentRoad.position.x, currentRoad.position.y + (currentRoad.scale.y / currentRoad.GetLength()) * 2);
-//                            trapezium.addPoint(otherRoad.position.x + (otherRoad.scale.x / otherRoad.GetLength()), otherRoad.position.y + otherRoad.scale.y);
-//                            trapezium.addPoint(otherRoad.position.x + (otherRoad.scale.x / otherRoad.GetLength()) * 2, otherRoad.position.y + otherRoad.scale.y);
-//                            g2.fillPolygon(trapezium);
-//                        }
-//                        break;
-//                    }
-//                    case WEST:
-//                    {
-//                        if(roadIntersections[Road.DIRECTION.NORTH.ordinal()] != null)
-//                        {
-//                            Road otherRoad = roadIntersections[Road.DIRECTION.NORTH.ordinal()].GetRoad();
-//                            Polygon trapezium = new Polygon();
-//                            trapezium.addPoint(currentRoad.position.x + (currentRoad.scale.x / currentRoad.GetLength()), currentRoad.position.y);
-//                            trapezium.addPoint(currentRoad.position.x + (currentRoad.scale.x / currentRoad.GetLength()) * 2, currentRoad.position.y);
-//                            trapezium.addPoint(otherRoad.position.x, otherRoad.position.y + (otherRoad.scale.y / otherRoad.GetLength() * 2));
-//                            trapezium.addPoint(otherRoad.position.x, otherRoad.position.y + (otherRoad.scale.y / otherRoad.GetLength()));
-//                            g2.fillPolygon(trapezium);
-//                        }
-//                        break;
-//                    }
-//                }
-//            }
-//        }
-//    }
-//
 }
