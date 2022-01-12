@@ -1,5 +1,7 @@
 package GUI;
 
+import TrafficSimulator.RoadManager;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -72,15 +74,15 @@ public class TrafficFrame extends JFrame{
 
     public void ShowSimulationDialog()
     {
-        int numOfCar = optionPane.GetUserInt("Input number of car", 1, 5);
+        int numOfCar = optionPane.GetUserInt("Input number of car", 1, RoadManager.roadCount);
         if (numOfCar == -1)
             return;
 
-        int numOfBus = optionPane.GetUserInt("Input number of bus", 0, 3);
+        int numOfBus = optionPane.GetUserInt("Input number of bus", 0, RoadManager.roadCount / 3);
         if (numOfBus == -1)
             return;
 
-        int numOfBike = optionPane.GetUserInt("Input number of motorbike", 0, 3);
+        int numOfBike = optionPane.GetUserInt("Input number of motorbike", 0, RoadManager.roadCount / 2);
         if (numOfBike == -1)
             return;
 

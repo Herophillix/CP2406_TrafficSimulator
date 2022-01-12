@@ -13,11 +13,14 @@ public class RoadManager {
     private ArrayList<Intersection> intersections;
     private FileManager fileManager;
 
+    public static int roadCount = 0;
+
     public RoadManager(FileManager fileManager)
     {
         roads = new ArrayList<>();
         intersections = new ArrayList<>();
         this.fileManager = fileManager;
+        roadCount = 0;
     }
 
     public Road AddRoad(int length, Road.DIRECTION direction, Road toConnect)
@@ -49,6 +52,7 @@ public class RoadManager {
         }
         roads.add(toReturn);
         fileManager.AddRoadToBuffer(toReturn, toConnect);
+        ++roadCount;
         return toReturn;
     }
 
@@ -98,6 +102,7 @@ public class RoadManager {
         }
         intersections.add(toReturn);
         fileManager.AddFourWayIntersectionToBuffer(toReturn, toConnect);
+        roadCount += 4;
         return toReturn;
     }
 
@@ -147,6 +152,7 @@ public class RoadManager {
         }
         intersections.add(toReturn);
         fileManager.AddThreeWayIntersectionToBuffer(toReturn, directions, toConnect);
+        roadCount += 3;
         return toReturn;
     }
 
