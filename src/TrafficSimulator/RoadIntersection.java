@@ -61,7 +61,7 @@ public class RoadIntersection extends TrafficObject{
             default -> startTick = 0;
         }
 
-        straightTrafficLight = new TrafficLight(0, objectName, isGreen, startTick);
+        straightTrafficLight = new TrafficLight(0, objectName, isGreen, startTick, dirOutwardsIntersection);
         straightSegment[0].AssignTrafficLight(straightTrafficLight);
 
         road.ConnectSegment(straightSegment[0], Lane.SEGMENT_POSITION.LAST, Road.DIRECTION.OppositeDirection(dirOutwardsIntersection));
@@ -96,7 +96,7 @@ public class RoadIntersection extends TrafficObject{
             default -> startTick = 0;
         }
 
-        rightTrafficLight = new TrafficLight(0, objectName, isGreen, startTick);
+        rightTrafficLight = new TrafficLight(0, objectName, isGreen, startTick, dirOutwardsIntersection);
         rightTurnSegment[0].AssignTrafficLight(rightTrafficLight);
 
         road.ConnectSegment(rightTurnSegment[0], Lane.SEGMENT_POSITION.LAST, Road.DIRECTION.OppositeDirection(dirOutwardsIntersection));
@@ -198,6 +198,32 @@ public class RoadIntersection extends TrafficObject{
                 }
             }
         }
+        if(straightTrafficLight != null)
+        {
+            switch (dirOutwardsIntersection)
+            {
+                case NORTH -> {
+                    int xTranslate = scale.x / 2 + rightTrafficLight.scale.x;
+                    int yTranslate = scale.y - straightTrafficLight.scale.y;
+                    straightTrafficLight.SetPosition(position.Add(new Vector2(xTranslate, yTranslate)));
+                }
+                case EAST -> {
+                    int xTranslate = 0;
+                    int yTranslate = scale.y / 2 + rightTrafficLight.scale.y;
+                    straightTrafficLight.SetPosition(position.Add(new Vector2(xTranslate, yTranslate)));
+                }
+                case SOUTH -> {
+                    int xTranslate = 0;
+                    int yTranslate = 0;
+                    straightTrafficLight.SetPosition(position.Add(new Vector2(xTranslate, yTranslate)));
+                }
+                case WEST -> {
+                    int xTranslate = scale.x - straightTrafficLight.scale.x;
+                    int yTranslate = 0;
+                    straightTrafficLight.SetPosition(position.Add(new Vector2(xTranslate, yTranslate)));
+                }
+            }
+        }
         for(int i = 0; i < rightTurnSegment.length; ++i)
         {
             Segment right = rightTurnSegment[i];
@@ -222,6 +248,32 @@ public class RoadIntersection extends TrafficObject{
                     int xTranslate = GRAPHIC_SCALE * (straightSegment.length + i + 1) + (GRAPHIC_SCALE - right.scale.x) / 2;
                     int yTranslate = scale.y / 4 + right.scale.y * (i * 3) + right.scale.y * 3 / 4;
                     right.SetPosition(position.Add(new Vector2(xTranslate, yTranslate)));
+                }
+            }
+        }
+        if(rightTrafficLight != null)
+        {
+            switch (dirOutwardsIntersection)
+            {
+                case NORTH -> {
+                    int xTranslate = scale.x / 2;
+                    int yTranslate = scale.y - rightTrafficLight.scale.y;
+                    rightTrafficLight.SetPosition(position.Add(new Vector2(xTranslate, yTranslate)));
+                }
+                case EAST -> {
+                    int xTranslate = 0;
+                    int yTranslate = scale.y / 2;
+                    rightTrafficLight.SetPosition(position.Add(new Vector2(xTranslate, yTranslate)));
+                }
+                case SOUTH -> {
+                    int xTranslate = rightTrafficLight.scale.x;
+                    int yTranslate = 0;
+                    rightTrafficLight.SetPosition(position.Add(new Vector2(xTranslate, yTranslate)));
+                }
+                case WEST -> {
+                    int xTranslate = scale.x - rightTrafficLight.scale.x;
+                    int yTranslate = rightTrafficLight.scale.y;
+                    rightTrafficLight.SetPosition(position.Add(new Vector2(xTranslate, yTranslate)));
                 }
             }
         }
@@ -257,10 +309,12 @@ public class RoadIntersection extends TrafficObject{
         {
             straight.AddObjectToFrame(frame);
         }
+        straightTrafficLight.AddObjectToFrame(frame);
         for(Segment right: rightTurnSegment)
         {
             right.AddObjectToFrame(frame);
         }
+        rightTrafficLight.AddObjectToFrame(frame);
         leftTurnSegment.AddObjectToFrame(frame);
         road.AddObjectToFrame(frame);
     }

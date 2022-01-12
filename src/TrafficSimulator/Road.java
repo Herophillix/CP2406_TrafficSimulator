@@ -7,6 +7,8 @@ import Utility.Vector2;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import javax.swing.*;
+import javax.swing.border.*;
 
 public class Road extends TrafficObject implements MouseListener {
     public static final int MIN_LENGTH = 3;

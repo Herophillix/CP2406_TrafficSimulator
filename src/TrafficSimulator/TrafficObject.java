@@ -5,6 +5,7 @@ import Utility.Vector2;
 
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.border.Border;
 
 public abstract class TrafficObject extends JPanel {
     protected static final int GRAPHIC_SCALE = 20;
@@ -20,6 +21,10 @@ public abstract class TrafficObject extends JPanel {
         this.id = id;
         this.name = name;
         position = new Vector2(0,0);
+
+        Border blackline = BorderFactory.createLineBorder(Color.BLACK);
+        setBorder(blackline);
+
         InitializeJPanelAttributes();
     }
 

@@ -1,12 +1,13 @@
 package TrafficSimulator.Test;
 
+import TrafficSimulator.Road;
 import TrafficSimulator.TrafficLight;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TrafficLightTest {
-    TrafficLight trafficLight = new TrafficLight(0, "TrafficSimulator.TrafficLight", true, 0);
+    TrafficLight trafficLight = new TrafficLight(0, "TrafficSimulator.TrafficLight", true, 0, Road.DIRECTION.EAST);
 
     @Test
     public void TestGreenLight() { assertTrue(trafficLight.GetIsGreen()); }
