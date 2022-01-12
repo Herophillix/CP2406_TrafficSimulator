@@ -7,7 +7,7 @@ import java.awt.*;
 import javax.swing.*;
 
 public abstract class TrafficObject extends JPanel {
-    protected static final int GRAPHIC_SCALE = 30;
+    protected static final int GRAPHIC_SCALE = 20;
     private int id;
     private String name;
     protected int saveId;

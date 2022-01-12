@@ -112,7 +112,7 @@ public abstract class Intersection extends TrafficObject{
                 }
             }
         }
-        setBounds(position.x, position.y, scale.x, scale.y);
+        setBounds(Math.round(position.x - scale.x * 0.75f) , Math.round(position.y - scale.y * 0.75f), Math.round((scale.x * 2.5f)), Math.round((scale.y * 2.5f)));
     }
 
     @Override

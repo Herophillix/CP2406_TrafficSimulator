@@ -5,9 +5,12 @@ import Utility.MathUtility;
 import Utility.Vector2;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-public class Road extends TrafficObject{
+public class Road extends TrafficObject implements MouseListener {
     public static final int MIN_LENGTH = 3;
+
     public enum DIRECTION {
         NORTH, EAST, SOUTH, WEST, DIRECTION_COUNT;
         public static DIRECTION OppositeDirection(DIRECTION direction)
@@ -40,6 +43,7 @@ public class Road extends TrafficObject{
                 this.scale = new Vector2(length * GRAPHIC_SCALE, 2 * GRAPHIC_SCALE);
             }
         }
+        addMouseListener(this);
     }
 
     @Override
@@ -127,5 +131,33 @@ public class Road extends TrafficObject{
             lane.AddObjectToFrame(frame);
         }
         frame.add(this);
+    }
+
+
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        //setBackground(Color.CYAN);
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+        //setBackground(Color.GRAY);
     }
 }
