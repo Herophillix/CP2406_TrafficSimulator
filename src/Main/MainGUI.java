@@ -163,10 +163,14 @@ public class MainGUI {
         }
     }
 
+    private static int cycle;
+
     private static void Simulate(int speedOfSim)
     {
         inSimulation = true;
+        cycle = 0;
         timer = new Timer(speedOfSim, e -> {
+            System.out.println("Cycle " + ++cycle);
             if (vehicleManager.GetVehicleCount() > 0) {
                 roadManager.Simulate();
                 vehicleManager.Simulate();
@@ -175,9 +179,11 @@ public class MainGUI {
             {
                 inSimulation = false;
                 timer.stop();
+                System.out.println("Simulation over");
                 frame.optionPane.ShowMessageDialog("Simulation over", JOptionPane.PLAIN_MESSAGE);
             }
             frame.repaint();
+            System.out.println();
         });
         timer.start();
     }
